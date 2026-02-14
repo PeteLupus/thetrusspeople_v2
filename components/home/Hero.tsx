@@ -76,7 +76,7 @@ export default function Hero() {
                             {HERO.title}
                         </h1>
                         <p
-                            className="mb-8 max-w-xl text-base leading-relaxed text-gray-100 md:text-lg"
+                            className="mb-8 max-w-xl text-base leading-relaxed text-white md:text-lg"
                             style={{ textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}
                         >
                             {HERO.description}
