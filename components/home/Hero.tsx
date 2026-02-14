@@ -71,13 +71,13 @@ export default function Hero() {
                         </span>
                         <h1
                             className="mb-6 font-heading text-4xl font-bold leading-tight text-white md:text-5xl lg:text-[3.2rem]"
-                            style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
+                            style={{ color: '#ffffff', textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
                         >
                             {HERO.title}
                         </h1>
                         <p
                             className="mb-8 max-w-xl text-base leading-relaxed text-white md:text-lg"
-                            style={{ textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}
+                            style={{ color: '#ffffff', textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}
                         >
                             {HERO.description}
                         </p>
