@@ -1,6 +1,8 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Button from '@/components/ui/Button';
 import { HERO, TRUST_ITEMS } from '@/lib/constants';
@@ -37,7 +39,7 @@ export default function Hero() {
                     priority
                     sizes="100vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-charcoal/80 via-charcoal/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-charcoal/90 via-charcoal/70 to-charcoal/40" />
             </div>
 
             {/* Mobile background - full width */}
@@ -67,10 +69,16 @@ export default function Hero() {
                         <span className="mb-4 inline-block w-fit rounded-full bg-terracotta/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-terracotta">
                             {HERO.label}
                         </span>
-                        <h1 className="mb-6 font-heading text-4xl font-bold leading-tight text-white md:text-5xl lg:text-[3.2rem]">
+                        <h1
+                            className="mb-6 font-heading text-4xl font-bold leading-tight text-white md:text-5xl lg:text-[3.2rem]"
+                            style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
+                        >
                             {HERO.title}
                         </h1>
-                        <p className="mb-8 max-w-xl text-base leading-relaxed text-gray-300 md:text-lg">
+                        <p
+                            className="mb-8 max-w-xl text-base leading-relaxed text-gray-100 md:text-lg"
+                            style={{ textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}
+                        >
                             {HERO.description}
                         </p>
                         <div className="flex flex-wrap gap-4">
@@ -108,33 +116,56 @@ export default function Hero() {
                                 </h3>
                             </div>
                             <div className="space-y-5">
-                                {TRUST_ITEMS.map((item, i) => (
-                                    <motion.div
-                                        key={i}
-                                        variants={fadeInUp}
-                                        initial="hidden"
-                                        animate="visible"
-                                        transition={{ delay: 0.5 + i * 0.15 }}
-                                        whileHover={{ scale: 1.04, x: 4 }}
-                                        className="flex cursor-pointer items-start gap-4 rounded-xl p-3 -ml-3 transition-colors duration-300 hover:bg-white/10"
-                                    >
-                                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 transition-all duration-300 group-hover:bg-terracotta/20">
-                                            {item.icon === 'checkmark' ? (
-                                                <Check className="h-6 w-6 text-terracotta" />
-                                            ) : (
-                                                <span className="font-heading text-lg font-bold text-terracotta">
-                                                    {item.icon}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div>
-                                            <h4 className="font-heading text-sm font-semibold text-white">
-                                                {item.title}
-                                            </h4>
-                                            <p className="text-xs text-gray-400">{item.description}</p>
-                                        </div>
-                                    </motion.div>
-                                ))}
+                                {TRUST_ITEMS.map((item, i) => {
+                                    const content = (
+                                        <motion.div
+                                            key={i}
+                                            variants={fadeInUp}
+                                            initial="hidden"
+                                            animate="visible"
+                                            transition={{ delay: 0.5 + i * 0.15 }}
+                                            whileHover={{ scale: 1.04, x: 4 }}
+                                            className="flex cursor-pointer items-start gap-4 rounded-xl p-3 -ml-3 transition-colors duration-300 hover:bg-white/10"
+                                        >
+                                            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 transition-all duration-300">
+                                                {item.icon === 'checkmark' ? (
+                                                    <Check className="h-6 w-6 text-terracotta" />
+                                                ) : (
+                                                    <span className="font-heading text-lg font-bold text-terracotta">
+                                                        {item.icon}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div>
+                                                <h4 className="font-heading text-sm font-semibold text-white">
+                                                    {item.title}
+                                                </h4>
+                                                <p className="text-xs text-gray-400">{item.description}</p>
+                                            </div>
+                                        </motion.div>
+                                    );
+
+                                    if (item.href?.startsWith('#')) {
+                                        return (
+                                            <a
+                                                key={i}
+                                                href={item.href}
+                                                onClick={(e) => handleScroll(e, item.href!)}
+                                                className="block"
+                                            >
+                                                {content}
+                                            </a>
+                                        );
+                                    }
+                                    if (item.href) {
+                                        return (
+                                            <Link key={i} href={item.href} className="block">
+                                                {content}
+                                            </Link>
+                                        );
+                                    }
+                                    return content;
+                                })}
                             </div>
                         </div>
                     </motion.div>

@@ -24,6 +24,8 @@ export const PHONE = '(03) 9309 6889';
 export const PHONE_HREF = 'tel:+61393096889';
 export const EMAIL = 'info@thetrusspeople.com.au';
 export const ADDRESS = '37-39 Glenelg Street, Coolaroo VIC 3048';
+export const FACEBOOK_URL = 'https://www.facebook.com/THE-TRUSS-PEOPLE-108692755843667/';
+export const INSTAGRAM_URL = 'https://www.instagram.com/thetrusspeople/';
 
 // Hero
 export const HERO = {
@@ -41,16 +43,19 @@ export const TRUST_ITEMS: TrustItem[] = [
         icon: '20',
         title: 'Years of Precision',
         description: 'Family-owned since 2006, Coolaroo VIC',
+        href: '#about',
     },
     {
         icon: 'checkmark',
         title: '100% Australian Made',
         description: 'Australian timber, materials & manufacturing',
+        href: '#products',
     },
     {
         icon: 'AS',
         title: 'AS/NZS Certified',
         description: 'Engineered to Australian Standards',
+        href: '/our-work',
     },
 ];
 

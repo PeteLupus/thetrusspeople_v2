@@ -9,6 +9,7 @@ export interface TrustItem {
   icon: string;
   title: string;
   description: string;
+  href?: string;
 }
 
 export interface AccordionItem {
