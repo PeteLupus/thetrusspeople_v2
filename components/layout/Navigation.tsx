@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, Phone } from 'lucide-react';
 import { NAV_LINKS, PHONE, PHONE_HREF } from '@/lib/constants';
 import { cn } from '@/lib/utils';
@@ -10,6 +11,8 @@ import { cn } from '@/lib/utils';
 export default function Navigation() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const pathname = usePathname();
+    const router = useRouter();
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -33,14 +36,23 @@ export default function Navigation() {
     }, [isOpen]);
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-        if (href.startsWith('#')) {
-            e.preventDefault();
-            const el = document.querySelector(href);
-            if (el) {
-                const top = el.getBoundingClientRect().top + window.scrollY - 80;
-                window.scrollTo({ top, behavior: 'smooth' });
-            }
-            setIsOpen(false);
+        // Non-hash links (e.g. /our-work) — let default Link behavior handle it
+        if (!href.startsWith('#')) return;
+
+        e.preventDefault();
+        setIsOpen(false);
+
+        // If we're NOT on the home page, navigate there first with the hash
+        if (pathname !== '/') {
+            router.push('/' + href);
+            return;
+        }
+
+        // On the home page, smooth-scroll to the section
+        const el = document.querySelector(href);
+        if (el) {
+            const top = el.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top, behavior: 'smooth' });
         }
     };
 
@@ -68,16 +80,26 @@ export default function Navigation() {
 
                 {/* Desktop Nav */}
                 <div className="hidden items-center gap-8 md:flex">
-                    {NAV_LINKS.map((link) => (
-                        <a
-                            key={link.label}
-                            href={link.href}
-                            onClick={(e) => handleNavClick(e, link.href)}
-                            className="relative font-body text-sm font-medium text-text-primary transition-colors duration-300 hover:text-timber after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-terracotta after:transition-all after:duration-300 hover:after:w-full"
-                        >
-                            {link.label}
-                        </a>
-                    ))}
+                    {NAV_LINKS.map((link) =>
+                        link.href.startsWith('#') ? (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                onClick={(e) => handleNavClick(e, link.href)}
+                                className="relative font-body text-sm font-medium text-text-primary transition-colors duration-300 hover:text-timber after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-terracotta after:transition-all after:duration-300 hover:after:w-full"
+                            >
+                                {link.label}
+                            </a>
+                        ) : (
+                            <Link
+                                key={link.label}
+                                href={link.href}
+                                className="relative font-body text-sm font-medium text-text-primary transition-colors duration-300 hover:text-timber after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-terracotta after:transition-all after:duration-300 hover:after:w-full"
+                            >
+                                {link.label}
+                            </Link>
+                        )
+                    )}
                 </div>
 
                 {/* Desktop CTA */}
@@ -124,16 +146,27 @@ export default function Navigation() {
                     )}
                 >
                     <div className="flex h-full flex-col px-6 pt-20">
-                        {NAV_LINKS.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                onClick={(e) => handleNavClick(e, link.href)}
-                                className="border-b border-border py-4 font-heading text-lg font-medium text-charcoal transition-colors hover:text-timber"
-                            >
-                                {link.label}
-                            </a>
-                        ))}
+                        {NAV_LINKS.map((link) =>
+                            link.href.startsWith('#') ? (
+                                <a
+                                    key={link.label}
+                                    href={link.href}
+                                    onClick={(e) => handleNavClick(e, link.href)}
+                                    className="border-b border-border py-4 font-heading text-lg font-medium text-charcoal transition-colors hover:text-timber"
+                                >
+                                    {link.label}
+                                </a>
+                            ) : (
+                                <Link
+                                    key={link.label}
+                                    href={link.href}
+                                    onClick={() => setIsOpen(false)}
+                                    className="border-b border-border py-4 font-heading text-lg font-medium text-charcoal transition-colors hover:text-timber"
+                                >
+                                    {link.label}
+                                </Link>
+                            )
+                        )}
                         <div className="mt-6 space-y-3">
                             <a
                                 href={PHONE_HREF}

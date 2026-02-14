@@ -115,9 +115,10 @@ export default function Hero() {
                                         initial="hidden"
                                         animate="visible"
                                         transition={{ delay: 0.5 + i * 0.15 }}
-                                        className="flex items-start gap-4"
+                                        whileHover={{ scale: 1.04, x: 4 }}
+                                        className="flex cursor-pointer items-start gap-4 rounded-xl p-3 -ml-3 transition-colors duration-300 hover:bg-white/10"
                                     >
-                                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-white/10">
+                                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 transition-all duration-300 group-hover:bg-terracotta/20">
                                             {item.icon === 'checkmark' ? (
                                                 <Check className="h-6 w-6 text-terracotta" />
                                             ) : (
