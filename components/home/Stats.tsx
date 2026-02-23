@@ -1,80 +1,65 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { useInView } from 'framer-motion';
-import ScrollReveal, {
-    ScrollRevealItem,
-} from '@/components/animations/ScrollReveal';
+import { useEffect, useRef, useState } from 'react';
 import { STATS } from '@/lib/constants';
+import type { StatItem } from '@/lib/types';
 
-function Counter({
-    target,
-    suffix,
-    isInView,
-}: {
-    target: number;
-    suffix: string;
-    isInView: boolean;
-}) {
-    const [count, setCount] = useState(0);
-    const hasAnimated = useRef(false);
-
-    const animate = useCallback(() => {
-        if (hasAnimated.current) return;
-        hasAnimated.current = true;
-        const duration = 2000;
-        const startTime = performance.now();
-
-        const step = (currentTime: number) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            // ease-out cubic
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.round(eased * target));
-            if (progress < 1) {
-                requestAnimationFrame(step);
-            }
-        };
-
-        requestAnimationFrame(step);
-    }, [target]);
-
-    useEffect(() => {
-        if (isInView) animate();
-    }, [isInView, animate]);
-
-    return (
-        <span className="font-heading text-4xl font-bold text-white md:text-5xl">
-            {count}
-            <span className="text-terracotta">{suffix}</span>
-        </span>
-    );
+interface StatsProps {
+  stats?: StatItem[];
 }
 
-export default function Stats() {
-    const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, { once: true, amount: 0.15 });
+function AnimatedNumber({ target, suffix }: { target: number; suffix: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
 
-    return (
-        <section className="bg-charcoal py-16 md:py-20" ref={ref}>
-            <div className="mx-auto max-w-[1400px] px-6">
-                <ScrollReveal stagger>
-                    <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-                        {STATS.map((stat, i) => (
-                            <ScrollRevealItem key={i}>
-                                <div className="text-center">
-                                    <Counter
-                                        target={stat.number}
-                                        suffix={stat.suffix}
-                                        isInView={isInView}
-                                    />
-                                    <p className="mt-2 text-sm text-gray-400">{stat.label}</p>
-                                </div>
-                            </ScrollRevealItem>
-                        ))}
-                    </div>
-                </ScrollReveal>
-            </div>
-        </section>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          let start = 0;
+          const duration = 1500;
+          const step = Math.ceil(target / (duration / 16));
+          const timer = setInterval(() => {
+            start += step;
+            if (start >= target) {
+              setCount(target);
+              clearInterval(timer);
+            } else {
+              setCount(start);
+            }
+          }, 16);
+        }
+      },
+      { threshold: 0.5 }
     );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target]);
+
+  return (
+    <span ref={ref} className="font-heading text-4xl font-bold text-terracotta md:text-5xl">
+      {count}{suffix}
+    </span>
+  );
+}
+
+export default function Stats({ stats }: StatsProps) {
+  const items = stats ?? STATS;
+
+  return (
+    <section className="bg-charcoal py-16 md:py-20">
+      <div className="mx-auto max-w-[1400px] px-6">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          {items.map((stat, i) => (
+            <div key={i} className="flex flex-col items-center text-center">
+              <AnimatedNumber target={stat.number} suffix={stat.suffix} />
+              <span className="mt-2 text-sm text-gray-400">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

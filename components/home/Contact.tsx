@@ -1,324 +1,205 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import Image from 'next/image';
-import { MapPin, Phone, Mail, Upload, CheckCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import SectionHeader from '@/components/ui/SectionHeader';
-import {
-    CONTACT_SECTION,
-    CONTACT_INFO,
-    PROJECT_TYPES,
-    CERTIFICATIONS,
-} from '@/lib/constants';
+import Button from '@/components/ui/Button';
+import { CONTACT_SECTION, PROJECT_TYPES, PHONE, EMAIL, ADDRESS } from '@/lib/constants';
 
-const contactSchema = z.object({
-    businessName: z.string().optional(),
-    name: z.string().min(1, 'Name is required'),
-    email: z.string().email('Valid email is required'),
-    phone: z.string().min(1, 'Phone number is required'),
-    suburb: z.string().optional(),
-    projectType: z.string().optional(),
-    message: z.string().min(1, 'Please provide some details'),
+const schema = z.object({
+  name: z.string().min(2, 'Name is required'),
+  email: z.string().email('Valid email required'),
+  phone: z.string().optional(),
+  company: z.string().optional(),
+  projectType: z.string().min(1, 'Please select a project type'),
+  message: z.string().min(10, 'Message must be at least 10 characters'),
 });
 
-type ContactFormData = z.infer<typeof contactSchema>;
+type FormData = z.infer<typeof schema>;
 
-const iconMap = {
-    map: MapPin,
-    phone: Phone,
-    mail: Mail,
-};
+interface ContactSectionData {
+  label?: string;
+  title?: string;
+  description?: string;
+}
 
-export default function Contact() {
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [fileName, setFileName] = useState<string>('');
-    const fileInputRef = useRef<HTMLInputElement>(null);
+interface ContactInfoData {
+  phone?: string;
+  email?: string;
+  address?: string;
+}
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<ContactFormData>({
-        resolver: zodResolver(contactSchema),
-    });
+interface ContactProps {
+  section?: ContactSectionData;
+  contactInfo?: ContactInfoData;
+}
 
-    const onSubmit = async (data: ContactFormData) => {
-        setIsSubmitting(true);
-        try {
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-            });
-            if (res.ok) {
-                setIsSuccess(true);
-            }
-        } catch {
-            // Handle error silently
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+export default function Contact({ section, contactInfo }: ContactProps) {
+  const s = {
+    label: section?.label ?? CONTACT_SECTION.label,
+    title: section?.title ?? CONTACT_SECTION.title,
+    description: section?.description ?? CONTACT_SECTION.description,
+  };
+  const phone = contactInfo?.phone ?? PHONE;
+  const email = contactInfo?.email ?? EMAIL;
+  const address = contactInfo?.address ?? ADDRESS;
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) setFileName(file.name);
-    };
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
 
-    return (
-        <section id="contact" className="bg-warm-white py-20 md:py-28">
-            <div className="mx-auto max-w-[1400px] px-6">
-                <ScrollReveal>
-                    <SectionHeader
-                        label={CONTACT_SECTION.label}
-                        title={CONTACT_SECTION.title}
-                        description={CONTACT_SECTION.description}
-                    />
-                </ScrollReveal>
+  const onSubmit = async (data: FormData) => {
+    setStatus('loading');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        setStatus('success');
+        reset();
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
 
-                <div className="mt-14 grid gap-12 lg:grid-cols-3">
-                    {/* Form */}
-                    <ScrollReveal className="lg:col-span-2">
-                        {isSuccess ? (
-                            <div className="flex flex-col items-center justify-center rounded-2xl bg-white p-12 text-center shadow-sm">
-                                <CheckCircle className="mb-4 h-16 w-16 text-success" />
-                                <h3 className="mb-2 font-heading text-2xl font-bold text-charcoal">
-                                    Thank You!
-                                </h3>
-                                <p className="text-text-light">
-                                    We&apos;ll be in touch within 24 hours.
-                                </p>
-                            </div>
-                        ) : (
-                            <form
-                                onSubmit={handleSubmit(onSubmit)}
-                                className={`rounded-2xl bg-white p-8 shadow-sm md:p-10 ${isSubmitting ? 'pointer-events-none opacity-70' : ''
-                                    }`}
-                            >
-                                <div className="grid gap-5 md:grid-cols-2">
-                                    {/* Business Name */}
-                                    <div className="relative">
-                                        <input
-                                            {...register('businessName')}
-                                            id="businessName"
-                                            type="text"
-                                            placeholder=" "
-                                            className="peer w-full rounded-lg border border-border px-4 pb-2 pt-6 text-sm text-charcoal transition-all focus:border-timber focus:ring-1 focus:ring-timber/20 focus:outline-none"
-                                        />
-                                        <label
-                                            htmlFor="businessName"
-                                            className="absolute left-4 top-2 text-xs text-text-light transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-timber"
-                                        >
-                                            Business Name
-                                        </label>
-                                    </div>
+  return (
+    <section id="contact" className="bg-white py-20 md:py-28">
+      <div className="mx-auto max-w-[1400px] px-6">
+        <ScrollReveal>
+          <SectionHeader label={s.label} title={s.title} description={s.description} />
+        </ScrollReveal>
 
-                                    {/* Name */}
-                                    <div className="relative">
-                                        <input
-                                            {...register('name')}
-                                            id="name"
-                                            type="text"
-                                            placeholder=" "
-                                            className="peer w-full rounded-lg border border-border px-4 pb-2 pt-6 text-sm text-charcoal transition-all focus:border-timber focus:ring-1 focus:ring-timber/20 focus:outline-none"
-                                        />
-                                        <label
-                                            htmlFor="name"
-                                            className="absolute left-4 top-2 text-xs text-text-light transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-timber"
-                                        >
-                                            Your Name *
-                                        </label>
-                                        {errors.name && (
-                                            <p className="mt-1 text-xs text-error">{errors.name.message}</p>
-                                        )}
-                                    </div>
-
-                                    {/* Email */}
-                                    <div className="relative">
-                                        <input
-                                            {...register('email')}
-                                            id="email"
-                                            type="email"
-                                            placeholder=" "
-                                            className="peer w-full rounded-lg border border-border px-4 pb-2 pt-6 text-sm text-charcoal transition-all focus:border-timber focus:ring-1 focus:ring-timber/20 focus:outline-none"
-                                        />
-                                        <label
-                                            htmlFor="email"
-                                            className="absolute left-4 top-2 text-xs text-text-light transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-timber"
-                                        >
-                                            Email Address *
-                                        </label>
-                                        {errors.email && (
-                                            <p className="mt-1 text-xs text-error">{errors.email.message}</p>
-                                        )}
-                                    </div>
-
-                                    {/* Phone */}
-                                    <div className="relative">
-                                        <input
-                                            {...register('phone')}
-                                            id="phone"
-                                            type="tel"
-                                            placeholder=" "
-                                            className="peer w-full rounded-lg border border-border px-4 pb-2 pt-6 text-sm text-charcoal transition-all focus:border-timber focus:ring-1 focus:ring-timber/20 focus:outline-none"
-                                        />
-                                        <label
-                                            htmlFor="phone"
-                                            className="absolute left-4 top-2 text-xs text-text-light transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-timber"
-                                        >
-                                            Phone Number *
-                                        </label>
-                                        {errors.phone && (
-                                            <p className="mt-1 text-xs text-error">{errors.phone.message}</p>
-                                        )}
-                                    </div>
-
-                                    {/* Suburb */}
-                                    <div className="relative">
-                                        <input
-                                            {...register('suburb')}
-                                            id="suburb"
-                                            type="text"
-                                            placeholder=" "
-                                            className="peer w-full rounded-lg border border-border px-4 pb-2 pt-6 text-sm text-charcoal transition-all focus:border-timber focus:ring-1 focus:ring-timber/20 focus:outline-none"
-                                        />
-                                        <label
-                                            htmlFor="suburb"
-                                            className="absolute left-4 top-2 text-xs text-text-light transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-timber"
-                                        >
-                                            Project Suburb
-                                        </label>
-                                    </div>
-
-                                    {/* Project Type */}
-                                    <div className="relative">
-                                        <select
-                                            {...register('projectType')}
-                                            id="projectType"
-                                            defaultValue=""
-                                            className="w-full appearance-none rounded-lg border border-border px-4 py-4 text-sm text-charcoal transition-all focus:border-timber focus:ring-1 focus:ring-timber/20 focus:outline-none"
-                                        >
-                                            <option value="" disabled>
-                                                Project Type
-                                            </option>
-                                            {PROJECT_TYPES.map((type) => (
-                                                <option key={type} value={type}>
-                                                    {type}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                {/* File Upload */}
-                                <div className="mt-5">
-                                    <div
-                                        onClick={() => fileInputRef.current?.click()}
-                                        className="flex cursor-pointer items-center justify-center gap-3 rounded-lg border-2 border-dashed border-border px-6 py-6 transition-colors hover:border-timber hover:bg-timber/5"
-                                    >
-                                        <Upload className="h-5 w-5 text-text-light" />
-                                        <span className="text-sm text-text-light">
-                                            {fileName || 'Attach Project Plans (PDF, DWG, Images)'}
-                                        </span>
-                                        <input
-                                            ref={fileInputRef}
-                                            type="file"
-                                            accept=".pdf,.dwg,.jpg,.jpeg,.png"
-                                            onChange={handleFileChange}
-                                            className="hidden"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Message */}
-                                <div className="relative mt-5">
-                                    <textarea
-                                        {...register('message')}
-                                        id="message"
-                                        rows={4}
-                                        placeholder=" "
-                                        className="peer w-full resize-none rounded-lg border border-border px-4 pb-2 pt-6 text-sm text-charcoal transition-all focus:border-timber focus:ring-1 focus:ring-timber/20 focus:outline-none"
-                                    />
-                                    <label
-                                        htmlFor="message"
-                                        className="absolute left-4 top-2 text-xs text-text-light transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-timber"
-                                    >
-                                        Additional Details *
-                                    </label>
-                                    {errors.message && (
-                                        <p className="mt-1 text-xs text-error">{errors.message.message}</p>
-                                    )}
-                                </div>
-
-                                {/* Submit */}
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="mt-6 w-full rounded-[6px] bg-terracotta px-7 py-4 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-charcoal hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
-                                >
-                                    {isSubmitting ? 'Sending...' : 'Request a Quote'}
-                                </button>
-                            </form>
-                        )}
-                    </ScrollReveal>
-
-                    {/* Sidebar */}
-                    <ScrollReveal delay={0.2}>
-                        <div className="space-y-6">
-                            {/* Contact Info */}
-                            {CONTACT_INFO.map((info, i) => {
-                                const Icon = iconMap[info.icon];
-                                return (
-                                    <div key={i} className="flex items-start gap-4">
-                                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-timber/10">
-                                            <Icon className="h-5 w-5 text-timber" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-heading text-sm font-semibold text-charcoal">
-                                                {info.title}
-                                            </h4>
-                                            {info.href ? (
-                                                <a
-                                                    href={info.href}
-                                                    className="text-sm text-text-light transition-colors hover:text-timber"
-                                                >
-                                                    {info.content}
-                                                </a>
-                                            ) : (
-                                                <p className="text-sm text-text-light">{info.content}</p>
-                                            )}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-
-                            {/* Certifications */}
-                            <div className="mt-8 rounded-xl border border-border bg-white p-6">
-                                <h4 className="mb-4 font-heading text-sm font-semibold text-charcoal">
-                                    Certifications & Memberships
-                                </h4>
-                                <div className="flex gap-6">
-                                    {CERTIFICATIONS.map((cert) => (
-                                        <Image
-                                            key={cert.name}
-                                            src={cert.logo}
-                                            alt={cert.name}
-                                            width={80}
-                                            height={50}
-                                            className="h-auto w-[70px] object-contain grayscale transition-all duration-300 hover:grayscale-0"
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </ScrollReveal>
+        <div className="mt-14 grid gap-12 lg:grid-cols-2">
+          {/* Contact Info */}
+          <ScrollReveal>
+            <div className="space-y-6">
+              <div className="flex items-start gap-4 rounded-xl bg-warm-white p-5">
+                <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-timber/10">
+                  <MapPin className="h-5 w-5 text-timber" />
                 </div>
+                <div>
+                  <p className="font-heading text-sm font-semibold text-charcoal">Visit Our Factory</p>
+                  <p className="text-sm text-text-light">{address}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 rounded-xl bg-warm-white p-5">
+                <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-timber/10">
+                  <Phone className="h-5 w-5 text-timber" />
+                </div>
+                <div>
+                  <p className="font-heading text-sm font-semibold text-charcoal">Call Us</p>
+                  <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-sm text-timber hover:underline">{phone}</a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 rounded-xl bg-warm-white p-5">
+                <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-timber/10">
+                  <Mail className="h-5 w-5 text-timber" />
+                </div>
+                <div>
+                  <p className="font-heading text-sm font-semibold text-charcoal">Email Us</p>
+                  <a href={`mailto:${email}`} className="text-sm text-timber hover:underline">{email}</a>
+                </div>
+              </div>
             </div>
-        </section>
-    );
+          </ScrollReveal>
+
+          {/* Form */}
+          <ScrollReveal delay={0.2}>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <input
+                    {...register('name')}
+                    placeholder="Your Name *"
+                    className="w-full rounded-lg border border-border px-4 py-3 text-sm outline-none focus:border-timber"
+                  />
+                  {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name.message}</p>}
+                </div>
+                <div>
+                  <input
+                    {...register('email')}
+                    placeholder="Email Address *"
+                    className="w-full rounded-lg border border-border px-4 py-3 text-sm outline-none focus:border-timber"
+                  />
+                  {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
+                </div>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <input
+                  {...register('phone')}
+                  placeholder="Phone Number"
+                  className="w-full rounded-lg border border-border px-4 py-3 text-sm outline-none focus:border-timber"
+                />
+                <input
+                  {...register('company')}
+                  placeholder="Company Name"
+                  className="w-full rounded-lg border border-border px-4 py-3 text-sm outline-none focus:border-timber"
+                />
+              </div>
+
+              <div>
+                <select
+                  {...register('projectType')}
+                  className="w-full rounded-lg border border-border px-4 py-3 text-sm outline-none focus:border-timber"
+                >
+                  <option value="">Select Project Type *</option>
+                  {PROJECT_TYPES.map((t) => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
+                </select>
+                {errors.projectType && <p className="mt-1 text-xs text-red-500">{errors.projectType.message}</p>}
+              </div>
+
+              <div>
+                <textarea
+                  {...register('message')}
+                  placeholder="Tell us about your project *"
+                  rows={4}
+                  className="w-full rounded-lg border border-border px-4 py-3 text-sm outline-none focus:border-timber resize-none"
+                />
+                {errors.message && <p className="mt-1 text-xs text-red-500">{errors.message.message}</p>}
+              </div>
+
+              {status === 'success' && (
+                <div className="flex items-center gap-2 rounded-lg bg-green-50 p-4 text-sm text-green-700">
+                  <CheckCircle className="h-4 w-4" />
+                  Message sent! We&apos;ll be in touch soon.
+                </div>
+              )}
+              {status === 'error' && (
+                <div className="flex items-center gap-2 rounded-lg bg-red-50 p-4 text-sm text-red-700">
+                  <AlertCircle className="h-4 w-4" />
+                  Something went wrong. Please try calling us directly.
+                </div>
+              )}
+
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={status === 'loading'}
+                className="w-full"
+              >
+                {status === 'loading' ? 'Sending...' : (
+                  <><Send className="mr-2 h-4 w-4" /> Send Message</>
+                )}
+              </Button>
+            </form>
+          </ScrollReveal>
+        </div>
+      </div>
+    </section>
+  );
 }
