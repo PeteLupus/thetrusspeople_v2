@@ -33,7 +33,8 @@ This is the beginning of Jarvis.
 | Styling | Tailwind CSS v4 | UI |
 | Animations | Framer Motion | Motion |
 | Forms | React Hook Form + Zod | Contact/lead forms |
-| Email | SendGrid | Form submissions |
+| File Storage | Google Drive API | Large file uploads (plans, docs) |
+| Email | Nodemailer via Gmail | Form notifications — no third party |
 
 ---
 
@@ -41,7 +42,7 @@ This is the beginning of Jarvis.
 
 ```
 project/
-├── app/                        # Next.js App Router pages
+├── app/
 │   ├── page.tsx                # Home page (fetches from Sanity)
 │   ├── studio/[[...tool]]/     # Embedded Sanity Studio at /studio
 │   └── [page-name]/page.tsx   # Each additional page
@@ -60,13 +61,13 @@ project/
 │       └── queries.ts          # All GROQ queries with fallbacks
 ├── sanity/
 │   └── schemaTypes/            # One file per content type
-│       ├── index.ts            # Registers all schemas
+│       ├── index.ts
 │       ├── siteSettings.ts     # Singleton: all site-wide content
-│       ├── product.ts          # Product documents
-│       ├── testimonial.ts      # Testimonial documents
-│       ├── galleryItem.ts      # Gallery/portfolio images
-│       └── productPage.ts      # Singleton: products page content
-├── sanity.config.ts            # Sanity Studio configuration
+│       ├── product.ts
+│       ├── testimonial.ts
+│       ├── galleryItem.ts
+│       └── productPage.ts
+├── sanity.config.ts
 ├── next.config.ts              # Must include cdn.sanity.io in images
 ├── .env.local                  # Local secrets (never commit)
 └── CLAUDE.md                   # This file
@@ -82,11 +83,147 @@ Always required. Never commit to git.
 NEXT_PUBLIC_SANITY_PROJECT_ID=   # From sanity.io/manage
 NEXT_PUBLIC_SANITY_DATASET=production
 SANITY_API_TOKEN=                # Editor role token — used for writes
+
 NEXT_PUBLIC_SITE_URL=            # Full production URL
+
+# Google — one dedicated Google account per agency (not the client's)
+GOOGLE_CLIENT_EMAIL=             # Service account email
+GOOGLE_PRIVATE_KEY=              # Service account private key
+GOOGLE_DRIVE_FOLDER_ID=          # The Drive folder ID for this client's files
+
+# Nodemailer — uses the same Google account to send email
+GMAIL_USER=                      # The Gmail address (e.g. submissions@youragency.com)
+GMAIL_APP_PASSWORD=              # Gmail App Password (not the account password)
+NOTIFY_EMAIL=                    # Client's email to receive notifications
 ```
 
-In Vercel: set all three. Mark `SANITY_API_TOKEN` as Sensitive.
+In Vercel: mark `SANITY_API_TOKEN` and `GOOGLE_PRIVATE_KEY` as Sensitive.
 Locally: copy `.env.local.example` to `.env.local` and fill in values.
+
+---
+
+## 📬 Contact Form Architecture
+
+**No third-party email services. No data leaving to external platforms.**
+
+Every contact form in this system follows the same pattern:
+
+```
+User submits form
+       ↓
+Next.js API route (/api/contact)
+       ↓
+  ┌────┴────┐
+  │         │
+Files    Form data
+  ↓         ↓
+Google   Nodemailer
+Drive    (Gmail SMTP)
+  ↓         ↓
+Client   Client inbox
+folder   gets email with
+         Drive link
+```
+
+### Why this approach:
+- **No third-party SaaS** — client data never touches SendGrid, Mailgun, etc.
+- **Free** — Google Drive free tier is 15GB, Gmail SMTP is free
+- **Large files work** — architectural plans, engineering drawings, PDFs, DWGs — no size limits that matter
+- **Client already uses Drive/Gmail** — zero new tools to learn
+- **Selling point** — "Your leads and files are stored in your own Google account, not a third-party server"
+
+---
+
+## 📂 Google Drive File Upload Pattern
+
+One dedicated Google account is used across all client sites (e.g. `submissions@youragency.com`).
+Each client gets their own folder inside that Drive. Files from their forms land in their folder.
+
+### Setup (once per client):
+1. Create a folder in Google Drive for the client (e.g. `TrussPeople-Submissions`)
+2. Note the folder ID from the URL: `drive.google.com/drive/folders/FOLDER_ID_HERE`
+3. Share the folder with the client's Google account so they can access it
+4. Set `GOOGLE_DRIVE_FOLDER_ID` env var to that folder ID
+
+### API Route pattern (`app/api/contact/route.ts`):
+```typescript
+import { google } from 'googleapis';
+import nodemailer from 'nodemailer';
+
+export async function POST(req: Request) {
+  const formData = await req.formData();
+
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const message = formData.get('message') as string;
+  const file = formData.get('file') as File | null;
+
+  let driveLink = null;
+
+  // 1. Upload file to Google Drive if attached
+  if (file) {
+    const auth = new google.auth.JWT({
+      email: process.env.GOOGLE_CLIENT_EMAIL,
+      key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      scopes: ['https://www.googleapis.com/auth/drive'],
+    });
+
+    const drive = google.drive({ version: 'v3', auth });
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const { Readable } = await import('stream');
+
+    const uploaded = await drive.files.create({
+      requestBody: {
+        name: `${name} - ${file.name}`,
+        parents: [process.env.GOOGLE_DRIVE_FOLDER_ID!],
+      },
+      media: {
+        mimeType: file.type,
+        body: Readable.from(buffer),
+      },
+      fields: 'id, webViewLink',
+    });
+
+    driveLink = uploaded.data.webViewLink;
+  }
+
+  // 2. Send email notification via Nodemailer (Gmail SMTP)
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  });
+
+  await transporter.sendMail({
+    from: process.env.GMAIL_USER,
+    to: process.env.NOTIFY_EMAIL,
+    subject: `New Quote Request from ${name}`,
+    html: `
+      <h2>New Quote Request</h2>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Message:</strong> ${message}</p>
+      ${driveLink ? `<p><strong>Attached Plans:</strong> <a href="${driveLink}">View in Google Drive</a></p>` : ''}
+    `,
+  });
+
+  return Response.json({ success: true });
+}
+```
+
+### Required packages:
+```bash
+npm install googleapis nodemailer
+npm install --save-dev @types/nodemailer
+```
+
+### Gmail App Password setup:
+1. Google Account → Security → 2-Step Verification (must be on)
+2. Security → App Passwords → create one for "Mail"
+3. Use that 16-character password as `GMAIL_APP_PASSWORD`
+4. Never use the actual account password
 
 ---
 
@@ -99,7 +236,7 @@ import { client } from '@/lib/sanity/client';
 const data = await client.fetch(
   `*[_type == "product"] | order(order asc) { _id, title, description }`,
   {},
-  { next: { revalidate: 60 } } // ISR: revalidate every 60 seconds
+  { next: { revalidate: 60 } }
 );
 ```
 
@@ -122,7 +259,7 @@ await writeClient
   .set({ title: 'Updated Title' })
   .commit();
 
-// Patch a specific field
+// Patch array field
 await writeClient
   .patch('document-id-here')
   .setIfMissing({ features: [] })
@@ -133,19 +270,17 @@ await writeClient
 await writeClient.delete('document-id-here');
 ```
 
-### Uploading an image
+### Uploading an image to Sanity
 ```typescript
 import { writeClient } from '@/lib/sanity/client';
 import fs from 'fs';
 
-// From file path
 const imageAsset = await writeClient.assets.upload(
   'image',
   fs.createReadStream('./path/to/image.jpg'),
   { filename: 'hero-image.jpg' }
 );
 
-// Then reference it in a document
 await writeClient
   .patch('document-id')
   .set({
@@ -161,12 +296,11 @@ await writeClient
 
 ## 🖼️ Image Handling
 
-All images go through Sanity's CDN. Never reference local `/public/assets/` images for CMS-managed content.
+All CMS images go through Sanity's CDN. Never reference local `/public/assets/` for CMS-managed content.
 
 ```typescript
 import { urlFor } from '@/lib/sanity/image';
 
-// In a component
 <Image
   src={urlFor(sanityImageObject).width(1200).height(630).url()}
   alt="description"
@@ -178,15 +312,14 @@ import { urlFor } from '@/lib/sanity/image';
 ```typescript
 function getImageSrc(image: SanityImage | string | undefined, fallback: string): string {
   if (!image) return fallback;
-  if (typeof image === 'string') return image; // legacy static path
-  if (image?.asset?._ref) return urlFor(image).width(1200).url(); // Sanity image
+  if (typeof image === 'string') return image;
+  if (image?.asset?._ref) return urlFor(image).width(1200).url();
   return fallback;
 }
 ```
 
-Next.js config must include:
+`next.config.ts` must include:
 ```typescript
-// next.config.ts
 images: {
   remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
 }
@@ -196,98 +329,68 @@ images: {
 
 ## 📝 GROQ Query Patterns
 
-GROQ is Sanity's query language. Always add fallbacks.
-
 ```groq
 # Fetch all of a type, ordered
 *[_type == "testimonial"] | order(order asc) { _id, stars, text, author, company }
 
-# Fetch singleton document
+# Fetch singleton
 *[_type == "siteSettings"][0] { phone, email, hero, navLinks }
 
 # Fetch with filter
 *[_type == "galleryItem" && (page == "home" || page == "both")] | order(order asc)
 
-# Fetch with image URL expansion
+# Fetch with image URL
 *[_type == "product"] { _id, title, image { asset -> { url } } }
-
-# Fetch specific document by ID
-*[_id == "specific-document-id"][0]
 ```
 
 ---
 
 ## 🗂️ Schema Patterns
 
-### Singleton (one document, like Site Settings)
+### Singleton
 ```typescript
 export default defineType({
   name: 'siteSettings',
-  title: 'Site Settings',
   type: 'document',
   __experimental_actions: ['update', 'publish'], // no create/delete
   fields: [ ... ]
 });
 ```
 
-### Collection (many documents, like Products)
+### Collection
 ```typescript
 export default defineType({
   name: 'product',
-  title: 'Product',
   type: 'document',
   fields: [
     defineField({ name: 'title', type: 'string', validation: R => R.required() }),
     defineField({ name: 'order', type: 'number', description: 'Lower = first' }),
-    // Always add an order field for sorting
   ],
   orderings: [{ title: 'Display Order', name: 'orderAsc', by: [{ field: 'order', direction: 'asc' }] }],
   preview: { select: { title: 'title' } },
 });
 ```
 
-### Rich text field (portable text)
-```typescript
-defineField({
-  name: 'body',
-  title: 'Content',
-  type: 'array',
-  of: [{ type: 'block' }], // basic rich text
-  // or with images:
-  of: [
-    { type: 'block' },
-    { type: 'image', options: { hotspot: true } },
-  ],
-})
-```
-
 ---
 
 ## 📐 Component Pattern
 
-Every section component follows this pattern:
-1. Accept data as optional props
-2. Fall back to constants if no Sanity data
-3. Never hardcode content inside the component
+Every section component:
+1. Accepts data as optional props
+2. Falls back to constants if no Sanity data
+3. Never has hardcoded content inside
 
 ```typescript
-// ✅ Correct pattern
 interface HeroProps {
   data?: SanityHeroData;
 }
 
 export default function Hero({ data }: HeroProps) {
   const hero = {
-    title: data?.title ?? HERO.title,      // Sanity first, constant fallback
+    title: data?.title ?? HERO.title,
     description: data?.description ?? HERO.description,
   };
   return <section>...</section>;
-}
-
-// ✅ Page fetches and passes down
-export default async function Page() {
-  const data = await getHomePageData();
-  return <Hero data={data.hero} />;
 }
 ```
 
@@ -295,23 +398,22 @@ export default async function Page() {
 
 ## ➕ How to Add a New Page
 
-1. **Create schema** in `sanity/schemaTypes/newPage.ts` and register in `index.ts`
-2. **Add to Studio structure** in `sanity.config.ts`
-3. **Add query** in `lib/sanity/queries.ts`
-4. **Create page file** at `app/new-page/page.tsx`
-5. **Update navigation** in siteSettings schema + nav component
-6. **Update sitemap** in `app/sitemap.ts`
+1. Create schema in `sanity/schemaTypes/newPage.ts`, register in `index.ts`
+2. Add to Studio structure in `sanity.config.ts`
+3. Add query in `lib/sanity/queries.ts`
+4. Create page file at `app/new-page/page.tsx`
+5. Update navigation in siteSettings + nav component
+6. Update sitemap in `app/sitemap.ts`
 
 ---
 
 ## 🌐 Website Archetypes
 
-Different site types need different schemas. Always start from this list and extend.
-
 ### 🏗️ Trade / Construction Business
-Core schemas: `siteSettings`, `service`, `project` (gallery), `testimonial`, `teamMember`
-Key sections: Hero with CTA, Services grid, Project gallery, Trust indicators, Contact form
-Special needs: Service area map, accreditations/logos, quote request form
+Core schemas: `siteSettings`, `service`, `project`, `testimonial`, `teamMember`
+Key sections: Hero with CTA, Services grid, Project gallery, Trust indicators, Contact form with file upload
+Special needs: Service area map, accreditations, quote request form accepting large files (plans, drawings)
+Form pattern: Google Drive upload + Nodemailer notification
 
 ### 🎨 Creative Portfolio (e.g. Yuri)
 Core schemas: `siteSettings`, `project`, `category`, `about`
@@ -321,8 +423,8 @@ Approach: Design-forward, minimal text, let the work speak. Floating elements, p
 
 ### 🏢 Professional Services (Law, Finance, Consulting)
 Core schemas: `siteSettings`, `service`, `teamMember`, `caseStudy`, `faq`
-Key sections: Authority hero, services list, team section, results/stats, CTA
-Special needs: Trust signals, professional tone, clear CTAs, no distractions
+Key sections: Authority hero, services list, team, results/stats, CTA
+Special needs: Trust signals, professional tone, clear CTAs
 
 ### 🛍️ Local Business / Retail
 Core schemas: `siteSettings`, `product`, `category`, `promotion`, `testimonial`
@@ -330,47 +432,47 @@ Key sections: Hero, product grid, promotions, testimonials, location/hours
 Special needs: Opening hours, Google Maps embed, social feed
 
 ### 🌟 Personal Brand
-Core schemas: `siteSettings`, `post` (blog), `project`, `appearance` (speaking/media)
+Core schemas: `siteSettings`, `post`, `project`, `appearance`
 Key sections: Statement hero, recent work, writing, social proof
-Special needs: Newsletter signup, RSS feed, SEO-heavy
+Special needs: Newsletter signup, RSS, SEO-heavy
 
 ---
 
 ## 🚀 Deployment Checklist
 
-Before every deployment:
 - [ ] `npm run build` passes locally
-- [ ] All env vars are set in Vercel
-- [ ] `next.config.ts` includes `cdn.sanity.io` in image domains
+- [ ] All env vars set in Vercel (`SANITY_API_TOKEN` and `GOOGLE_PRIVATE_KEY` marked Sensitive)
+- [ ] `next.config.ts` includes `cdn.sanity.io`
 - [ ] Sanity CORS settings include the production URL
-  - Go to sanity.io/manage → API → CORS Origins → add production URL
-- [ ] `/studio` route is working
-- [ ] Fallbacks tested — site renders even if Sanity returns nothing
-- [ ] Sitemap updated if new pages were added
+- [ ] `/studio` route working
+- [ ] Fallbacks tested — site renders with no Sanity data
+- [ ] Google Drive folder created and shared with client
+- [ ] Gmail App Password created and tested
+- [ ] Sitemap updated if new pages added
 
 ---
 
 ## ⚡ Adding Sanity to a New Project
 
-Quick setup for a new client site:
-
 ```bash
 # 1. Install packages
-npm install next-sanity @sanity/image-url sanity @sanity/vision
+npm install next-sanity @sanity/image-url sanity @sanity/vision googleapis nodemailer
+npm install --save-dev @types/nodemailer
 
-# 2. Create Sanity project
-# Go to sanity.io/manage → New Project
+# 2. Create Sanity project at sanity.io/manage
 
-# 3. Copy these files from thetrusspeople_v2:
-# - sanity.config.ts
-# - sanity/schemaTypes/ (modify schemas for the new site)
-# - lib/sanity/ (client.ts, image.ts, queries.ts)
-# - app/studio/[[...tool]]/page.tsx
+# 3. Copy from thetrusspeople_v2:
+#    - sanity.config.ts
+#    - sanity/schemaTypes/ (modify for new site)
+#    - lib/sanity/
+#    - app/studio/[[...tool]]/page.tsx
+#    - app/api/contact/route.ts
 
 # 4. Update sanity.config.ts with new project name/ID
-# 5. Add env vars to Vercel
-# 6. Add cdn.sanity.io to next.config.ts images
-# 7. Add CORS origin in Sanity manage
+# 5. Add all env vars to Vercel
+# 6. Create Google Drive folder for client, share with them
+# 7. Set up Gmail App Password
+# 8. Add CORS origin in Sanity manage
 ```
 
 ---
@@ -379,50 +481,48 @@ npm install next-sanity @sanity/image-url sanity @sanity/vision
 
 When given a task, always:
 
-1. **Read this file first** to understand the current stack
-2. **Check existing schemas** before creating new ones — reuse where possible
+1. **Read this file first**
+2. **Check existing schemas** before creating new ones
 3. **Never edit `main` branch directly** — work on feature branches
-4. **Always add fallbacks** to constants when writing queries
-5. **Test image paths** — Sanity images use `urlFor()`, static images use `/assets/`
-6. **Preserve existing content** — patch, don't overwrite entire documents
-7. **Confirm before deleting** — always ask before any destructive operation
+4. **Always add fallbacks** to constants in queries
+5. **Test image paths** — Sanity images use `urlFor()`, static use `/assets/`
+6. **Preserve existing content** — patch, don't overwrite
+7. **Confirm before deleting** — always ask before destructive operations
 8. **Branch naming**: `feature/description`, `fix/description`, `content/description`
 
-### Common agent tasks:
+### Common tasks:
 
 **Add a new page:**
-> "Add a Services page with hero, services grid, and CTA section"
 → Create schema → add query → create page file → update nav → deploy
 
 **Update content:**
-> "Update the hero title to X"
-→ Use writeClient.patch() on siteSettings document
+→ `writeClient.patch()` on the relevant document
 
 **Upload and set image:**
-> "Set the about section image to this file"
-→ writeClient.assets.upload() → patch the document with the asset reference
+→ `writeClient.assets.upload()` → patch document with asset reference
 
 **Add a product/service:**
-> "Add a new product called X with description Y"
-→ writeClient.create() with _type: 'product'
+→ `writeClient.create()` with correct `_type`
 
 **Restructure navigation:**
-> "Add Products page to the nav, remove Testimonials"
-→ patch siteSettings.navLinks array
+→ patch `siteSettings.navLinks` array
 
 ---
 
 ## 🔮 Future Capabilities (Jarvis Roadmap)
 
 - [ ] Designer agent: receives client assets, proposes layouts, creates content
-- [ ] Image agent: processes raw photos, crops, color-graded, uploads to Sanity
+- [ ] Image agent: processes raw photos, crops, colour grades, uploads to Sanity
 - [ ] Video agent: cuts hero videos from client footage, exports web-optimised
 - [ ] SEO agent: monitors rankings, updates meta content, adds schema markup
 - [ ] Analytics agent: reads traffic data, suggests content improvements
-- [ ] Client portal: lightweight dashboard where clients request changes
+- [ ] Client portal: lightweight dashboard where clients can request changes
 - [ ] Multi-site orchestration: one agent managing all client sites from single interface
+- [ ] Advanced form storage: write submissions to Sanity as documents (full lead database)
+- [ ] Cloudflare R2 upgrade: replace Google Drive with R2 for high-volume file storage
 
 ---
 
 *Last updated: February 2026*
 *Stack: Next.js 16 + Sanity v3 + Vercel + Tailwind v4*
+*Form pattern: Google Drive (files) + Nodemailer/Gmail (notifications) — no third-party email services*
