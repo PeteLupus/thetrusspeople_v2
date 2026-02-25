@@ -103,7 +103,7 @@ export default function OurWorkPage() {
                         <p className="mx-auto mb-8 max-w-xl text-base text-gray-300">
                             Send us your plans and get a comprehensive quote within 24 hours.
                         </p>
-                        <Button variant="primary" href="/#contact">
+                        <Button variant="primary" href="/quote">
                             Get a Free Quote
                             <ArrowRight className="h-4 w-4" />
                         </Button>

@@ -18,6 +18,7 @@ export interface AccordionItem {
 }
 
 export interface Product {
+  _id?: string;
   title: string;
   description: string;
   features: string[];
@@ -55,4 +56,48 @@ export interface ContactInfo {
 export interface FooterColumn {
   title: string;
   links: { label: string; href: string }[];
+}
+
+// ─── Quote Form ────────────────────────────────────────────────────────────────
+
+export interface QuoteFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  company?: string;
+  preferredContact: 'email' | 'phone' | 'either';
+  projectType: string;
+  projectTypeOther?: string;
+  projectStage: string;
+  suburb: string;
+  state: string;
+  storeys: string;
+  estimatedTimeline: string;
+  additionalDetails?: string;
+  files?: CompletedFile[];
+}
+
+export interface UploadFile {
+  localId: string;
+  file: File;
+  name: string;
+  size: number;
+  type: string;
+  progress: number;
+  status: 'pending' | 'uploading' | 'complete' | 'error';
+  objectName?: string;
+  error?: string;
+}
+
+export interface CompletedFile {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+}
+
+export interface SelectOption {
+  value: string;
+  label: string;
 }

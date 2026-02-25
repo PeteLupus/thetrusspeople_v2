@@ -123,6 +123,21 @@ export async function getProductPage() {
   }
 }
 
+// ─── Quote Page ──────────────────────────────────────────────────────────────
+
+export async function getQuotePage() {
+  try {
+    const data = await client.fetch(
+      `*[_type == "quotePage"][0]{ hero, successTitle, successDescription }`,
+      {},
+      { next: { revalidate: 60 } }
+    );
+    return data || null;
+  } catch {
+    return null;
+  }
+}
+
 // ─── Convenience: fetch everything for the home page in one go ────────────────
 
 export async function getHomePageData() {

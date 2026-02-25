@@ -17,7 +17,8 @@ export async function POST(request: NextRequest) {
 
         // Check if SendGrid is configured
         const apiKey = process.env.SENDGRID_API_KEY;
-        const contactEmail = process.env.CONTACT_EMAIL;
+        const contactEmails = process.env.CONTACT_EMAIL;
+        const fromEmail = process.env.SENDGRID_FROM_EMAIL || contactEmails?.split(',')[0]?.trim() || 'info@thetrusspeople.com.au';
 
         if (!apiKey || apiKey === 'your_sendgrid_api_key_here') {
             // In development, log the form data and return success
@@ -40,11 +41,16 @@ export async function POST(request: NextRequest) {
         const sgMail = (await import('@sendgrid/mail')).default;
         sgMail.setApiKey(apiKey);
 
+        // Support comma-separated CONTACT_EMAIL for multiple recipients
+        const recipients = contactEmails
+            ? contactEmails.split(',').map((e) => e.trim()).filter(Boolean)
+            : ['info@thetrusspeople.com.au'];
+
         await sgMail.send({
-            to: contactEmail || 'info@thetrusspeople.com.au',
-            from: contactEmail || 'info@thetrusspeople.com.au',
+            to: recipients,
+            from: fromEmail,
             replyTo: email,
-            subject: `New Quote Request from ${name}${businessName ? ` (${businessName})` : ''
+            subject: `New Contact Request from ${name}${businessName ? ` (${businessName})` : ''
                 }`,
             html: `
         <h2>New Quote Request</h2>

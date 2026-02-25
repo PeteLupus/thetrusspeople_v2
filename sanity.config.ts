@@ -34,6 +34,14 @@ export default defineConfig({
             S.documentTypeListItem('galleryItem').title('Gallery Items'),
             S.divider(),
             S.documentTypeListItem('productPage').title('Products Page'),
+            S.listItem()
+              .title('Quote Page')
+              .id('quotePage')
+              .child(
+                S.document()
+                  .schemaType('quotePage')
+                  .documentId('quotePage')
+              ),
           ]),
     }),
     visionTool(),

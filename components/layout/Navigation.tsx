@@ -111,13 +111,12 @@ export default function Navigation() {
                         <Phone className="h-4 w-4" />
                         <span className="hidden lg:inline">{PHONE}</span>
                     </a>
-                    <a
-                        href="#contact"
-                        onClick={(e) => handleNavClick(e, '#contact')}
+                    <Link
+                        href="/quote"
                         className="rounded-[6px] bg-terracotta px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-charcoal hover:shadow-md"
                     >
                         Get Quote
-                    </a>
+                    </Link>
                 </div>
 
                 {/* Mobile hamburger */}
@@ -175,13 +174,13 @@ export default function Navigation() {
                                 <Phone className="h-4 w-4 text-timber" />
                                 {PHONE}
                             </a>
-                            <a
-                                href="#contact"
-                                onClick={(e) => handleNavClick(e, '#contact')}
+                            <Link
+                                href="/quote"
+                                onClick={() => setIsOpen(false)}
                                 className="block rounded-[6px] bg-terracotta px-5 py-3 text-center text-sm font-semibold text-white transition-all hover:bg-charcoal"
                             >
                                 Get a Free Quote
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

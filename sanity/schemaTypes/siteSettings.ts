@@ -4,7 +4,7 @@ export default defineType({
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
-  __experimental_actions: ['update', 'publish'],
+  // Singleton — creation/deletion handled by Studio structure
   fields: [
     // ─── Contact Info ───────────────────────────────────────────────
     defineField({

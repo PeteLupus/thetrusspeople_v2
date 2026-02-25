@@ -63,7 +63,7 @@ export default async function ProductsPage() {
                   <div className="mb-6 rounded-xl bg-warm-white p-5">
                     <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-charcoal">Specifications</p>
                     <dl className="grid grid-cols-2 gap-2">
-                      {(product as { specs: { label: string; value: string }[] }).specs.map((spec, k: number) => (
+                      {(product as unknown as { specs: { label: string; value: string }[] }).specs.map((spec, k: number) => (
                         <div key={k}>
                           <dt className="text-xs text-gray-400">{spec.label}</dt>
                           <dd className="text-sm font-medium text-charcoal">{spec.value}</dd>
@@ -74,7 +74,7 @@ export default async function ProductsPage() {
                 ) : null}
 
                 <Link
-                  href="/#contact"
+                  href="/quote"
                   className="inline-flex items-center gap-2 rounded-lg bg-timber px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-terracotta"
                 >
                   Request a Quote →
@@ -117,7 +117,7 @@ export default async function ProductsPage() {
               'Tell us about your project and we\'ll get back to you with a detailed quote.'}
           </p>
           <Link
-            href={pageData?.ctaSection?.buttonHref ?? '/#contact'}
+            href={pageData?.ctaSection?.buttonHref ?? '/quote'}
             className="inline-flex items-center gap-2 rounded-lg bg-terracotta px-8 py-3 font-semibold text-white transition-all duration-300 hover:bg-terracotta/80"
           >
             {pageData?.ctaSection?.buttonText ?? 'Get a Free Quote'}

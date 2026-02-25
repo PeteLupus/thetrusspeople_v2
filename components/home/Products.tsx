@@ -96,7 +96,7 @@ export default function Products({ section, products }: ProductsProps) {
                     ))}
                   </ul>
                   <a
-                    href="#contact"
+                    href="/quote"
                     className="group/link mt-auto inline-flex items-center gap-2 text-sm font-semibold text-timber transition-all duration-300 hover:gap-3"
                   >
                     Request a Quote

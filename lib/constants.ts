@@ -322,7 +322,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
             { label: 'About Us', href: '#about' },
             { label: 'Our Work', href: '/our-work' },
             { label: 'Testimonials', href: '#testimonials' },
-            { label: 'Get a Quote', href: '#contact' },
+            { label: 'Get a Quote', href: '/quote' },
         ],
     },
 ];
@@ -332,3 +332,50 @@ export const CERTIFICATIONS = [
     { name: 'FTMA Australia', logo: '/assets/ftma-logo.png' },
     { name: 'Master Builders Victoria', logo: '/assets/mbav-logo.png' },
 ];
+
+// ─── Quote Page ────────────────────────────────────────────────────────────────
+
+export const QUOTE_PAGE = {
+    label: 'Request a Quote',
+    title: 'Get a Free Quote for Your Project',
+    description:
+        'Upload your plans and project details. Our team will review everything and get back to you with a comprehensive quote within 24 hours.',
+};
+
+export const QUOTE_STEP_LABELS = ['Your Details', 'Project Info', 'Upload Plans', 'Review'];
+
+export const QUOTE_PROJECT_TYPES: { value: string; label: string }[] = [
+    { value: 'Timber Roof Trusses', label: 'Timber Roof Trusses' },
+    { value: 'Wall Frames', label: 'Wall Frames' },
+    { value: 'Floor Joists', label: 'Floor Joists' },
+    { value: 'Full Framing Package', label: 'Full Framing Package' },
+    { value: 'I-Joists & Multistructs', label: 'I-Joists & Multistructs' },
+    { value: 'Other', label: 'Other' },
+];
+
+export const QUOTE_PROJECT_STAGES: { value: string; label: string }[] = [
+    { value: 'Planning / Design Phase', label: 'Planning / Design Phase' },
+    { value: 'Permits Approved', label: 'Permits Approved' },
+    { value: 'Ready to Build', label: 'Ready to Build' },
+    { value: 'Under Construction', label: 'Under Construction' },
+    { value: 'Other', label: 'Other' },
+];
+
+export const QUOTE_TIMELINES: { value: string; label: string }[] = [
+    { value: 'ASAP', label: 'ASAP' },
+    { value: '1-2 Months', label: '1-2 Months' },
+    { value: '3-6 Months', label: '3-6 Months' },
+    { value: '6+ Months', label: '6+ Months' },
+    { value: 'Not Sure Yet', label: 'Not Sure Yet' },
+];
+
+export const QUOTE_STOREYS: { value: string; label: string }[] = [
+    { value: 'Single Storey', label: 'Single Storey' },
+    { value: 'Double Storey', label: 'Double Storey' },
+    { value: 'Multi-Storey', label: 'Multi-Storey' },
+    { value: 'Commercial', label: 'Commercial' },
+];
+
+export const QUOTE_ACCEPTED_TYPES = '.pdf,.dwg,.dxf,.jpg,.jpeg,.png,.zip,.rar';
+export const QUOTE_MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+export const QUOTE_MAX_FILES = 10;

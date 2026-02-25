@@ -115,8 +115,7 @@ export default function Hero({ data, trustItems }: HeroProps) {
             <div className="flex flex-wrap gap-4">
               <Button
                 variant="primary"
-                href="#contact"
-                onClick={(e) => handleScroll(e, '#contact')}
+                href="/quote"
               >
                 {hero.ctaPrimary}
               </Button>

@@ -5,7 +5,7 @@ export default defineType({
   name: 'productPage',
   title: 'Products Page',
   type: 'document',
-  __experimental_actions: ['update', 'publish'],
+  // Singleton — creation/deletion handled by Studio structure
   fields: [
     defineField({
       name: 'hero',
