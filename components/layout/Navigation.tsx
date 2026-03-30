@@ -121,7 +121,7 @@ export default function Navigation() {
 
                 {/* Mobile hamburger */}
                 <button
-                    className="relative z-10 flex h-10 w-10 items-center justify-center md:hidden"
+                    className="relative z-[60] flex h-10 w-10 items-center justify-center md:hidden"
                     onClick={() => setIsOpen(!isOpen)}
                     aria-label={isOpen ? 'Close menu' : 'Open menu'}
                     aria-expanded={isOpen}
@@ -140,9 +140,10 @@ export default function Navigation() {
                 {/* Mobile Menu Panel */}
                 <div
                     className={cn(
-                        'fixed right-0 top-0 z-50 h-full w-[70%] max-w-[320px] bg-white shadow-xl transition-transform duration-300 md:hidden',
+                        'fixed inset-y-0 right-0 z-50 w-[75%] max-w-[320px] shadow-xl transition-transform duration-300 md:hidden',
                         isOpen ? 'translate-x-0' : 'translate-x-full'
                     )}
+                    style={{ backgroundColor: '#ffffff' }}
                 >
                     <div className="flex h-full flex-col px-6 pt-20">
                         {NAV_LINKS.map((link) =>
