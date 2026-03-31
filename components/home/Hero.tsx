@@ -67,7 +67,7 @@ export default function Hero({ data, trustItems }: HeroProps) {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/90 via-charcoal/70 to-charcoal/40" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(105deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.15) 100%)' }} />
       </div>
 
       {/* Mobile background */}
@@ -84,6 +84,16 @@ export default function Hero({ data, trustItems }: HeroProps) {
         <div className="absolute inset-0 bg-charcoal/70" />
       </div>
 
+      {/* Grain overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none z-[5] opacity-[0.06]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: '128px 128px',
+        }}
+      />
+
       {/* Content */}
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-[1400px] items-center px-6 py-16">
         <div className="grid w-full gap-12 lg:grid-cols-2 lg:gap-16">
@@ -94,14 +104,16 @@ export default function Hero({ data, trustItems }: HeroProps) {
             animate="visible"
             className="flex flex-col justify-center"
           >
-            <span className="mb-4 inline-block w-fit rounded-full bg-terracotta/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-terracotta">
+            <span className="mb-4 inline-block w-fit rounded-full bg-terracotta/20 px-4 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
               {hero.label}
             </span>
             <h1
-              className="mb-6 font-heading text-4xl font-bold leading-tight text-white md:text-5xl lg:text-[3.2rem]"
+              className="mb-6 font-display text-4xl font-bold uppercase leading-none tracking-tight text-white md:text-6xl"
               style={{ color: '#ffffff', textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
             >
-              {hero.title}
+              <span className="block">Melbourne&apos;s Trusted</span>
+              <span className="block">Timber Roof Truss &amp;</span>
+              <span className="block">Wall Frame Manufacturer</span>
             </h1>
             <p
               className="mb-8 max-w-xl text-base leading-relaxed text-white md:text-lg"

@@ -39,7 +39,7 @@ function AnimatedNumber({ target, suffix }: { target: number; suffix: string }) 
   }, [target]);
 
   return (
-    <span ref={ref} className="font-heading text-4xl font-bold text-terracotta md:text-5xl">
+    <span ref={ref} className="font-display text-6xl font-bold leading-none text-terracotta md:text-8xl">
       {count}{suffix}
     </span>
   );
@@ -55,7 +55,7 @@ export default function Stats({ stats }: StatsProps) {
           {items.map((stat, i) => (
             <div key={i} className="flex flex-col items-center text-center">
               <AnimatedNumber target={stat.number} suffix={stat.suffix} />
-              <span className="mt-2 text-sm text-gray-400">{stat.label}</span>
+              <span className="mt-2 font-body text-sm uppercase tracking-widest text-gray-400">{stat.label}</span>
             </div>
           ))}
         </div>

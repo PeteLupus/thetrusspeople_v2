@@ -65,7 +65,7 @@ export default function Gallery({ section, items }: GalleryProps) {
         <div className="mt-10 text-center">
           <Link
             href="/our-work"
-            className="inline-flex items-center gap-2 rounded-lg border border-timber px-6 py-3 text-sm font-semibold text-timber transition-all duration-300 hover:bg-timber hover:text-white"
+            className="inline-flex items-center gap-2 rounded-lg border border-terracotta px-6 py-3 text-sm font-semibold text-terracotta transition-all duration-300 hover:bg-terracotta hover:text-white"
           >
             View All Projects
           </Link>

@@ -15,11 +15,11 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
     return (
         <div className={centered ? 'text-center' : ''}>
-            <span className="mb-3 inline-block rounded-full bg-terracotta/10 px-4 py-1.5 font-body text-xs font-semibold uppercase tracking-wider text-terracotta">
+            <span className="mb-3 inline-block rounded-full bg-terracotta/10 px-4 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
                 {label}
             </span>
             <h2
-                className={`font-heading text-3xl font-bold leading-tight md:text-4xl ${light ? 'text-white' : 'text-charcoal'
+                className={`font-display text-3xl font-bold uppercase leading-tight tracking-tight md:text-4xl ${light ? 'text-white' : 'text-charcoal'
                     }`}
             >
                 {title}

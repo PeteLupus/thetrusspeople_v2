@@ -74,7 +74,7 @@ export default function Navigation() {
                             alt="The Truss People"
                             width={180}
                             height={65}
-                            className="h-[55px] w-auto md:h-[65px]"
+                            className="h-[55px] w-auto border-0 outline-none md:h-[65px]"
                             priority
                         />
                     </Link>

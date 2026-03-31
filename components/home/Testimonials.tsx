@@ -26,10 +26,10 @@ export default function Testimonials({ section, testimonials }: TestimonialsProp
   const items = testimonials ?? TESTIMONIALS;
 
   return (
-    <section id="testimonials" className="bg-warm-white py-20 md:py-28">
+    <section id="testimonials" className="bg-gray-900 py-20 md:py-28">
       <div className="mx-auto max-w-[1400px] px-6">
         <ScrollReveal>
-          <SectionHeader label={s.label} title={s.title} description={s.description} />
+          <SectionHeader label={s.label} title={s.title} description={s.description} light />
         </ScrollReveal>
 
         <ScrollReveal stagger className="mt-14">
@@ -37,7 +37,7 @@ export default function Testimonials({ section, testimonials }: TestimonialsProp
             {items.map((testimonial, i) => (
               <ScrollRevealItem key={(testimonial as { _id?: string })._id ?? i}>
                 <div
-                  className={`group flex h-full flex-col rounded-xl border-l-4 border-timber bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-2.5 hover:border-terracotta hover:shadow-lg ${
+                  className={`group flex h-full flex-col rounded-xl border border-gray-700 bg-gray-800 p-8 transition-all duration-300 hover:-translate-y-2.5 hover:border-terracotta hover:shadow-lg ${
                     i % 2 === 1 ? 'md:mt-8' : ''
                   }`}
                 >
@@ -46,16 +46,16 @@ export default function Testimonials({ section, testimonials }: TestimonialsProp
                       <Star key={j} className="h-4 w-4 fill-terracotta text-terracotta" />
                     ))}
                   </div>
-                  <p className="mb-6 flex-1 text-sm italic leading-relaxed text-text-light">
+                  <p className="mb-6 flex-1 text-base italic leading-relaxed text-gray-200">
                     &ldquo;{testimonial.text}&rdquo;
                   </p>
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-timber text-sm font-semibold text-white">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-terracotta text-sm font-semibold text-white">
                       {testimonial.initials}
                     </div>
                     <div>
-                      <p className="font-heading text-sm font-semibold text-charcoal">{testimonial.author}</p>
-                      <p className="text-xs text-text-light">{testimonial.company}</p>
+                      <p className="font-display text-sm font-semibold text-white">{testimonial.author}</p>
+                      <p className="text-xs text-gray-400">{testimonial.company}</p>
                     </div>
                   </div>
                 </div>

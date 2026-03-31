@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Poppins, DM_Sans } from "next/font/google";
+import { Barlow_Condensed, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const barlowCondensed = Barlow_Condensed({
+  variable: "--font-barlow-condensed",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["600", "700", "800"],
   display: "swap",
 });
 
@@ -76,7 +76,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${dmSans.variable} antialiased`}>
+      <body className={`${barlowCondensed.variable} ${dmSans.variable} antialiased`}>
         <GoogleAnalytics />
         <Navigation />
         <main>{children}</main>
