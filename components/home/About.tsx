@@ -5,14 +5,13 @@ import ScrollReveal from '@/components/animations/ScrollReveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Accordion from '@/components/ui/Accordion';
 import { ABOUT, ACCORDION_ITEMS } from '@/lib/constants';
-import { urlFor } from '@/lib/sanity/image';
 import type { AccordionItem } from '@/lib/types';
 
 interface AboutData {
   label?: string;
   title?: string;
   description?: string;
-  image?: { asset?: { _ref?: string } } | string;
+  image?: string;
 }
 
 interface AboutProps {
@@ -23,7 +22,6 @@ interface AboutProps {
 function getImageSrc(image: AboutData['image']): string {
   if (!image) return ABOUT.image;
   if (typeof image === 'string') return image;
-  if (image?.asset?._ref) return urlFor(image).width(900).url();
   return ABOUT.image;
 }
 

@@ -5,7 +5,6 @@ import Link from 'next/link';
 import ScrollReveal, { ScrollRevealItem } from '@/components/animations/ScrollReveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { GALLERY_SECTION, GALLERY_ITEMS } from '@/lib/constants';
-import { urlFor } from '@/lib/sanity/image';
 import type { GalleryItem } from '@/lib/types';
 
 interface GallerySectionData {
@@ -22,9 +21,6 @@ interface GalleryProps {
 function getImageSrc(image: GalleryItem['image']): string {
   if (!image) return '';
   if (typeof image === 'string') return image;
-  if ((image as { asset?: { _ref?: string } })?.asset?._ref) {
-    return urlFor(image as Parameters<typeof urlFor>[0]).width(800).url();
-  }
   return '';
 }
 

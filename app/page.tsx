@@ -6,25 +6,25 @@ import Gallery from '@/components/home/Gallery';
 import Testimonials from '@/components/home/Testimonials';
 import Contact from '@/components/home/Contact';
 import ServiceAreas from '@/components/home/ServiceAreas';
-import { getHomePageData } from '@/lib/sanity/queries';
+import {
+  HERO, TRUST_ITEMS, ABOUT, ACCORDION_ITEMS,
+  PRODUCTS_SECTION, PRODUCTS, STATS,
+  GALLERY_SECTION, GALLERY_ITEMS,
+  TESTIMONIALS_SECTION, TESTIMONIALS,
+  CONTACT_SECTION, PHONE, EMAIL, ADDRESS,
+} from '@/lib/constants';
 
-export default async function Home() {
-  const data = await getHomePageData();
-
+export default function Home() {
   return (
     <>
-      <Hero data={data.hero} trustItems={data.trustItems} />
-      <About data={data.about} accordionItems={data.accordionItems} />
-      <Products section={data.productsSection} products={data.products} />
-      <Stats stats={data.stats} />
-      <Gallery section={data.gallerySection} items={data.galleryItems} />
-      <Testimonials section={data.testimonialsSection} testimonials={data.testimonials} />
-      <Contact section={data.contactSection} contactInfo={{
-        phone: data.phone,
-        email: data.email,
-        address: data.address,
-      }} />
-      <ServiceAreas areas={data.serviceAreas} />
+      <Hero data={HERO} trustItems={TRUST_ITEMS} />
+      <About data={ABOUT} accordionItems={ACCORDION_ITEMS} />
+      <Products section={PRODUCTS_SECTION} products={PRODUCTS} />
+      <Stats stats={STATS} />
+      <Gallery section={GALLERY_SECTION} items={GALLERY_ITEMS} />
+      <Testimonials section={TESTIMONIALS_SECTION} testimonials={TESTIMONIALS} />
+      <Contact section={CONTACT_SECTION} contactInfo={{ phone: PHONE, email: EMAIL, address: ADDRESS }} />
+      <ServiceAreas areas={[]} />
     </>
   );
 }

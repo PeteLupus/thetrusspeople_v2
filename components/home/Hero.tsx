@@ -7,7 +7,6 @@ import Button from '@/components/ui/Button';
 import { HERO, TRUST_ITEMS } from '@/lib/constants';
 import { slideInLeft, slideInRight, fadeInUp } from '@/lib/utils';
 import { Shield, Check } from 'lucide-react';
-import { urlFor } from '@/lib/sanity/image';
 import type { TrustItem } from '@/lib/types';
 
 interface HeroData {
@@ -16,7 +15,7 @@ interface HeroData {
   description?: string;
   ctaPrimary?: string;
   ctaSecondary?: string;
-  backgroundImage?: { asset?: { _ref?: string } } | string;
+  backgroundImage?: string;
 }
 
 interface HeroProps {
@@ -27,8 +26,6 @@ interface HeroProps {
 function getImageSrc(image: HeroData['backgroundImage']): string {
   if (!image) return HERO.backgroundImage;
   if (typeof image === 'string') return image;
-  // Sanity image object
-  if (image?.asset?._ref) return urlFor(image).width(1600).url();
   return HERO.backgroundImage;
 }
 
