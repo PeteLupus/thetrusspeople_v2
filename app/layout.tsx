@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     template: "%s | The Truss People",
   },
   description:
-    "Timber roof trusses, wall frames & floor joists for Melbourne & Victoria builders. 100% Australian-made. Family-owned since 2006. Coolaroo VIC.",
+    "Timber roof trusses, wall frames, floor joists & Steelwood systems for Melbourne & Victoria builders. 100% Australian-made. Family-owned since 2006. Coolaroo VIC.",
   keywords:
-    "timber roof trusses Melbourne, wall frames Melbourne, floor joists Melbourne, roof truss manufacturer Victoria, prefabricated trusses Coolaroo, I-joists Melbourne, truss supplier Greater Melbourne, Australian made trusses, AS NZS compliant trusses, timber frames Victoria, roof truss delivery Melbourne, custom roof trusses, residential trusses Melbourne, commercial trusses Victoria",
+    "timber roof trusses Melbourne, wall frames Melbourne, floor joists Melbourne, Multistruts Melbourne, Steelwood joists Melbourne, roof truss manufacturer Victoria, prefabricated trusses Coolaroo, truss supplier Greater Melbourne, Australian made trusses, AS NZS compliant trusses, timber frames Victoria, roof truss delivery Melbourne, custom roof trusses, residential trusses Melbourne, commercial trusses Victoria",
   robots: "index, follow",
   alternates: {
     canonical: BASE_URL,
@@ -138,11 +138,19 @@ export default function RootLayout({
                 },
                 {
                   "@type": "Offer",
-                  itemOffered: { "@type": "Product", name: "Floor Joists" },
+                  itemOffered: { "@type": "Product", name: "Floor Joists & Multistruts" },
                 },
                 {
                   "@type": "Offer",
-                  itemOffered: { "@type": "Product", name: "I-Joists" },
+                  itemOffered: { "@type": "Product", name: "Steelwood Joists" },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: { "@type": "Service", name: "Site Measuring" },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: { "@type": "Service", name: "Franna Crane Rental" },
                 },
               ],
               openingHours: "Mo-Fr 07:00-16:00",

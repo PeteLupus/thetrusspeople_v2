@@ -129,8 +129,7 @@ export default function Hero({ data, trustItems }: HeroProps) {
               </Button>
               <Button
                 variant="secondary"
-                href="#products"
-                onClick={(e) => handleScroll(e, '#products')}
+                href="/products"
               >
                 {hero.ctaSecondary}
               </Button>

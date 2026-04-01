@@ -45,7 +45,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       'timber-roof-trusses': 'timber-roof-trusses',
       'wall-frames': 'wall-frames',
       'floor-joists': 'floor-joists',
-      'i-joists--multistructs': 'i-joists',
+      'floor-joists---multistruts': 'floor-joists',
+      'floor-joists-multistruts': 'floor-joists',
+      'steelwood': 'steelwood',
+      'site-measuring': 'site-measuring',
+      'franna-crane-rental': 'franna-crane-rental',
     };
     return (slugMap[pSlug] || pSlug) !== slug;
   });
@@ -54,8 +58,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     const map: Record<string, string> = {
       'Timber Roof Trusses': 'timber-roof-trusses',
       'Wall Frames': 'wall-frames',
-      'Floor Joists': 'floor-joists',
-      'I-Joists & Multistructs': 'i-joists',
+      'Floor Joists / Multistruts': 'floor-joists',
+      'Steelwood': 'steelwood',
+      'Site Measuring': 'site-measuring',
+      'Franna Crane Rental': 'franna-crane-rental',
     };
     return map[title] || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   };
@@ -65,14 +71,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {/* Hero */}
       <section className="relative bg-charcoal pt-[80px]">
         <div className="absolute inset-0">
-          <Image
-            src={product.heroImage}
-            alt={product.title}
-            fill
-            className="object-cover opacity-30"
-            priority
-            sizes="100vw"
-          />
+          {product.heroImage && (
+            <Image
+              src={product.heroImage}
+              alt={product.title}
+              fill
+              className="object-cover opacity-30"
+              priority
+              sizes="100vw"
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/80 to-charcoal/60" />
         </div>
         <div className="relative mx-auto max-w-[1400px] px-6 pb-16 pt-12 md:pb-20">
@@ -150,15 +158,21 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 ))}
               </ul>
             </div>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl lg:aspect-auto">
-              <Image
-                src={product.heroImage}
-                alt={product.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
+            {product.heroImage ? (
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl lg:aspect-auto">
+                <Image
+                  src={product.heroImage}
+                  alt={product.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+            ) : (
+              <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl bg-charcoal/5 lg:aspect-auto">
+                <p className="text-sm text-text-light">Image coming soon</p>
+              </div>
+            )}
           </div>
         </div>
       </section>

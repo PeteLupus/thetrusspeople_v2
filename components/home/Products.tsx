@@ -1,55 +1,28 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal, { ScrollRevealItem } from '@/components/animations/ScrollReveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { PRODUCTS_SECTION, PRODUCTS } from '@/lib/constants';
 import type { Product } from '@/lib/types';
 
-function ProductIcon({ type }: { type: Product['icon'] }) {
-  return (
-    <svg
-      viewBox="0 0 48 48"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      className="h-12 w-12 text-terracotta transition-all duration-300 group-hover:scale-110 group-hover:rotate-[5deg]"
-    >
-      {type === 'truss' && (
-        <>
-          <path d="M4 38L24 8L44 38" />
-          <path d="M10 38L24 18L38 38" />
-          <line x1="4" y1="38" x2="44" y2="38" />
-        </>
-      )}
-      {type === 'frame' && (
-        <>
-          <rect x="6" y="8" width="36" height="32" rx="2" />
-          <line x1="16" y1="8" x2="16" y2="40" />
-          <line x1="26" y1="8" x2="26" y2="40" />
-          <line x1="36" y1="8" x2="36" y2="40" />
-        </>
-      )}
-      {type === 'floor' && (
-        <>
-          <rect x="4" y="14" width="40" height="6" rx="1" />
-          <rect x="4" y="24" width="40" height="6" rx="1" />
-          <rect x="4" y="34" width="40" height="6" rx="1" />
-        </>
-      )}
-      {type === 'ijoist' && (
-        <>
-          <line x1="4" y1="16" x2="44" y2="16" strokeWidth={3} />
-          <line x1="4" y1="32" x2="44" y2="32" strokeWidth={3} />
-          <line x1="24" y1="16" x2="24" y2="32" strokeWidth={2} />
-          <circle cx="12" cy="24" r="3" />
-          <circle cx="36" cy="24" r="3" />
-        </>
-      )}
-    </svg>
-  );
-}
+/** Condensed one-liner descriptions for the homepage cards */
+const SHORT_DESCRIPTIONS: Record<string, string> = {
+  'Timber Roof Trusses':
+    'Custom-engineered roof trusses for residential and light commercial builds. AS/NZS certified, 100% Australian timber.',
+  'Wall Frames':
+    'Precision timber wall frames, pre-cut and site-ready. Custom-designed to your plans and delivered on schedule.',
+  'Floor Joists / Multistruts':
+    'Spanjoist and Multistrut systems with superior span capabilities. Load-optimized and site-ready.',
+  'Steelwood':
+    'Timber and galvanised steel trusses spanning up to 10m floors. Reduces concrete slab costs by up to 50%.',
+  'Site Measuring':
+    'Professional on-site measuring to ensure your framing is manufactured to exact specifications.',
+  'Franna Crane Rental':
+    'Franna crane hire with experienced operators to safely lift and position your trusses on site.',
+};
 
 interface ProductsSectionData {
   label?: string;
@@ -61,6 +34,15 @@ interface ProductsProps {
   section?: ProductsSectionData;
   products?: Product[];
 }
+
+const SLUG_MAP: Record<string, string> = {
+  'Timber Roof Trusses': 'timber-roof-trusses',
+  'Wall Frames': 'wall-frames',
+  'Floor Joists / Multistruts': 'floor-joists',
+  'Steelwood': 'steelwood',
+  'Site Measuring': 'site-measuring',
+  'Franna Crane Rental': 'franna-crane-rental',
+};
 
 export default function Products({ section, products }: ProductsProps) {
   const s = {
@@ -78,48 +60,50 @@ export default function Products({ section, products }: ProductsProps) {
         </ScrollReveal>
 
         <ScrollReveal stagger className="mt-14">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((product, i) => (
               <ScrollRevealItem key={product._id ?? i}>
-                <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border border-t-4 border-t-transparent bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-t-terracotta hover:shadow-xl">
-                  {/* Photo background */}
+                <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  {/* Product image — top of card */}
                   {product.image && (
-                    <div className="absolute inset-0 opacity-[0.30] transition-opacity duration-500 group-hover:opacity-[0.45]">
+                    <div className="relative h-48 w-full overflow-hidden">
                       <Image
                         src={product.image}
-                        alt=""
+                        alt={product.title}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        aria-hidden="true"
                       />
+                      {/* Subtle gradient overlay at bottom for smooth transition into content */}
+                      <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white/60 to-transparent" />
                     </div>
                   )}
-                  {/* Light overlay for text readability */}
-                  {product.image && (
-                    <div className="absolute inset-0 bg-white/50 transition-colors duration-500 group-hover:bg-white/40" />
-                  )}
-                  <div className="relative z-10">
-                    <div className="mb-5">
-                      <ProductIcon type={product.icon} />
+
+                  {/* Content */}
+                  <div className="flex flex-1 flex-col p-5">
+                    <h3 className="mb-2 font-display text-lg font-bold uppercase tracking-tight text-charcoal">
+                      {product.title}
+                    </h3>
+                    <p className="mb-5 text-sm leading-relaxed text-text-light">
+                      {SHORT_DESCRIPTIONS[product.title] ?? product.description}
+                    </p>
+
+                    {/* CTAs — pushed to bottom */}
+                    <div className="mt-auto flex items-center gap-3">
+                      <Link
+                        href={`/products/${SLUG_MAP[product.title] || product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                        className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-charcoal transition-all duration-300 hover:text-terracotta"
+                      >
+                        Learn More
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
+                      </Link>
+                      <Link
+                        href="/quote"
+                        className="ml-auto inline-flex items-center rounded-lg bg-terracotta px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-terracotta/85 hover:shadow-md"
+                      >
+                        Get Quote
+                      </Link>
                     </div>
-                    <h3 className="mb-3 font-display text-lg font-bold uppercase tracking-tight text-charcoal">{product.title}</h3>
-                    <p className="mb-5 flex-1 text-sm leading-relaxed text-text-light">{product.description}</p>
-                    <ul className="mb-5 space-y-2">
-                      {product.features.map((feat, j) => (
-                        <li key={j} className="flex items-start gap-2 text-xs text-text-light">
-                          <span className="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">✓</span>
-                          {feat}
-                        </li>
-                      ))}
-                    </ul>
-                    <a
-                      href="/quote"
-                      className="group/link mt-auto inline-flex items-center gap-2 text-sm font-semibold text-terracotta transition-all duration-300 hover:gap-3 hover:text-terracotta/80"
-                    >
-                      Request a Quote
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
-                    </a>
                   </div>
                 </div>
               </ScrollRevealItem>

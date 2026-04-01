@@ -15,7 +15,7 @@ import type {
 export const NAV_LINKS: NavLink[] = [
     { label: 'Home', href: '#home' },
     { label: 'About', href: '#about' },
-    { label: 'Products', href: '#products' },
+    { label: 'Products', href: '/products' },
     { label: 'Our Work', href: '/our-work' },
     { label: 'Testimonials', href: '#testimonials' },
     { label: 'Contact', href: '#contact' },
@@ -54,7 +54,7 @@ export const TRUST_ITEMS: TrustItem[] = [
         icon: 'checkmark',
         title: '100% Australian Made',
         description: 'Australian timber, materials & manufacturing',
-        href: '#products',
+        href: '/products',
     },
     {
         icon: 'AS',
@@ -135,28 +135,51 @@ export const PRODUCTS: Product[] = [
         image: '/assets/product-wall-frames.jpg',
     },
     {
-        title: 'Floor Joists',
+        title: 'Floor Joists / Multistruts',
         description:
-            'Engineered floor joist systems including Spanjoists and Steelwood Joists. Available on a project-dependent basis for residential builds requiring reliable floor framing solutions.',
+            'Engineered floor joist and Multistrut systems for residential builds. Spanning solutions including Spanjoists, Multistruts, and traditional floor joists — load-optimized and site-ready.',
         features: [
-            'Spanjoist & Steelwood options',
+            'Spanjoist & Multistrut options',
+            'Superior span capabilities',
             'Load-optimized engineering',
-            'Consistent structural performance',
         ],
         icon: 'floor',
         image: '/assets/product-floor-joists.jpg',
     },
     {
-        title: 'I-Joists & Multistructs',
+        title: 'Steelwood',
         description:
-            'Advanced I-joist and Multistruct systems for long-span applications. Exceptional strength-to-weight ratios engineered for demanding residential and light commercial floor systems.',
+            'Multinail Steelwood structural trusses combining solid timber and galvanised steel. Floor spans up to 10 metres — ideal for demanding residential and light commercial applications.',
         features: [
-            'Superior span capabilities',
-            'Lightweight & dimensionally stable',
-            'Australian-sourced materials',
+            'Timber & galvanised steel construction',
+            'Floor spans up to 10 metres',
+            'Reduces concrete slab costs by up to 50%',
         ],
-        icon: 'ijoist',
+        icon: 'steelwood',
         image: '/assets/product-ijoists.jpg',
+    },
+    {
+        title: 'Site Measuring',
+        description:
+            'Professional on-site measuring service to ensure your trusses, frames, and floor systems are engineered to exact specifications before manufacturing begins.',
+        features: [
+            'Accurate on-site measurements',
+            'Eliminates costly errors',
+            'Included with framing packages',
+        ],
+        icon: 'measure',
+    },
+    {
+        title: 'Franna Crane Rental',
+        description:
+            'Franna crane hire for truss and frame installation. Our experienced operators safely lift and position your trusses on site, keeping your build on schedule.',
+        features: [
+            'Experienced crane operators',
+            'Safe truss & frame positioning',
+            'Coordinated with your delivery',
+        ],
+        icon: 'crane',
+        image: '/assets/our-work-02.jpg',
     },
 ];
 
@@ -263,100 +286,198 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
     },
     'floor-joists': {
         slug: 'floor-joists',
-        title: 'Floor Joists',
-        tagline: 'Engineered floor joist systems including Spanjoists and Steelwood Joists for reliable residential floor framing.',
+        title: 'Floor Joists / Multistruts',
+        tagline: 'Engineered floor joist and Multistrut systems for reliable residential floor framing across Melbourne and Victoria.',
         heroImage: '/assets/product-floor-joists.jpg',
-        metaTitle: 'Floor Joists Melbourne | The Truss People',
-        metaDescription: 'Engineered floor joist systems including Spanjoists and Steelwood Joists. Load-optimized engineering for residential builds across Melbourne.',
+        metaTitle: 'Floor Joists & Multistruts Melbourne | The Truss People',
+        metaDescription: 'Engineered floor joist and Multistrut systems for residential builds across Melbourne. Spanjoists, Multistruts, and traditional floor joists — load-optimized engineering.',
         benefits: [
             {
                 icon: 'shield',
                 title: 'Load-Optimized Engineering',
-                description: 'Every floor joist system is engineered to handle the specific load requirements of your project, ensuring structural integrity and performance.',
+                description: 'Every floor joist and Multistrut system is engineered to handle the specific load requirements of your project, ensuring structural integrity and performance.',
             },
             {
                 icon: 'timber',
-                title: 'Spanjoist & Steelwood Options',
-                description: 'We offer multiple floor joist systems to match your project requirements, including Spanjoist and Steelwood Joist options.',
+                title: 'Spanjoist & Multistrut Options',
+                description: 'We offer multiple floor framing systems to match your project — including Spanjoists for standard spans and Multistruts for long-span applications requiring superior strength.',
             },
             {
                 icon: 'zap',
-                title: 'Consistent Performance',
-                description: 'Engineered floor joists provide consistent, predictable structural performance — no bowing, twisting, or shrinking over time.',
+                title: 'Superior Span Capabilities',
+                description: 'Multistruts can span greater distances than traditional timber joists, reducing the need for intermediate supports and giving builders more flexibility in open-plan layouts.',
             },
             {
                 icon: 'users',
                 title: 'Expert Guidance',
-                description: 'Our team helps you select the right floor joist system for your project and ensures it integrates with your overall framing package.',
+                description: 'Our team helps you select the right floor joist or Multistrut system for your project and ensures it integrates with your overall framing package.',
             },
         ],
         content: [
-            'The Truss People supplies engineered floor joist systems for residential builds across Melbourne and regional Victoria. Available on a project-dependent basis, our floor joists provide reliable, consistent floor framing solutions for homes that demand structural performance.',
-            'We offer Spanjoist and Steelwood Joist systems — both engineered to deliver superior load-bearing performance compared to traditional solid timber joists. These systems resist bowing, twisting, and shrinking, giving you a level, stable floor platform.',
-            'Floor joists are available as part of a complete framing package alongside our timber roof trusses and wall frames, or as a standalone supply. Our team will help you determine the right system for your span requirements and load specifications.',
+            'The Truss People supplies engineered floor joist and Multistrut systems for residential builds across Melbourne and regional Victoria. Our floor framing solutions provide reliable, consistent performance for homes that demand structural integrity.',
+            'We offer Spanjoist systems for standard residential spans, and Multistruts for applications requiring longer spans and higher load capacity. Multistruts are lightweight, dimensionally stable, and can span greater distances than traditional solid timber — reducing the need for load-bearing walls and intermediate supports.',
+            'Floor joists and Multistruts are available as part of a complete framing package alongside our timber roof trusses and wall frames, or as a standalone supply. Our team will help you determine the right system for your span requirements and load specifications.',
         ],
         features: [
-            'Spanjoist & Steelwood options',
+            'Spanjoist & Multistrut options',
+            'Superior span capabilities',
             'Load-optimized engineering',
-            'Consistent structural performance',
-            'No bowing, twisting, or shrinking',
+            'Lightweight & dimensionally stable',
             'Available as part of full framing packages',
-            'Residential applications',
+            'Residential & light commercial applications',
         ],
         process: [
             { step: 'Discuss Your Project', description: 'Talk to our team about your floor framing requirements, spans, and load specifications.' },
-            { step: 'Engineering & Quote', description: 'We engineer the right floor joist solution for your project and provide a detailed quote.' },
-            { step: 'Supply', description: 'Floor joists are sourced and coordinated to arrive with your broader framing package.' },
+            { step: 'Engineering & Quote', description: 'We engineer the right floor joist or Multistrut solution for your project and provide a detailed quote.' },
+            { step: 'Supply', description: 'Floor joists and Multistruts are sourced and coordinated to arrive with your broader framing package.' },
             { step: 'Delivery', description: 'Delivered to site alongside your trusses and wall frames for a streamlined build.' },
         ],
     },
-    'i-joists': {
-        slug: 'i-joists',
-        title: 'I-Joists & Multistructs',
-        tagline: 'Advanced I-joist and Multistruct systems for long-span applications with exceptional strength-to-weight ratios.',
+    'steelwood': {
+        slug: 'steelwood',
+        title: 'Steelwood',
+        tagline: 'Multinail Steelwood structural trusses — solid timber and galvanised steel engineered for demanding floor and roofing applications.',
         heroImage: '/assets/product-ijoists.jpg',
-        metaTitle: 'I-Joists & Multistructs Melbourne | The Truss People',
-        metaDescription: 'Advanced I-joist and Multistruct systems for long-span floor applications. Superior strength-to-weight ratios, Australian-sourced materials. Free quotes.',
+        metaTitle: 'Steelwood Joists Melbourne | The Truss People',
+        metaDescription: 'Multinail Steelwood structural trusses for floor and roofing applications. Timber and galvanised steel, spans up to 10m floors / 20m roofs. Free quotes Melbourne.',
         benefits: [
             {
                 icon: 'zap',
-                title: 'Superior Span Capabilities',
-                description: 'I-joists and Multistructs can span greater distances than traditional timber joists, reducing the need for intermediate supports.',
+                title: 'Exceptional Span Capabilities',
+                description: 'Steelwood trusses achieve floor spans up to 10 metres and roof spans up to 20 metres — reducing the need for intermediate supports.',
             },
             {
-                icon: 'leaf',
-                title: 'Lightweight & Stable',
-                description: 'Dimensionally stable and significantly lighter than solid timber, making them easier to handle on site and less prone to movement.',
+                icon: 'shield',
+                title: 'Timber & Steel Construction',
+                description: 'Solid timber chords with galvanised steel diagonal webs deliver superior strength-to-weight ratios and corrosion resistance.',
             },
             {
                 icon: 'timber',
-                title: 'Australian-Sourced Materials',
-                description: 'All materials are sourced from Australian suppliers, maintaining our commitment to local manufacturing and quality.',
+                title: 'Cost-Effective Alternative',
+                description: 'Steelwood can reduce traditional concrete slab construction costs by up to 50%, making it a smart choice for demanding builds.',
             },
             {
                 icon: 'ruler',
                 title: 'Engineered Precision',
-                description: 'Factory-manufactured to exact specifications, I-joists deliver consistent dimensions and performance across every unit.',
+                description: 'Prefabricated off-site to exact specifications with Multinail technology. Consistent dimensions and reliable structural performance across every unit.',
             },
         ],
         content: [
-            'The Truss People supplies advanced I-joist and Multistruct systems for residential and light commercial floor applications across Melbourne and regional Victoria. These engineered products are designed for demanding builds that require long spans, minimal deflection, and reliable performance.',
-            'I-joists use an engineered web design that provides exceptional strength-to-weight ratios. They\'re lighter than solid timber, dimensionally stable, and can span greater distances — reducing the need for load-bearing walls and intermediate supports. This gives architects and builders more flexibility in open-plan floor layouts.',
-            'Multistruct beams complement our I-joist range for applications requiring additional load capacity. Both products integrate seamlessly with our timber roof trusses, wall frames, and floor joist systems as part of a complete framing solution.',
+            'The Truss People supplies Multinail Steelwood structural trusses for residential and light commercial applications across Melbourne and regional Victoria. Steelwood trusses combine solid timber top and bottom chords with galvanised steel diagonal web members — engineered for builds that demand long spans, high load capacity, and reliable performance.',
+            'Steelwood uses vertical timber compression members and diagonal galvanised steel tension webs, which from an engineering perspective is superior to V-webbed joist systems and can carry higher loads. Floor spans reach up to 10 metres and roof spans up to 20 metres with most sheet roofing materials.',
+            'Manufactured off-site and delivered when required, Steelwood is simple and efficient to install. It integrates seamlessly with our timber roof trusses, wall frames, and floor joist systems as part of a complete framing solution — and in many cases can reduce traditional concrete slab construction costs by up to 50%.',
         ],
         features: [
-            'Superior span capabilities',
-            'Lightweight & dimensionally stable',
-            'Australian-sourced materials',
-            'Minimal deflection under load',
-            'Ideal for open-plan layouts',
+            'Solid timber & galvanised steel construction',
+            'Floor spans up to 10 metres',
+            'Roof spans up to 20 metres',
+            'Multinail engineered technology',
+            'Reduces concrete slab costs up to 50%',
             'Integrates with full framing packages',
         ],
         process: [
-            { step: 'Send Your Plans', description: 'Share your floor plans and span requirements with our team.' },
-            { step: 'Product Selection', description: 'We recommend the right I-joist or Multistruct product for your specific span and load requirements.' },
-            { step: 'Engineering', description: 'The floor system is engineered to integrate with your overall framing design.' },
-            { step: 'Supply & Delivery', description: 'Products are sourced and delivered to site coordinated with your broader framing package.' },
+            { step: 'Send Your Plans', description: 'Share your floor or roof plans and span requirements with our team.' },
+            { step: 'Product Selection', description: 'We assess whether Steelwood is the right solution for your specific span, load, and application requirements.' },
+            { step: 'Engineering', description: 'The Steelwood system is engineered to integrate with your overall framing design using Multinail technology.' },
+            { step: 'Supply & Delivery', description: 'Prefabricated off-site and delivered to your site coordinated with your broader framing package.' },
+        ],
+    },
+    'site-measuring': {
+        slug: 'site-measuring',
+        title: 'Site Measuring',
+        tagline: 'Professional on-site measuring to ensure your trusses, frames, and floor systems are built to exact specifications.',
+        heroImage: '',
+        metaTitle: 'Site Measuring Service Melbourne | The Truss People',
+        metaDescription: 'Professional on-site measuring for roof trusses, wall frames, and floor systems. Accurate dimensions before manufacturing — eliminates costly errors. Melbourne & Victoria.',
+        benefits: [
+            {
+                icon: 'ruler',
+                title: 'Millimetre-Accurate Measurements',
+                description: 'Our team measures every detail on site — roof lines, wall heights, floor levels, and structural openings — so your framing is manufactured to exact dimensions.',
+            },
+            {
+                icon: 'shield',
+                title: 'Eliminates Costly Errors',
+                description: 'On-site verification catches discrepancies between plans and the actual build before manufacturing begins, saving time and money on rework.',
+            },
+            {
+                icon: 'clock',
+                title: 'Fast Turnaround',
+                description: 'We schedule site measuring quickly and feed the data directly into our engineering and manufacturing process — no delays in your build timeline.',
+            },
+            {
+                icon: 'users',
+                title: 'Experienced Measurers',
+                description: 'Our team has decades of combined experience reading builds and anticipating framing requirements. We measure what matters.',
+            },
+        ],
+        content: [
+            'The Truss People offers professional site measuring services for builders across Melbourne and regional Victoria. Before we manufacture your trusses, wall frames, or floor joists, our team can visit the site to verify dimensions and ensure everything is built to the exact specifications of your project.',
+            'Site measuring is especially valuable for renovation work, additions, and projects where the as-built conditions may differ from the original plans. Our experienced measurers check roof lines, wall heights, floor levels, and structural openings — catching discrepancies before they become expensive manufacturing errors.',
+            'This service is available as part of a complete framing package or as a standalone service. We feed the measurements directly into our engineering software at the Coolaroo facility, so there is no gap between what we measure and what we manufacture.',
+        ],
+        features: [
+            'Roof line & pitch verification',
+            'Wall height & opening measurements',
+            'Floor level checks',
+            'Renovation & addition specialists',
+            'Direct feed into engineering software',
+            'Available across Melbourne & regional Victoria',
+        ],
+        process: [
+            { step: 'Book a Site Visit', description: 'Contact our team to schedule a site measuring appointment at a time that suits your build schedule.' },
+            { step: 'On-Site Measuring', description: 'Our experienced measurers visit the site and take all necessary dimensions, verifying against your plans.' },
+            { step: 'Engineering', description: 'Measurements are fed directly into our engineering and detailing software for accurate manufacturing.' },
+            { step: 'Manufacturing', description: 'Your trusses, frames, or floor systems are manufactured to the verified site dimensions at our Coolaroo facility.' },
+        ],
+    },
+    'franna-crane-rental': {
+        slug: 'franna-crane-rental',
+        title: 'Franna Crane Rental',
+        tagline: 'Franna crane hire with experienced operators to safely lift and position your trusses and frames on site.',
+        heroImage: '/assets/our-work-02.jpg',
+        metaTitle: 'Franna Crane Hire Melbourne | The Truss People',
+        metaDescription: 'Franna crane rental for roof truss and wall frame installation. Experienced operators, safe lifting, coordinated with your delivery. Melbourne & Victoria builders.',
+        benefits: [
+            {
+                icon: 'shield',
+                title: 'Safe & Insured Operations',
+                description: 'Fully insured crane operations with experienced operators who understand timber truss handling and the specific requirements of residential builds.',
+            },
+            {
+                icon: 'truck',
+                title: 'Coordinated with Delivery',
+                description: 'We coordinate crane hire with your truss and frame delivery so everything arrives and goes up on the same day — no wasted time on site.',
+            },
+            {
+                icon: 'clock',
+                title: 'Keeps Your Build on Schedule',
+                description: 'Professional crane placement means your trusses and frames are positioned quickly and accurately, keeping your framers productive and your timeline intact.',
+            },
+            {
+                icon: 'users',
+                title: 'Experienced Operators',
+                description: 'Our crane operators have extensive experience lifting and positioning timber roof trusses and wall frames on residential and light commercial builds.',
+            },
+        ],
+        content: [
+            'The Truss People offers Franna crane hire for builders across Melbourne and regional Victoria. When your trusses and frames are ready for installation, our crane service ensures they are lifted and positioned safely and efficiently on site.',
+            'A Franna crane is ideal for residential truss installation — compact enough to access tight building sites while powerful enough to lift heavy truss packages onto the roof structure. Our operators specialise in timber truss handling, so your frames are placed accurately and without damage.',
+            'Crane hire can be bundled with your truss and frame delivery for a seamless build day, or booked separately. We work around your schedule and coordinate with your framers to make sure everything runs smoothly from delivery to placement.',
+        ],
+        features: [
+            'Franna crane suited to residential sites',
+            'Experienced truss-handling operators',
+            'Bundled with delivery or standalone hire',
+            'Fully insured operations',
+            'Compact access for tight sites',
+            'Melbourne & regional Victoria coverage',
+        ],
+        process: [
+            { step: 'Book Your Crane', description: 'Let us know your installation date when ordering your trusses, or book crane hire separately.' },
+            { step: 'Site Coordination', description: 'We confirm access requirements, site conditions, and coordinate timing with your framers.' },
+            { step: 'Delivery & Lift', description: 'Trusses are delivered and craned into position on the same day — minimising site downtime.' },
+            { step: 'Placement', description: 'Our operator positions each truss package exactly where your framers need it, ready for immediate installation.' },
         ],
     },
 };
@@ -380,8 +501,8 @@ export const GALLERY_SECTION = {
 export const GALLERY_ITEMS: GalleryItem[] = [
     {
         image: '/assets/project-4.jpg',
-        title: 'Multi-Unit Development',
-        description: 'Full timber framing solution for volume builder',
+        title: 'Residential Build',
+        description: 'Custom roof trusses for premium Melbourne home',
     },
     {
         image: '/assets/project-2.jpg',
@@ -395,8 +516,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     },
     {
         image: '/assets/project-1.jpg',
-        title: 'Residential Build',
-        description: 'Custom roof trusses for premium Melbourne home',
+        title: 'Multi-Unit Development',
+        description: 'Full timber framing solution for volume builder',
     },
 ];
 
@@ -407,11 +528,6 @@ export const OUR_WORK_ITEMS: GalleryItem[] = [
         title: 'Residential Roof Trusses',
         description: 'Custom timber roof trusses installed on a double-storey home.',
         large: true,
-    },
-    {
-        image: '/assets/our-work-02.jpg',
-        title: 'Wall Frame Assembly',
-        description: 'Precision wall frames ready for site delivery.',
     },
     {
         image: '/assets/our-work-03.jpg',
@@ -560,7 +676,7 @@ export const CONTACT_SECTION = {
     label: 'Get a Quote',
     title: "Let's Talk About Your Next Build",
     description:
-        'Whether you need roof trusses, wall frames or floor joists - get in touch for a quote. We serve builders across Greater Melbourne, Geelong, Ballarat, Bendigo and the Mornington Peninsula.',
+        'Whether you need roof trusses, wall frames, floor joists or Steelwood systems - get in touch for a quote. We serve builders across Greater Melbourne, Geelong, Ballarat, Bendigo and the Mornington Peninsula.',
 };
 
 export const CONTACT_INFO: ContactInfo[] = [
@@ -587,7 +703,10 @@ export const CONTACT_INFO: ContactInfo[] = [
 export const PROJECT_TYPES = [
     'Timber Roof Trusses',
     'Wall Frames',
-    'Floor Joists',
+    'Floor Joists / Multistruts',
+    'Steelwood',
+    'Site Measuring',
+    'Franna Crane Rental',
     'Full Framing Package',
     'Other',
 ];
@@ -613,10 +732,12 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     {
         title: 'Products',
         links: [
-            { label: 'Timber Roof Trusses', href: '#products' },
-            { label: 'Wall Frames', href: '#products' },
-            { label: 'Floor Joists', href: '#products' },
-            { label: 'I-Joists & Multistructs', href: '#products' },
+            { label: 'Timber Roof Trusses', href: '/products/timber-roof-trusses' },
+            { label: 'Wall Frames', href: '/products/wall-frames' },
+            { label: 'Floor Joists / Multistruts', href: '/products/floor-joists' },
+            { label: 'Steelwood', href: '/products/steelwood' },
+            { label: 'Site Measuring', href: '/products/site-measuring' },
+            { label: 'Franna Crane Rental', href: '/products/franna-crane-rental' },
         ],
     },
     {
@@ -650,9 +771,11 @@ export const QUOTE_STEP_LABELS = ['Your Details', 'Project Info', 'Upload Plans'
 export const QUOTE_PROJECT_TYPES: { value: string; label: string }[] = [
     { value: 'Timber Roof Trusses', label: 'Timber Roof Trusses' },
     { value: 'Wall Frames', label: 'Wall Frames' },
-    { value: 'Floor Joists', label: 'Floor Joists' },
+    { value: 'Floor Joists / Multistruts', label: 'Floor Joists / Multistruts' },
+    { value: 'Steelwood', label: 'Steelwood' },
+    { value: 'Site Measuring', label: 'Site Measuring' },
+    { value: 'Franna Crane Rental', label: 'Franna Crane Rental' },
     { value: 'Full Framing Package', label: 'Full Framing Package' },
-    { value: 'I-Joists & Multistructs', label: 'I-Joists & Multistructs' },
     { value: 'Other', label: 'Other' },
 ];
 

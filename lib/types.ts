@@ -22,7 +22,7 @@ export interface Product {
   title: string;
   description: string;
   features: string[];
-  icon: 'truss' | 'frame' | 'floor' | 'ijoist';
+  icon: 'truss' | 'frame' | 'floor' | 'steelwood' | 'measure' | 'crane';
   image?: string;
 }
 

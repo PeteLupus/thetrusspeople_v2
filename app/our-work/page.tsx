@@ -78,9 +78,6 @@ export default function OurWorkPage() {
                                         <h3 className="translate-y-4 font-heading text-xl font-semibold text-white transition-transform duration-300 group-hover:translate-y-0">
                                             {item.title}
                                         </h3>
-                                        <p className="translate-y-4 text-sm text-gray-300 transition-transform duration-300 delay-75 group-hover:translate-y-0">
-                                            {item.description}
-                                        </p>
                                     </div>
                                 </div>
                             </ScrollReveal>

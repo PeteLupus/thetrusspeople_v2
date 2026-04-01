@@ -41,10 +41,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.8,
         },
         {
-            url: `${BASE_URL}/products/i-joists`,
+            url: `${BASE_URL}/products/steelwood`,
             lastModified: new Date(),
             changeFrequency: 'monthly',
             priority: 0.8,
+        },
+        {
+            url: `${BASE_URL}/products/site-measuring`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.7,
+        },
+        {
+            url: `${BASE_URL}/products/franna-crane-rental`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.7,
         },
         {
             url: `${BASE_URL}/quote`,

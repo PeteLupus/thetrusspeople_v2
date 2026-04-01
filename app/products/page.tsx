@@ -7,14 +7,16 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Products & Services | The Truss People',
   description:
-    'Timber roof trusses, wall frames, floor joists and I-joists — all 100% Australian-made at our Coolaroo facility, engineered to AS/NZS standards.',
+    'Timber roof trusses, wall frames, floor joists, Multistruts and Steelwood systems — all 100% Australian-made at our Coolaroo facility, engineered to AS/NZS standards.',
 };
 
 const SLUG_MAP: Record<string, string> = {
   'Timber Roof Trusses': 'timber-roof-trusses',
   'Wall Frames': 'wall-frames',
-  'Floor Joists': 'floor-joists',
-  'I-Joists & Multistructs': 'i-joists',
+  'Floor Joists / Multistruts': 'floor-joists',
+  'Steelwood': 'steelwood',
+  'Site Measuring': 'site-measuring',
+  'Franna Crane Rental': 'franna-crane-rental',
 };
 
 export default function ProductsPage() {
@@ -45,7 +47,7 @@ export default function ProductsPage() {
                   href={`/products/${slug}`}
                   className="group overflow-hidden rounded-2xl border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                 >
-                  {product.image && (
+                  {product.image ? (
                     <div className="relative aspect-[16/9] overflow-hidden">
                       <Image
                         src={product.image}
@@ -56,6 +58,12 @@ export default function ProductsPage() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 to-transparent" />
                       <h2 className="absolute bottom-4 left-6 font-heading text-2xl font-bold text-white">
+                        {product.title}
+                      </h2>
+                    </div>
+                  ) : (
+                    <div className="relative flex aspect-[16/9] items-center justify-center bg-charcoal/5">
+                      <h2 className="font-heading text-2xl font-bold text-charcoal">
                         {product.title}
                       </h2>
                     </div>

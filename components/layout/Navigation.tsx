@@ -68,7 +68,7 @@ export default function Navigation() {
             >
                 <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-3">
                     {/* Logo */}
-                    <Link href="/" className="relative z-10 flex-shrink-0">
+                    <Link href="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="relative z-10 flex-shrink-0">
                         <Image
                             src="/assets/logo.png"
                             alt="The Truss People"
