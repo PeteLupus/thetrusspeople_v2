@@ -5,9 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import ScrollReveal, {
-    ScrollRevealItem,
-} from '@/components/animations/ScrollReveal';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Lightbox from '@/components/ui/Lightbox';
 import Button from '@/components/ui/Button';
@@ -43,53 +41,51 @@ export default function OurWorkPage() {
             {/* Gallery Grid */}
             <section className="bg-white py-16 md:py-24">
                 <div className="mx-auto max-w-[1400px] px-6">
-                    <ScrollReveal stagger>
-                        <div className="grid gap-6 md:grid-cols-2">
-                            {OUR_WORK_ITEMS.map((item, i) => (
-                                <ScrollRevealItem
-                                    key={i}
-                                    className={item.large ? 'md:col-span-2' : ''}
+                    <div className="grid gap-6 md:grid-cols-2">
+                        {OUR_WORK_ITEMS.map((item, i) => (
+                            <ScrollReveal
+                                key={i}
+                                className={item.large ? 'md:col-span-2' : ''}
+                            >
+                                <div
+                                    className="group relative cursor-pointer overflow-hidden rounded-xl"
+                                    onClick={() =>
+                                        setLightbox({
+                                            isOpen: true,
+                                            src: item.image,
+                                            alt: item.title,
+                                        })
+                                    }
                                 >
                                     <div
-                                        className="group relative cursor-pointer overflow-hidden rounded-xl"
-                                        onClick={() =>
-                                            setLightbox({
-                                                isOpen: true,
-                                                src: item.image,
-                                                alt: item.title,
-                                            })
-                                        }
+                                        className={`relative ${item.large ? 'aspect-[21/9]' : 'aspect-[4/3]'
+                                            }`}
                                     >
-                                        <div
-                                            className={`relative ${item.large ? 'aspect-[21/9]' : 'aspect-[4/3]'
-                                                }`}
-                                        >
-                                            <Image
-                                                src={item.image}
-                                                alt={item.title}
-                                                fill
-                                                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                                                sizes={
-                                                    item.large
-                                                        ? '100vw'
-                                                        : '(max-width: 768px) 100vw, 50vw'
-                                                }
-                                            />
-                                        </div>
-                                        {/* Hover Overlay */}
-                                        <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-charcoal/80 via-transparent to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                            <h3 className="translate-y-4 font-heading text-xl font-semibold text-white transition-transform duration-300 group-hover:translate-y-0">
-                                                {item.title}
-                                            </h3>
-                                            <p className="translate-y-4 text-sm text-gray-300 transition-transform duration-300 delay-75 group-hover:translate-y-0">
-                                                {item.description}
-                                            </p>
-                                        </div>
+                                        <Image
+                                            src={item.image}
+                                            alt={item.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                            sizes={
+                                                item.large
+                                                    ? '100vw'
+                                                    : '(max-width: 768px) 100vw, 50vw'
+                                            }
+                                        />
                                     </div>
-                                </ScrollRevealItem>
-                            ))}
-                        </div>
-                    </ScrollReveal>
+                                    {/* Hover Overlay */}
+                                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-charcoal/80 via-transparent to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                        <h3 className="translate-y-4 font-heading text-xl font-semibold text-white transition-transform duration-300 group-hover:translate-y-0">
+                                            {item.title}
+                                        </h3>
+                                        <p className="translate-y-4 text-sm text-gray-300 transition-transform duration-300 delay-75 group-hover:translate-y-0">
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                </div>
+                            </ScrollReveal>
+                        ))}
+                    </div>
                 </div>
             </section>
 

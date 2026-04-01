@@ -23,6 +23,7 @@ export interface Product {
   description: string;
   features: string[];
   icon: 'truss' | 'frame' | 'floor' | 'ijoist';
+  image?: string;
 }
 
 export interface StatItem {
@@ -56,6 +57,27 @@ export interface ContactInfo {
 export interface FooterColumn {
   title: string;
   links: { label: string; href: string }[];
+}
+
+// ─── Product Pages ────────────────────────────────────────────────────────────
+
+export interface ProductBenefit {
+  icon: 'shield' | 'timber' | 'ruler' | 'truck' | 'leaf' | 'users' | 'clock' | 'zap';
+  title: string;
+  description: string;
+}
+
+export interface ProductPageData {
+  slug: string;
+  title: string;
+  tagline: string;
+  heroImage: string;
+  metaTitle: string;
+  metaDescription: string;
+  benefits: ProductBenefit[];
+  content: string[];
+  features: string[];
+  process: { step: string; description: string }[];
 }
 
 // ─── Quote Form ────────────────────────────────────────────────────────────────

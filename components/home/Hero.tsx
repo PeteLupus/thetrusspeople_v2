@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -15,18 +16,12 @@ interface HeroData {
   description?: string;
   ctaPrimary?: string;
   ctaSecondary?: string;
-  backgroundImage?: string;
+  backgroundImages?: string[];
 }
 
 interface HeroProps {
   data?: HeroData;
   trustItems?: TrustItem[];
-}
-
-function getImageSrc(image: HeroData['backgroundImage']): string {
-  if (!image) return HERO.backgroundImage;
-  if (typeof image === 'string') return image;
-  return HERO.backgroundImage;
 }
 
 export default function Hero({ data, trustItems }: HeroProps) {
@@ -36,9 +31,19 @@ export default function Hero({ data, trustItems }: HeroProps) {
     description: data?.description ?? HERO.description,
     ctaPrimary: data?.ctaPrimary ?? HERO.ctaPrimary,
     ctaSecondary: data?.ctaSecondary ?? HERO.ctaSecondary,
-    backgroundImage: getImageSrc(data?.backgroundImage),
+    backgroundImages: data?.backgroundImages ?? HERO.backgroundImages,
   };
   const items = trustItems ?? TRUST_ITEMS;
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const advance = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % hero.backgroundImages.length);
+  }, [hero.backgroundImages.length]);
+
+  useEffect(() => {
+    const timer = setInterval(advance, 5000);
+    return () => clearInterval(timer);
+  }, [advance]);
 
   const handleScroll = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
@@ -54,34 +59,28 @@ export default function Hero({ data, trustItems }: HeroProps) {
       id="home"
       className="relative min-h-screen overflow-hidden bg-charcoal pt-[80px]"
     >
-      {/* Background Image with clip-path */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{ clipPath: 'polygon(0 0, 65% 0, 55% 100%, 0 100%)' }}
-      >
-        <Image
-          src={hero.backgroundImage}
-          alt="Timber roof trusses being manufactured"
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
+      {/* Full-bleed background images */}
+      <div className="absolute inset-0 z-0">
+        {hero.backgroundImages.map((src, i) => (
+          <Image
+            key={src}
+            src={src}
+            alt="Timber roof trusses being manufactured"
+            fill
+            className={`object-cover transition-opacity duration-1000 ${
+              i === activeIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+            priority={i === 0}
+            sizes="100vw"
+          />
+        ))}
+        {/* Gradient overlay — dark on left for text, fading to reveal image on right */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to right, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.65) 35%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.10) 75%, rgba(0,0,0,0.15) 100%)',
+          }}
         />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(105deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.15) 100%)' }} />
-      </div>
-
-      {/* Mobile background */}
-      <div className="absolute inset-0 z-0 md:hidden">
-        <Image
-          src={hero.backgroundImage}
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-charcoal/70" />
       </div>
 
       {/* Grain overlay */}
@@ -96,7 +95,7 @@ export default function Hero({ data, trustItems }: HeroProps) {
 
       {/* Content */}
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-[1400px] items-center px-6 py-16">
-        <div className="grid w-full gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid w-full gap-8 lg:grid-cols-[1fr_320px] lg:gap-12 xl:grid-cols-[1fr_360px]">
           {/* Text */}
           <motion.div
             variants={slideInLeft}
@@ -138,21 +137,21 @@ export default function Hero({ data, trustItems }: HeroProps) {
             </div>
           </motion.div>
 
-          {/* Trust Card */}
+          {/* Trust Card — compact */}
           <motion.div
             variants={slideInRight}
             initial="hidden"
             animate="visible"
             className="flex items-center justify-center lg:justify-end"
           >
-            <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/10 p-8 shadow-xl backdrop-blur-md">
-              <div className="mb-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-terracotta">
-                  <Shield className="h-5 w-5 text-white" />
+            <div className="w-full max-w-[320px] rounded-2xl border border-white/10 bg-black/30 p-6 shadow-xl backdrop-blur-md">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta">
+                  <Shield className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="font-heading text-lg font-semibold text-white">Why Choose Us</h3>
+                <h3 className="font-heading text-base font-semibold text-white">Why Choose Us</h3>
               </div>
-              <div className="space-y-5">
+              <div className="space-y-3">
                 {items.map((item, i) => {
                   const content = (
                     <motion.div
@@ -162,13 +161,13 @@ export default function Hero({ data, trustItems }: HeroProps) {
                       animate="visible"
                       transition={{ delay: 0.5 + i * 0.15 }}
                       whileHover={{ scale: 1.04, x: 4 }}
-                      className="flex cursor-pointer items-start gap-4 rounded-xl p-3 -ml-3 transition-colors duration-300 hover:bg-white/10"
+                      className="flex cursor-pointer items-start gap-3 rounded-lg p-2 -ml-2 transition-colors duration-300 hover:bg-white/10"
                     >
-                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 transition-all duration-300">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white/10 transition-all duration-300">
                         {item.icon === 'checkmark' ? (
-                          <Check className="h-6 w-6 text-terracotta" />
+                          <Check className="h-5 w-5 text-terracotta" />
                         ) : (
-                          <span className="font-heading text-lg font-bold text-terracotta">{item.icon}</span>
+                          <span className="font-heading text-sm font-bold text-terracotta">{item.icon}</span>
                         )}
                       </div>
                       <div>
@@ -194,6 +193,20 @@ export default function Hero({ data, trustItems }: HeroProps) {
             </div>
           </motion.div>
         </div>
+      </div>
+
+      {/* Carousel indicators */}
+      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+        {hero.backgroundImages.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveIndex(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === activeIndex ? 'w-8 bg-terracotta' : 'w-2 bg-white/40'
+            }`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
       </div>
     </section>
   );

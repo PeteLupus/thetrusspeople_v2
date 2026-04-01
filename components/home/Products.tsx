@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal, { ScrollRevealItem } from '@/components/animations/ScrollReveal';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -81,26 +82,45 @@ export default function Products({ section, products }: ProductsProps) {
             {items.map((product, i) => (
               <ScrollRevealItem key={product._id ?? i}>
                 <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border border-t-4 border-t-transparent bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-t-terracotta hover:shadow-xl">
-                  <div className="mb-5">
-                    <ProductIcon type={product.icon} />
+                  {/* Photo background */}
+                  {product.image && (
+                    <div className="absolute inset-0 opacity-[0.30] transition-opacity duration-500 group-hover:opacity-[0.45]">
+                      <Image
+                        src={product.image}
+                        alt=""
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  )}
+                  {/* Light overlay for text readability */}
+                  {product.image && (
+                    <div className="absolute inset-0 bg-white/50 transition-colors duration-500 group-hover:bg-white/40" />
+                  )}
+                  <div className="relative z-10">
+                    <div className="mb-5">
+                      <ProductIcon type={product.icon} />
+                    </div>
+                    <h3 className="mb-3 font-display text-lg font-bold uppercase tracking-tight text-charcoal">{product.title}</h3>
+                    <p className="mb-5 flex-1 text-sm leading-relaxed text-text-light">{product.description}</p>
+                    <ul className="mb-5 space-y-2">
+                      {product.features.map((feat, j) => (
+                        <li key={j} className="flex items-start gap-2 text-xs text-text-light">
+                          <span className="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">✓</span>
+                          {feat}
+                        </li>
+                      ))}
+                    </ul>
+                    <a
+                      href="/quote"
+                      className="group/link mt-auto inline-flex items-center gap-2 text-sm font-semibold text-terracotta transition-all duration-300 hover:gap-3 hover:text-terracotta/80"
+                    >
+                      Request a Quote
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+                    </a>
                   </div>
-                  <h3 className="mb-3 font-display text-lg font-bold uppercase tracking-tight text-charcoal">{product.title}</h3>
-                  <p className="mb-5 flex-1 text-sm leading-relaxed text-text-light">{product.description}</p>
-                  <ul className="mb-5 space-y-2">
-                    {product.features.map((feat, j) => (
-                      <li key={j} className="flex items-start gap-2 text-xs text-text-light">
-                        <span className="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">✓</span>
-                        {feat}
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href="/quote"
-                    className="group/link mt-auto inline-flex items-center gap-2 text-sm font-semibold text-terracotta transition-all duration-300 hover:gap-3 hover:text-terracotta/80"
-                  >
-                    Request a Quote
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
-                  </a>
                 </div>
               </ScrollRevealItem>
             ))}

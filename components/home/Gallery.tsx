@@ -45,7 +45,7 @@ export default function Gallery({ section, items }: GalleryProps) {
               <ScrollRevealItem key={(item as { _id?: string })._id ?? i}>
                 <div className="group relative overflow-hidden rounded-xl bg-gray-100 aspect-square">
                   <Image
-                    src={getImageSrc(item.image) || '/assets/placeholder.jpg'}
+                    src={getImageSrc(item.image)}
                     alt={item.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"

@@ -43,12 +43,13 @@ export default function About({ data, accordionItems }: AboutProps) {
 
         <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
           <ScrollReveal>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl">
               <Image
                 src={about.image}
-                alt="The Truss People factory"
-                fill
-                className="object-cover"
+                alt="The Truss People — Brothers Victor and Tony Manoski"
+                width={800}
+                height={1000}
+                className="h-auto w-full"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
