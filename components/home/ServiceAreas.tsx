@@ -19,7 +19,7 @@ export default function ServiceAreas({ areas }: ServiceAreasProps) {
           {items.map((area, i) => (
             <span
               key={i}
-              className="rounded-full border border-white/20 px-4 py-1.5 text-sm text-gray-300"
+              className="rounded-full border border-white/30 px-4 py-1.5 text-sm text-white/80"
             >
               {area}
             </span>

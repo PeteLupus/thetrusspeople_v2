@@ -103,8 +103,8 @@ export const ACCORDION_ITEMS: AccordionItem[] = [
 
 // Products
 export const PRODUCTS_SECTION = {
-    label: 'Our Products',
-    title: 'Timber Roof Trusses, Wall Frames & Floor Systems',
+    label: 'Products & Services',
+    title: 'Timber Framing, Delivery & Site Services',
     description:
         'Every product is manufactured from 100% Australian timber at our Coolaroo facility, engineered to AS/NZS standards using Multinail technology.',
 };
@@ -168,6 +168,7 @@ export const PRODUCTS: Product[] = [
             'Included with framing packages',
         ],
         icon: 'measure',
+        image: '/assets/product-measuring.jpg',
     },
     {
         title: 'Franna Crane Rental',
@@ -180,6 +181,18 @@ export const PRODUCTS: Product[] = [
         ],
         icon: 'crane',
         image: '/assets/our-work-02.jpg',
+    },
+    {
+        title: 'Delivery',
+        description:
+            'Direct-to-site delivery across Melbourne and regional Victoria. Our fleet handles full truss, frame, and floor system loads — on time, every time.',
+        features: [
+            'Melbourne & regional Victoria coverage',
+            'Full framing package loads',
+            'Coordinated with your build schedule',
+        ],
+        icon: 'delivery',
+        image: '/assets/product-delivery-v2.jpg',
     },
 ];
 
@@ -386,7 +399,7 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
         slug: 'site-measuring',
         title: 'Site Measuring',
         tagline: 'Professional on-site measuring to ensure your trusses, frames, and floor systems are built to exact specifications.',
-        heroImage: '',
+        heroImage: '/assets/product-measuring.jpg',
         metaTitle: 'Site Measuring Service Melbourne | The Truss People',
         metaDescription: 'Professional on-site measuring for roof trusses, wall frames, and floor systems. Accurate dimensions before manufacturing — eliminates costly errors. Melbourne & Victoria.',
         benefits: [
@@ -478,6 +491,55 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
             { step: 'Site Coordination', description: 'We confirm access requirements, site conditions, and coordinate timing with your framers.' },
             { step: 'Delivery & Lift', description: 'Trusses are delivered and craned into position on the same day — minimising site downtime.' },
             { step: 'Placement', description: 'Our operator positions each truss package exactly where your framers need it, ready for immediate installation.' },
+        ],
+    },
+    'delivery': {
+        slug: 'delivery',
+        title: 'Delivery',
+        tagline: 'Direct-to-site delivery of trusses, wall frames, and floor systems across Melbourne and regional Victoria.',
+        heroImage: '/assets/product-delivery-v2.jpg',
+        metaTitle: 'Truss & Frame Delivery Melbourne | The Truss People',
+        metaDescription: 'Direct-to-site delivery of timber roof trusses, wall frames, and floor systems across Melbourne and regional Victoria. On-time, every time.',
+        benefits: [
+            {
+                icon: 'truck',
+                title: 'Our Own Fleet',
+                description: 'We deliver with our own trucks and drivers — no third-party couriers. Your trusses and frames are handled by people who know the product.',
+            },
+            {
+                icon: 'clock',
+                title: 'On-Time Guarantee',
+                description: 'We confirm delivery dates upfront and stick to them. Your build schedule depends on materials arriving when promised — we respect that.',
+            },
+            {
+                icon: 'shield',
+                title: 'Safe Handling',
+                description: 'Our drivers are experienced in loading, transporting, and unloading timber framing packages. Product arrives to site in perfect condition.',
+            },
+            {
+                icon: 'users',
+                title: 'Coordinated with Your Build',
+                description: 'Delivery is scheduled around your framers and crane hire so everything arrives together — no wasted days waiting for materials.',
+            },
+        ],
+        content: [
+            'The Truss People operates our own delivery fleet from our Coolaroo manufacturing facility. When your trusses, wall frames, or floor systems are ready, we load them onto our trucks and deliver directly to your building site across Melbourne and regional Victoria.',
+            'We don\'t outsource delivery to third-party transport companies. Our drivers know how to handle timber framing products — they understand the weight, the dimensions, and the care required to get your order to site without damage. That means fewer delays, fewer disputes, and fewer headaches for you.',
+            'Delivery is coordinated with your build schedule. If you\'ve booked crane hire through us, we time the delivery so your trusses arrive and go up on the same day. For builders running tight timelines on multi-unit or volume projects, this coordination is the difference between a smooth build week and a costly delay.',
+        ],
+        features: [
+            'Own fleet — no third-party transport',
+            'Melbourne & regional Victoria coverage',
+            'Full framing package loads',
+            'Coordinated with crane hire',
+            'Experienced drivers & loaders',
+            'On-time delivery commitment',
+        ],
+        process: [
+            { step: 'Order Confirmed', description: 'Once your trusses, frames, or floor systems are manufactured, we confirm a delivery date that fits your build schedule.' },
+            { step: 'Loaded & Dispatched', description: 'Your order is loaded at our Coolaroo facility by experienced handlers who know how to pack for safe transport.' },
+            { step: 'Site Delivery', description: 'Our truck arrives on the confirmed date. Driver coordinates with your site contact for safe unloading placement.' },
+            { step: 'Ready to Build', description: 'Materials are positioned on site ready for your framers — or craned into position if you\'ve booked our Franna crane service.' },
         ],
     },
 };
@@ -738,6 +800,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
             { label: 'Steelwood', href: '/products/steelwood' },
             { label: 'Site Measuring', href: '/products/site-measuring' },
             { label: 'Franna Crane Rental', href: '/products/franna-crane-rental' },
+            { label: 'Delivery', href: '/products/delivery' },
         ],
     },
     {
