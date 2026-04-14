@@ -2,6 +2,8 @@
 
 > Drop this file in every project root. All operators read it on cold start. Update it before switching terminals.
 
+**COLD START READ ORDER:** `~/.claude/CLAUDE.md` → `~/.claude/memories/BUGFIX.md` (global patterns) → this file → `CODEX_LOG.md` (Codex execution log)
+
 ---
 
 ## PROJECT
