@@ -119,6 +119,18 @@ export default function Footer() {
                                 <span className="text-sm text-gray-400">{ADDRESS}</span>
                             </li>
                         </ul>
+                        <div className="mt-3 overflow-hidden rounded-lg border border-white/10">
+                            <iframe
+                                src="https://www.google.com/maps?q=37-39+Glenelg+Street,+Coolaroo+VIC+3048&output=embed"
+                                width="100%"
+                                height="130"
+                                style={{ border: 0 }}
+                                allowFullScreen={false}
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                title="The Truss People location"
+                            />
+                        </div>
                     </div>
                 </div>
 

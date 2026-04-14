@@ -1,4 +1,38 @@
-# CLAUDE.md — Jarvis Operating Manual
+# CLAUDE.md — The Truss People V2
+
+## MISSION
+- **Client:** The Truss People (Victor & Tony Manoski)
+- **Project:** Professional website — Melbourne roof truss & wall frame manufacturer
+- **Status:** Live on Vercel
+- **Phase:** Maintenance + Growth
+- **Notion:** https://www.notion.so/e36726bb56804c8ca5d8f370572234c1
+- **Vercel Project:** thetrusspeople-v2 (prj_A6xaPDJrlvE6dz7HKAXQegQwqKjB)
+- **Local Path:** ~/Projects/clients/truss-people/v2/
+
+## WHAT'S DONE
+- [x] Full website built and deployed (Home, Our Work, About, Contact, Services)
+- [x] Sanity CMS v3 — all content managed via Studio at /studio
+- [x] Contact form with Google Drive file uploads + Nodemailer email
+- [x] Framer Motion animations throughout
+- [x] SEO basics (sitemap.ts, robots.ts, meta tags)
+- [x] Mobile responsive
+- [x] Victoria AI Agent — after-hours receptionist (Vapi + n8n, v4 production)
+
+## WHAT'S NEXT
+- [ ] SEO push — blog/FAQ content for organic traffic
+- [ ] Google Analytics setup
+- [ ] Google Search Console — submit sitemap
+- [ ] Monthly project showcase content (with images)
+- [ ] Victoria agent — live integration testing
+- [ ] Potential 3D upgrade (archived React Three Fiber experiment in ~/Projects/_archive/truss-people-v2123-3d/)
+
+## SUB-PROJECTS
+- **Victoria AI Agent** — Notion: https://www.notion.so/337d422a3acb812098b0cd8aab010e22
+- **Victoria v4 Prompt (production)** — in Notion under Victoria AI Agent
+
+---
+
+# Jarvis Operating Manual
 
 This file is read automatically by Claude Code on every session.
 It defines how to build, manage, and evolve websites using the Sanity CMS stack.
