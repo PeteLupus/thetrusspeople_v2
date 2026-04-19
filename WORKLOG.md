@@ -77,6 +77,10 @@ If blog/FAQ section needs new page design → brief Gemini with:
              Phase 0: CLAUDE.md/GEMINI.md/CODEX.md rectified. Sanity CMS deferred, reasoning documented.
              GCS (not Drive) confirmed as file storage. Stack in all docs now matches package.json.
              Phase 0 commit: docs: rectify CLAUDE.md/GEMINI.md/CODEX.md to match actual stack; defer Sanity integration
+2026-04-20 — Phases 1-3+5 complete. Branch pushed. Vercel preview building.
+             Preview URL: https://thetrusspeople-v2-git-feature-c-7214cc-petars-projects-a03b8a08.vercel.app
+             4 commits on feature/content-seo-launch-prep. Awaiting boss approval to merge to main.
+             Phase 6 (domain/Google) blocked on operator intel from Annex E.
 ```
 
 ---
