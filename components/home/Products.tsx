@@ -40,7 +40,7 @@ interface ProductsProps {
 const SLUG_MAP: Record<string, string> = {
   'Timber Roof Trusses': 'timber-roof-trusses',
   'Wall Frames': 'wall-frames',
-  'Floor Joists / Multistruts': 'floor-joists',
+  'Floor Joists': 'floor-joists',
   'Steelwood': 'steelwood',
   'Site Measuring': 'site-measuring',
   'Franna Crane Rental': 'franna-crane-rental',
@@ -51,7 +51,7 @@ const SLUG_MAP: Record<string, string> = {
 const TIMBER_TITLES = new Set([
   'Timber Roof Trusses',
   'Wall Frames',
-  'Floor Joists / Multistruts',
+  'Floor Joists',
   'Steelwood',
 ]);
 
