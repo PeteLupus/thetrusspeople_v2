@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { SERVICE_AREAS } from '@/lib/constants';
 
 const pillVariants = {
@@ -17,6 +17,7 @@ export default function ServiceAreas({ areas }: ServiceAreasProps) {
   const items = areas ?? SERVICE_AREAS;
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section className="bg-charcoal py-12">
@@ -28,8 +29,8 @@ export default function ServiceAreas({ areas }: ServiceAreasProps) {
           ref={ref}
           className="flex flex-wrap justify-center gap-3"
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } } }}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
+          initial={shouldReduceMotion ? 'visible' : 'hidden'}
+          animate={shouldReduceMotion ? 'visible' : isInView ? 'visible' : 'hidden'}
         >
           {items.map((area, i) => (
             <motion.span

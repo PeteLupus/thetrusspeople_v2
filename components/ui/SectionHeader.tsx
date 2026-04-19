@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 
 const wordVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -25,6 +25,7 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const shouldReduceMotion = useReducedMotion();
   const words = title.split(' ');
 
   return (
@@ -35,8 +36,8 @@ export default function SectionHeader({
       <motion.h2
         className={`font-display text-3xl font-bold uppercase leading-tight tracking-tight md:text-4xl ${light ? 'text-white' : 'text-charcoal'}`}
         variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
-        initial="hidden"
-        animate={isInView ? 'visible' : 'hidden'}
+        initial={shouldReduceMotion ? 'visible' : 'hidden'}
+        animate={shouldReduceMotion ? 'visible' : isInView ? 'visible' : 'hidden'}
       >
         {words.map((word, i) => (
           <motion.span

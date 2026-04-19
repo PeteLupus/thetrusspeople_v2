@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import ScrollReveal, { ScrollRevealItem } from '@/components/animations/ScrollReveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { PRODUCTS_SECTION, PRODUCTS } from '@/lib/constants';
@@ -55,6 +55,7 @@ const TIMBER_TITLES = new Set([
 ]);
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
+  const shouldReduceMotion = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -62,6 +63,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), { stiffness: 400, damping: 30 });
 
   function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (shouldReduceMotion) return;
     const rect = e.currentTarget.getBoundingClientRect();
     x.set((e.clientX - rect.left) / rect.width - 0.5);
     y.set((e.clientY - rect.top) / rect.height - 0.5);
