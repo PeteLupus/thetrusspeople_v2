@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   description:
     "Timber roof trusses, wall frames, floor joists & Steelwood systems for Melbourne & Victoria builders. 100% Australian-made. Family-owned since 2006. Coolaroo VIC.",
   keywords:
-    "timber roof trusses Melbourne, wall frames Melbourne, floor joists Melbourne, Multistruts Melbourne, Steelwood joists Melbourne, roof truss manufacturer Victoria, prefabricated trusses Coolaroo, truss supplier Greater Melbourne, Australian made trusses, AS1684 compliant trusses, timber frames Victoria, roof truss delivery Melbourne, custom roof trusses, residential trusses Melbourne, commercial trusses Victoria",
+    "timber roof trusses Melbourne, wall frames Melbourne, floor joists Melbourne, floor joist manufacturer Victoria, Multistruts Melbourne, Steelwood joists Melbourne, roof truss manufacturer Victoria, prefabricated trusses Coolaroo, truss supplier Greater Melbourne, Australian made trusses, AS1684 compliant trusses, timber frames Victoria, roof truss delivery Melbourne, custom roof trusses, residential trusses Melbourne, commercial trusses Victoria, Geelong trusses, Ballarat trusses, Bendigo trusses, Mornington Peninsula trusses, Bellarine Peninsula trusses",
   robots: "index, follow",
   alternates: {
     canonical: BASE_URL,
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     siteName: "The Truss People",
     images: [
       {
-        url: "/assets/og-image.jpg",
+        url: "/assets/hero-1.jpg",
         width: 1200,
         height: 630,
         alt: "The Truss People — Timber Roof Trusses & Wall Frames Melbourne",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     title: "Roof Trusses & Wall Frames Melbourne | The Truss People",
     description:
       "Family-owned timber roof truss & wall frame manufacturer. 100% Australian-made. Serving Melbourne & Victoria since 2006.",
-    images: ["/assets/og-image.jpg"],
+    images: ["/assets/hero-1.jpg"],
   },
   verification: {
     // Replace with your Google Search Console verification code after deployment
@@ -88,11 +88,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "LocalBusiness",
+              "@type": ["LocalBusiness", "GeneralContractor"],
               name: "The Truss People",
               description:
-                "Family-owned timber roof truss and wall frame manufacturer in Melbourne, Victoria. 100% Australian-made products engineered to AS standards.",
-              url: "https://thetrusspeople.com.au",
+                "Family-owned timber roof truss, wall frame and floor joist manufacturer in Melbourne, Victoria. 100% Australian-made products engineered to AS standards.",
+              url: BASE_URL,
               telephone: "+61393096889",
               email: "info@thetrusspeople.com.au",
               address: {
@@ -119,6 +119,7 @@ export default function RootLayout({
                 { "@type": "City", name: "Ballarat" },
                 { "@type": "City", name: "Bendigo" },
                 { "@type": "Place", name: "Mornington Peninsula" },
+                { "@type": "Place", name: "Bellarine Peninsula" },
               ],
               memberOf: [
                 { "@type": "Organization", name: "FTMA Australia" },
@@ -127,10 +128,7 @@ export default function RootLayout({
               makesOffer: [
                 {
                   "@type": "Offer",
-                  itemOffered: {
-                    "@type": "Product",
-                    name: "Timber Roof Trusses",
-                  },
+                  itemOffered: { "@type": "Product", name: "Timber Roof Trusses" },
                 },
                 {
                   "@type": "Offer",
@@ -138,11 +136,11 @@ export default function RootLayout({
                 },
                 {
                   "@type": "Offer",
-                  itemOffered: { "@type": "Product", name: "Floor Joists & Multistruts" },
+                  itemOffered: { "@type": "Product", name: "Floor Joists" },
                 },
                 {
                   "@type": "Offer",
-                  itemOffered: { "@type": "Product", name: "Steelwood Joists" },
+                  itemOffered: { "@type": "Product", name: "Steelwood" },
                 },
                 {
                   "@type": "Offer",
@@ -152,8 +150,19 @@ export default function RootLayout({
                   "@type": "Offer",
                   itemOffered: { "@type": "Service", name: "Franna Crane Rental" },
                 },
+                {
+                  "@type": "Offer",
+                  itemOffered: { "@type": "Service", name: "Delivery" },
+                },
               ],
-              openingHours: "Mo-Fr 07:00-16:00",
+              openingHoursSpecification: [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                  opens: "07:00",
+                  closes: "16:00",
+                },
+              ],
               priceRange: "$$",
             }),
           }}

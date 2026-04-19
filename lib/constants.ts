@@ -302,7 +302,7 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
     },
     'floor-joists': {
         slug: 'floor-joists',
-        title: 'Floor Joists / Multistruts',
+        title: 'Floor Joists',
         tagline: 'Engineered floor joist and Multistrut systems for reliable residential floor framing across Melbourne and Victoria.',
         heroImage: '/assets/product-floor-joists.jpg',
         metaTitle: 'Floor Joists & Multistruts Melbourne | The Truss People',
@@ -768,7 +768,7 @@ export const CONTACT_INFO: ContactInfo[] = [
 export const PROJECT_TYPES = [
     'Timber Roof Trusses',
     'Wall Frames',
-    'Floor Joists / Multistruts',
+    'Floor Joists',
     'Steelwood',
     'Site Measuring',
     'Franna Crane Rental',
@@ -800,7 +800,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
         links: [
             { label: 'Timber Roof Trusses', href: '/products/timber-roof-trusses' },
             { label: 'Wall Frames', href: '/products/wall-frames' },
-            { label: 'Floor Joists / Multistruts', href: '/products/floor-joists' },
+            { label: 'Floor Joists', href: '/products/floor-joists' },
             { label: 'Steelwood', href: '/products/steelwood' },
             { label: 'Site Measuring', href: '/products/site-measuring' },
             { label: 'Franna Crane Rental', href: '/products/franna-crane-rental' },
@@ -839,7 +839,7 @@ export const QUOTE_STEP_LABELS = ['Your Details', 'Project Info', 'Upload Plans'
 export const QUOTE_PROJECT_TYPES: { value: string; label: string }[] = [
     { value: 'Timber Roof Trusses', label: 'Timber Roof Trusses' },
     { value: 'Wall Frames', label: 'Wall Frames' },
-    { value: 'Floor Joists / Multistruts', label: 'Floor Joists / Multistruts' },
+    { value: 'Floor Joists', label: 'Floor Joists' },
     { value: 'Steelwood', label: 'Steelwood' },
     { value: 'Site Measuring', label: 'Site Measuring' },
     { value: 'Franna Crane Rental', label: 'Franna Crane Rental' },

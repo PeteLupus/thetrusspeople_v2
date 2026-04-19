@@ -65,7 +65,7 @@ export default function Hero({ data, trustItems }: HeroProps) {
           <Image
             key={src}
             src={src}
-            alt="Timber roof trusses being manufactured"
+            alt={i === 0 ? "Timber roof trusses manufactured at The Truss People Coolaroo facility" : i === 1 ? "Wall frame and truss installation on a Melbourne residential build" : "Precision timber framing by The Truss People Melbourne"}
             fill
             className={`object-cover transition-opacity duration-1000 ${
               i === activeIndex ? 'opacity-100' : 'opacity-0'
@@ -111,8 +111,9 @@ export default function Hero({ data, trustItems }: HeroProps) {
               style={{ color: '#ffffff', textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
             >
               <span className="block">Melbourne&apos;s Trusted</span>
-              <span className="block">Timber Roof Truss &amp;</span>
-              <span className="block">Wall Frame Manufacturer</span>
+              <span className="block">Timber Roof Truss,</span>
+              <span className="block">Wall Frame &amp; Floor Joist</span>
+              <span className="block">Manufacturer</span>
             </h1>
             <p
               className="mb-8 max-w-xl text-base leading-relaxed text-white md:text-lg"

@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     const map: Record<string, string> = {
       'Timber Roof Trusses': 'timber-roof-trusses',
       'Wall Frames': 'wall-frames',
-      'Floor Joists / Multistruts': 'floor-joists',
+      'Floor Joists': 'floor-joists',
       'Steelwood': 'steelwood',
       'Site Measuring': 'site-measuring',
       'Franna Crane Rental': 'franna-crane-rental',
