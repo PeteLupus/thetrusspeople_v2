@@ -37,6 +37,7 @@ export interface GalleryItem {
   title: string;
   description: string;
   large?: boolean;
+  location?: string;
 }
 
 export interface Testimonial {

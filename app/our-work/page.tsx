@@ -73,6 +73,15 @@ export default function OurWorkPage() {
                                             }
                                         />
                                     </div>
+                                    {/* Location badge — always visible */}
+                                    {item.location && (
+                                        <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-charcoal/75 px-3 py-1 backdrop-blur-sm">
+                                            <svg className="h-3 w-3 text-terracotta" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                                            </svg>
+                                            <span className="text-xs font-medium text-white">{item.location}</span>
+                                        </div>
+                                    )}
                                     {/* Hover Overlay */}
                                     <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-charcoal/80 via-transparent to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                         <h3 className="translate-y-4 font-heading text-xl font-semibold text-white transition-transform duration-300 group-hover:translate-y-0">
