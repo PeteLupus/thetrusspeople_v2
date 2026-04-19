@@ -11,11 +11,11 @@ import type { Product } from '@/lib/types';
 /** Condensed one-liner descriptions for the homepage cards */
 const SHORT_DESCRIPTIONS: Record<string, string> = {
   'Timber Roof Trusses':
-    'Custom-engineered roof trusses for residential and light commercial builds. AS/NZS certified, 100% Australian timber.',
+    'Custom-engineered roof trusses for residential and light commercial builds. AS certified, 100% Australian timber.',
   'Wall Frames':
     'Precision timber wall frames, pre-cut and site-ready. Custom-designed to your plans and delivered on schedule.',
-  'Floor Joists / Multistruts':
-    'Spanjoist and Multistrut systems with superior span capabilities. Load-optimized and site-ready.',
+  'Floor Joists':
+    'Multistrut, Span Joists, Steelwood and I-joist systems. Complete floor framing solutions — load-optimized and site-ready.',
   'Steelwood':
     'Timber and galvanised steel trusses spanning up to 10m floors. Reduces concrete slab costs by up to 50%.',
   'Site Measuring':

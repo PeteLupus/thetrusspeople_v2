@@ -31,9 +31,9 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/thetrusspeople/';
 // Hero
 export const HERO = {
     label: 'Family-Owned & Australian-Made Since 2006',
-    title: "Melbourne's Trusted Timber Roof Truss & Wall Frame Manufacturer",
+    title: "Melbourne's Trusted Timber Roof Truss, Wall Frame & Floor Joist Manufacturer",
     description:
-        'Two brothers. One promise. Precision-engineered timber roof trusses and wall frames, 100% Australian-made with honest lead times. Serving builders across Greater Melbourne, Geelong, Ballarat, Bendigo and the Mornington Peninsula.',
+        'Two brothers. One promise. Precision-engineered timber roof trusses, wall frames & floor joists, 100% Australian-made with honest lead times. Serving builders across Greater Melbourne and Regional Victoria including Geelong, Ballarat, Bendigo, Mornington and Bellarine Peninsulas.',
     ctaPrimary: 'Get a Free Quote',
     ctaSecondary: 'Our Products',
     backgroundImages: [
@@ -58,7 +58,7 @@ export const TRUST_ITEMS: TrustItem[] = [
     },
     {
         icon: 'AS',
-        title: 'AS/NZS Certified',
+        title: 'AS Certified',
         description: 'Engineered to Australian Standards',
         href: '/our-work',
     },
@@ -69,7 +69,7 @@ export const ABOUT = {
     label: 'About Us',
     title: 'Two Brothers. One Promise. Built to Last.',
     description:
-        'In 2006, brothers Victor and Tony Manoski stepped in to save a struggling truss plant from closing. Having worked side by side since their teenage years, they re-opened the doors under a new name: The Truss People. Today, from our Coolaroo facility, we manufacture precision-engineered timber roof trusses and wall frames for builders across Melbourne and regional Victoria.',
+        'In 2006, brothers Victor and Tony Manoski stepped in to save a struggling truss plant from closing. Having worked side by side since their teenage years, they purchased the business and re-opened the doors under a new name: The Truss People. Today, from our Coolaroo facility, we manufacture precision-engineered timber roof trusses, wall frames and floor systems for builders across Melbourne and regional Victoria.',
     image: '/assets/two-brothers.jpg',
 };
 
@@ -77,7 +77,7 @@ export const ACCORDION_ITEMS: AccordionItem[] = [
     {
         title: 'Engineered Right',
         content:
-            'Every roof truss and wall frame is detailed to your plans and engineered to AS/NZS standards. We partner with Multinail - an Australian engineering company - for our nail plates, software and connector systems. No shortcuts, no compromises.',
+            'Every roof truss and wall frame is detailed to your plans and engineered to AS standards. We partner with Multinail — an Australian engineering company — for our nail plates, software and connector systems. No shortcuts, no compromises.',
     },
     {
         title: 'Honest Lead Times',
@@ -87,12 +87,12 @@ export const ACCORDION_ITEMS: AccordionItem[] = [
     {
         title: '100% Australian Made',
         content:
-            'All our timber is Australian-grown. All nail plates and connectors are Australian-made. Every truss and frame is manufactured right here in Coolaroo, Melbourne. We source from trusted local suppliers including Meyer Timber, VTW and City Timber.',
+            'All our timber is Australian-grown. All nail plates and connectors are Australian-made. Every truss and frame prefabricated product is manufactured right here in Coolaroo, Melbourne. We source from trusted local suppliers including Meyer Timber, VTW and City Timber.',
     },
     {
         title: 'Personal Service',
         content:
-            'When you call, you speak directly with our detailers, engineers or production leads - not an automated system. We\'re a family business with long-time employees who know the building industry inside out.',
+            'When you call, you speak directly with our detailers, engineers, production leads, or business owners — not an automated system. We\'re a family business with long-term employees who know the building industry inside out.',
     },
     {
         title: 'Practical Design',
@@ -106,7 +106,7 @@ export const PRODUCTS_SECTION = {
     label: 'Products & Services',
     title: 'Timber Framing, Delivery & Site Services',
     description:
-        'Every product is manufactured from 100% Australian timber at our Coolaroo facility, engineered to AS/NZS standards using Multinail technology.',
+        'Every product is manufactured from 100% Australian timber at our Coolaroo facility, engineered to AS standards using Multinail technology.',
 };
 
 export const PRODUCTS: Product[] = [
@@ -115,7 +115,7 @@ export const PRODUCTS: Product[] = [
         description:
             'Custom-engineered timber roof trusses detailed to your plans. From standard gable to complex hip designs, every truss is built for residential and light commercial projects across Melbourne and Victoria.',
         features: [
-            'Engineered to AS/NZS standards',
+            'Engineered to AS1684 standards',
             '100% Australian timber',
             'Multinail nail plates & connectors',
         ],
@@ -135,13 +135,14 @@ export const PRODUCTS: Product[] = [
         image: '/assets/product-wall-frames.jpg',
     },
     {
-        title: 'Floor Joists / Multistruts',
+        title: 'Floor Joists',
         description:
-            'Engineered floor joist and Multistrut systems for residential builds. Spanning solutions including Spanjoists, Multistruts, and traditional floor joists — load-optimized and site-ready.',
+            'Complete floor system solutions for residential and light commercial builds. Multistrut for standard spans, Span Joists (Longreach) for long spans, Steelwood for commercial-grade high loads, and I-joists. All engineered to your plans and manufactured at our Coolaroo facility.',
         features: [
-            'Spanjoist & Multistrut options',
-            'Superior span capabilities',
-            'Load-optimized engineering',
+            'Multistrut — standard spans',
+            'Span Joists (Longreach) — long spans',
+            'Steelwood — commercial grade, greater loads',
+            'I-joists available',
         ],
         icon: 'floor',
         image: '/assets/product-floor-joists.jpg',
@@ -149,10 +150,11 @@ export const PRODUCTS: Product[] = [
     {
         title: 'Steelwood',
         description:
-            'Multinail Steelwood structural trusses combining solid timber and galvanised steel. Floor spans up to 10 metres — ideal for demanding residential and light commercial applications.',
+            'The Truss People supplies Multinail Steelwood structural trusses for residential and light commercial applications across Melbourne and regional Victoria. Steelwood trusses combine solid timber top and bottom chords with galvanised steel diagonal web members — engineered for builds that demand long spans, high load capacity, and reliable performance. Steelwood uses vertical timber compression members and diagonal galvanised steel tension webs, which from an engineering perspective is superior to V-webbed joist systems and can carry higher loads. Floor spans reach up to 10 metres and roof spans up to 20 metres with most sheet roofing materials. Manufactured off-site and delivered when required, Steelwood is simple and efficient to install. It integrates seamlessly with our timber roof trusses, wall frames, and floor joist systems as part of a complete framing solution — and in many cases can reduce traditional concrete slab construction costs by up to 50%.',
         features: [
             'Timber & galvanised steel construction',
             'Floor spans up to 10 metres',
+            'Roof spans up to 20 metres',
             'Reduces concrete slab costs by up to 50%',
         ],
         icon: 'steelwood',
@@ -185,11 +187,12 @@ export const PRODUCTS: Product[] = [
     {
         title: 'Delivery',
         description:
-            'Direct-to-site delivery across Melbourne and regional Victoria. Our fleet handles full truss, frame, and floor system loads — on time, every time.',
+            'The Truss People operates our own delivery fleet from our Coolaroo manufacturing facility. When your trusses, wall frames, or floor systems are ready, we load them onto our trucks and deliver directly to your building site across Melbourne and regional Victoria by one of our experienced and competent crane truck operators.\n\nWe don\'t outsource delivery to third-party transport companies. Our drivers know how to handle timber framing products — they understand the weight, the dimensions, and the care required to get your order to site without damage. That means fewer delays, fewer disputes, and fewer headaches for you.\n\nThe Truss People and our drivers have experience and understand the requirements for oversize dimensioned loads — we take the headache away from the client and organise everything from escort vehicles, VicRoads permits, and traffic management to get your product to site.',
         features: [
+            'Own delivery fleet from Coolaroo',
+            'Experienced crane truck operators',
+            'Oversize load permits & VicRoads compliance',
             'Melbourne & regional Victoria coverage',
-            'Full framing package loads',
-            'Coordinated with your build schedule',
         ],
         icon: 'delivery',
         image: '/assets/product-delivery-v2.jpg',
@@ -205,12 +208,12 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
         tagline: 'Custom-engineered timber roof trusses manufactured at our Coolaroo facility, designed to your plans and delivered on schedule.',
         heroImage: '/assets/product-roof-trusses.jpg',
         metaTitle: 'Timber Roof Trusses Melbourne | The Truss People',
-        metaDescription: 'Custom-engineered timber roof trusses manufactured in Coolaroo, Melbourne. AS/NZS certified, 100% Australian timber, Multinail technology. Get a free quote.',
+        metaDescription: 'Custom-engineered timber roof trusses manufactured in Coolaroo, Melbourne. AS1684 certified, 100% Australian timber, Multinail technology. Get a free quote.',
         benefits: [
             {
                 icon: 'shield',
-                title: 'AS/NZS Certified',
-                description: 'Every truss is engineered to Australian and New Zealand structural standards. Fully certified and compliant for residential and light commercial builds.',
+                title: 'AS1684 Certified',
+                description: 'Every truss is engineered to AS1684 — the Australian standard for timber-framed construction. Fully certified and compliant for residential and light commercial builds.',
             },
             {
                 icon: 'timber',
@@ -234,7 +237,7 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
             'We\'ve been doing this since 2006. As a family-owned business, we take pride in personal service — when you call, you speak directly with our detailers, engineers, or production team. Not a call centre. We quote quickly, manufacture accurately, and deliver when we say we will.',
         ],
         features: [
-            'Engineered to AS/NZS standards',
+            'Engineered to AS1684 standards',
             '100% Australian timber',
             'Multinail nail plates & connectors',
             'Standard gable to complex hip designs',
@@ -264,7 +267,7 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
             {
                 icon: 'shield',
                 title: 'Australian Standards',
-                description: 'All wall frames are engineered and manufactured to comply with AS/NZS structural standards for residential and light commercial construction.',
+                description: 'All wall frames are engineered and manufactured to comply with AS structural standards for residential and light commercial construction.',
             },
             {
                 icon: 'zap',
@@ -549,7 +552,7 @@ export const STATS: StatItem[] = [
     { number: 20, suffix: '+', label: 'Years in Business' },
     { number: 100, suffix: '%', label: 'Australian Made' },
     { number: 30, suffix: '+', label: 'Years Combined Experience' },
-    { number: 100, suffix: '%', label: 'AS/NZS Compliant' },
+    { number: 100, suffix: '%', label: 'AS Certified' },
 ];
 
 // Gallery

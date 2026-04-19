@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   description:
     "Timber roof trusses, wall frames, floor joists & Steelwood systems for Melbourne & Victoria builders. 100% Australian-made. Family-owned since 2006. Coolaroo VIC.",
   keywords:
-    "timber roof trusses Melbourne, wall frames Melbourne, floor joists Melbourne, Multistruts Melbourne, Steelwood joists Melbourne, roof truss manufacturer Victoria, prefabricated trusses Coolaroo, truss supplier Greater Melbourne, Australian made trusses, AS NZS compliant trusses, timber frames Victoria, roof truss delivery Melbourne, custom roof trusses, residential trusses Melbourne, commercial trusses Victoria",
+    "timber roof trusses Melbourne, wall frames Melbourne, floor joists Melbourne, Multistruts Melbourne, Steelwood joists Melbourne, roof truss manufacturer Victoria, prefabricated trusses Coolaroo, truss supplier Greater Melbourne, Australian made trusses, AS1684 compliant trusses, timber frames Victoria, roof truss delivery Melbourne, custom roof trusses, residential trusses Melbourne, commercial trusses Victoria",
   robots: "index, follow",
   alternates: {
     canonical: BASE_URL,
@@ -91,7 +91,7 @@ export default function RootLayout({
               "@type": "LocalBusiness",
               name: "The Truss People",
               description:
-                "Family-owned timber roof truss and wall frame manufacturer in Melbourne, Victoria. 100% Australian-made products engineered to AS/NZS standards.",
+                "Family-owned timber roof truss and wall frame manufacturer in Melbourne, Victoria. 100% Australian-made products engineered to AS standards.",
               url: "https://thetrusspeople.com.au",
               telephone: "+61393096889",
               email: "info@thetrusspeople.com.au",
