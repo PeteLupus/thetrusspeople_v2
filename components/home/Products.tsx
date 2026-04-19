@@ -3,12 +3,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import ScrollReveal, { ScrollRevealItem } from '@/components/animations/ScrollReveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { PRODUCTS_SECTION, PRODUCTS } from '@/lib/constants';
 import type { Product } from '@/lib/types';
 
-/** Condensed one-liner descriptions for the homepage cards */
 const SHORT_DESCRIPTIONS: Record<string, string> = {
   'Timber Roof Trusses':
     'Custom-engineered roof trusses for residential and light commercial builds. AS certified, 100% Australian timber.',
@@ -47,7 +47,6 @@ const SLUG_MAP: Record<string, string> = {
   'Delivery': 'delivery',
 };
 
-/** Timber products (top row — 4 columns) */
 const TIMBER_TITLES = new Set([
   'Timber Roof Trusses',
   'Wall Frames',
@@ -56,50 +55,70 @@ const TIMBER_TITLES = new Set([
 ]);
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), { stiffness: 400, damping: 30 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), { stiffness: 400, damping: 30 });
+
+  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  }
+
+  function onMouseLeave() {
+    x.set(0);
+    y.set(0);
+  }
+
   return (
     <ScrollRevealItem key={product._id ?? index}>
-      <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-        {/* Product image — top of card */}
-        {product.image && (
-          <div className="relative h-48 w-full overflow-hidden">
-            <Image
-              src={product.image}
-              alt={product.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            />
-            {/* Subtle gradient overlay at bottom for smooth transition into content */}
-            <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white/60 to-transparent" />
-          </div>
-        )}
+      <div style={{ perspective: '1000px' }} className="h-full">
+        <motion.div
+          style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseLeave}
+          className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-white transition-shadow duration-300 hover:shadow-xl"
+        >
+          {product.image && (
+            <div className="relative h-48 w-full overflow-hidden">
+              <Image
+                src={product.image}
+                alt={product.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white/60 to-transparent" />
+            </div>
+          )}
 
-        {/* Content */}
-        <div className="flex flex-1 flex-col p-5">
-          <h3 className="mb-2 font-display text-lg font-bold uppercase tracking-tight text-charcoal">
-            {product.title}
-          </h3>
-          <p className="mb-5 text-sm leading-relaxed text-text-light">
-            {SHORT_DESCRIPTIONS[product.title] ?? product.description}
-          </p>
+          <div className="flex flex-1 flex-col p-5">
+            <h3 className="mb-2 font-display text-lg font-bold uppercase tracking-tight text-charcoal">
+              {product.title}
+            </h3>
+            <p className="mb-5 text-sm leading-relaxed text-text-light">
+              {SHORT_DESCRIPTIONS[product.title] ?? product.description}
+            </p>
 
-          {/* CTAs — pushed to bottom */}
-          <div className="mt-auto flex items-center gap-3">
-            <Link
-              href={`/products/${SLUG_MAP[product.title] || product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-              className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-charcoal transition-all duration-300 hover:text-terracotta"
-            >
-              Learn More
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
-            </Link>
-            <Link
-              href="/quote"
-              className="ml-auto inline-flex items-center rounded-lg bg-terracotta px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-terracotta/85 hover:shadow-md"
-            >
-              Get Quote
-            </Link>
+            <div className="mt-auto flex items-center gap-3">
+              <Link
+                href={`/products/${SLUG_MAP[product.title] || product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-charcoal transition-all duration-300 hover:text-terracotta"
+              >
+                Learn More
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
+              </Link>
+              <Link
+                href="/quote"
+                className="ml-auto inline-flex items-center rounded-lg bg-terracotta px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-terracotta/85 hover:shadow-md"
+              >
+                Get Quote
+              </Link>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </ScrollRevealItem>
   );
@@ -123,7 +142,6 @@ export default function Products({ section, products }: ProductsProps) {
           <SectionHeader label={s.label} title={s.title} description={s.description} />
         </ScrollReveal>
 
-        {/* Top row — Timber Products (4 columns) */}
         <ScrollReveal stagger className="mt-14">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {timberProducts.map((product, i) => (
@@ -132,7 +150,6 @@ export default function Products({ section, products }: ProductsProps) {
           </div>
         </ScrollReveal>
 
-        {/* Bottom row — Services (3 columns, centered) */}
         <ScrollReveal stagger className="mt-6">
           <div className="flex justify-center">
             <div className="grid w-full max-w-[1050px] gap-6 sm:grid-cols-2 lg:grid-cols-3">
