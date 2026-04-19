@@ -783,6 +783,7 @@ export const SERVICE_AREAS = [
     'Ballarat',
     'Bendigo',
     'Mornington Peninsula',
+    'Bellarine Peninsula',
     'Sunbury',
     'Broadmeadows',
     'Coolaroo',
@@ -811,6 +812,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
         links: [
             { label: 'About Us', href: '#about' },
             { label: 'Our Work', href: '/our-work' },
+            { label: 'FAQ', href: '/faq' },
             { label: 'Testimonials', href: '#testimonials' },
             { label: 'Get a Quote', href: '/quote' },
         ],
