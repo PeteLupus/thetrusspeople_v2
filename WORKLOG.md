@@ -73,6 +73,10 @@ If blog/FAQ section needs new page design → brief Gemini with:
 2026-04-11 — Initial WORKLOG seeded. Site LIVE on Vercel. 
              Victoria AI Agent v4 in production. No GA4 or GSC yet.
              Blog/FAQ content: not started.
+2026-04-20 — OPS-ORDER-TTP-001 initiated. Branch: feature/content-seo-launch-prep.
+             Phase 0: CLAUDE.md/GEMINI.md/CODEX.md rectified. Sanity CMS deferred, reasoning documented.
+             GCS (not Drive) confirmed as file storage. Stack in all docs now matches package.json.
+             Phase 0 commit: docs: rectify CLAUDE.md/GEMINI.md/CODEX.md to match actual stack; defer Sanity integration
 ```
 
 ---

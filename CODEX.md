@@ -75,7 +75,7 @@ Baton is now with CC. Do not start new tasks without a new WORKLOG assignment.
 ### Frontend
 - React 19, Next.js (App Router), Tailwind CSS
 - Framer Motion for animations (Goldmark, Truss People projects)
-- Sanity CMS (Truss People V2) — use `writeClient.patch()` for updates, never overwrite full documents
+- No CMS on Truss People V2 — content is in `lib/constants.ts` (Sanity evaluated and deferred 19 APR 2026)
 
 ### Backend / Infra
 - Node.js, Express
@@ -167,7 +167,7 @@ When something breaks:
 | Project | Path | Stack |
 |---------|------|-------|
 | Goldmark Painting (LIVE) | `~/Projects/clients/golub/goldmark-painting-v2/` | Static HTML, Vanilla CSS/JS |
-| Truss People V2 | `~/Projects/clients/truss-people/v2/` | Next.js, React 19, Sanity CMS, Tailwind |
+| Truss People V2 | `~/Projects/clients/truss-people/v2/` | Next.js, React 19, Tailwind, SendGrid, GCS |
 | AI Influencer Pipeline | `~/Projects/products/ai-influencer/pipeline-wavespeed/` | Python, Claude API, Wavespeed, Google Drive |
 | Luna Pinterest Scraper | `~/Projects/products/ai-influencer/luna-scraper/` | Node.js, Apify, Docker |
 | SEO Ops | `~/Projects/tools/seo-ops/` | Node.js, Google Search Console |

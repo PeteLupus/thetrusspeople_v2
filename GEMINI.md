@@ -90,7 +90,7 @@ If it doesn't make someone say "holy shit" — it's not done.
 - **Framework:** Next.js (App Router), React 19
 - **Styling:** Tailwind CSS — use utility classes in specs, not custom CSS
 - **Animations:** Framer Motion
-- **CMS:** Sanity (Truss People V2 only)
+- **CMS:** None currently — content hardcoded in `lib/constants.ts` (Sanity deferred, see CLAUDE.md)
 - **Deploy:** Vercel
 
 **EXCEPTION — Goldmark Painting:** Static HTML + vanilla CSS/JS. No React. No Framer Motion. No Tailwind.
@@ -106,7 +106,7 @@ Check the project in ACTIVE PROJECTS before speccing — don't assume Next.js.
 | Project | Vibe | Notes |
 |---------|------|-------|
 | Goldmark Painting | Premium tradie. Trust + quality | **Static HTML/vanilla CSS — NO Framer Motion, NO React, NO Tailwind** |
-| Truss People V2 | Professional structural engineering | Next.js, Sanity CMS, Framer Motion, clean corporate |
+| Truss People V2 | Professional structural engineering | Next.js, Framer Motion, clean corporate — no CMS |
 | AI Influencer (Luna) | Dark, modern, creator OS | Next.js, Pinterest aesthetic, image-heavy, dashboard UI |
 
 ---
