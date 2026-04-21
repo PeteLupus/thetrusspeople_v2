@@ -81,6 +81,15 @@ If blog/FAQ section needs new page design → brief Gemini with:
              Preview URL: https://thetrusspeople-v2-git-feature-c-7214cc-petars-projects-a03b8a08.vercel.app
              4 commits on feature/content-seo-launch-prep. Awaiting boss approval to merge to main.
              Phase 6 (domain/Google) blocked on operator intel from Annex E.
+2026-04-20 — Replaced about section image (two-brothers.jpg) with updated magazine article scan.
+             Committed [content] replace brothers in trusses about section image → pushed to main → Vercel auto-deploy triggered.
+2026-04-21 — Mission 1 (TTP GSC + domain staging) complete.
+             Domains staged on Vercel: thetrusspeople.com.au, www.thetrusspeople.com.au, preview.thetrusspeople.com.au
+             preview.thetrusspeople.com.au CNAME live (cname.vercel-dns.com) — client can review site at preview subdomain.
+             GSC intel: sc-domain:thetrusspeople.com.au already verified. Sitemaps previously submitted (http+https, 7 URLs, last 2025-10-30).
+             seo-ops CLI registered: clients/trusspeople.json. Sitemap submit deferred to flip day (canonical domain not live yet).
+             DNS at webstophosting.com.au (operator has cPanel access). Flip day: 1x A record edit only (www is CNAME → apex).
+             MX (Outlook 365), SPF, TXT (MS verify) must be preserved on flip.
 ```
 
 ---
@@ -88,10 +97,14 @@ If blog/FAQ section needs new page design → brief Gemini with:
 ## OPEN DECISIONS
 > Things that need a human call before moving forward.
 
-- [ ] GA4 — create property, get Measurement ID, add to site
-- [ ] GSC — submit sitemap (thetrusspeople.com.au/sitemap.xml)
+- [ ] FLIP DAY — edit apex A record in cPanel: thetrusspeople.com.au → 76.76.21.21 (www is CNAME → apex, no change needed)
+- [ ] FLIP DAY — verify site loads at thetrusspeople.com.au post-flip
+- [ ] FLIP DAY — confirm MX/email still live post-flip
+- [ ] FLIP DAY — seo-ops confirm sitemap: node src/index.js sitemap list -c trusspeople
+- [ ] FLIP DAY — seo-ops submit sitemap if needed: node src/index.js sitemap submit -c trusspeople
+- [ ] GA4 — create property, get Measurement ID, add to site (NEXT_PUBLIC_GA_ID env var)
 - [ ] Blog/FAQ strategy — what topics? Who writes? AI-assisted or manual?
-- [ ] Monthly project showcase — process for getting photos from client + uploading to Sanity
+- [ ] Monthly project showcase — process for getting photos from client + uploading to constants.ts
 - [ ] Victoria agent — live integration testing scheduled?
 
 ---
