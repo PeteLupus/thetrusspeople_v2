@@ -25,7 +25,7 @@ export const PHONE = '(03) 9309 6889';
 export const PHONE_HREF = 'tel:+61393096889';
 export const EMAIL = 'info@thetrusspeople.com.au';
 export const ADDRESS = '37-39 Glenelg Street, Coolaroo VIC 3048';
-export const FACEBOOK_URL = 'https://www.facebook.com/THE-TRUSS-PEOPLE-108692755843667/';
+export const FACEBOOK_URL = 'https://www.facebook.com/people/THE-TRUSS-PEOPLE/100027213897034/';
 export const INSTAGRAM_URL = 'https://www.instagram.com/thetrusspeople/';
 
 // Hero
