@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     siteName: "The Truss People",
     images: [
       {
-        url: "/assets/hero-1.jpg",
+        url: "/assets/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "The Truss People — Timber Roof Trusses & Wall Frames Melbourne",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: "Roof Trusses & Wall Frames Melbourne | The Truss People",
     description:
       "Family-owned timber roof truss & wall frame manufacturer. 100% Australian-made. Serving Melbourne & Victoria since 2006.",
-    images: ["/assets/hero-1.jpg"],
+    images: ["/assets/og-image.jpg"],
   },
   verification: {
     // Replace with your Google Search Console verification code after deployment

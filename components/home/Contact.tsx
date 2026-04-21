@@ -112,6 +112,19 @@ export default function Contact({ section, contactInfo }: ContactProps) {
                   <a href={`mailto:${email}`} className="text-sm text-timber hover:underline">{email}</a>
                 </div>
               </div>
+
+              <div className="overflow-hidden rounded-xl border border-border">
+                <iframe
+                  src="https://www.google.com/maps?q=37-39+Glenelg+Street,+Coolaroo+VIC+3048&output=embed"
+                  width="100%"
+                  height="220"
+                  style={{ border: 0 }}
+                  allowFullScreen={false}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="The Truss People factory location — 37-39 Glenelg Street, Coolaroo VIC 3048"
+                />
+              </div>
             </div>
           </ScrollReveal>
 
