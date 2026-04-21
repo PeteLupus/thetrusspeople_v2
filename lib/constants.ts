@@ -715,6 +715,29 @@ export const OUR_WORK_ITEMS: GalleryItem[] = [
     },
 ];
 
+// Interstate projects — placeholder tiles, swap images once team provides real assets
+// TODO: Replace placeholder images with actual interstate delivery photos once received from team
+export const INTERSTATE_PROJECTS: GalleryItem[] = [
+    {
+        image: '/assets/our-work-09.jpg',
+        title: 'Interstate Delivery — South Australia',
+        description: 'Truss and frame package delivered to South Australia, coordinated end-to-end including oversize load logistics.',
+        location: 'South Australia',
+    },
+    {
+        image: '/assets/our-work-09.jpg',
+        title: 'Interstate Delivery — Tasmania',
+        description: 'Complete framing package delivered interstate to Tasmania with escort vehicles and transport coordination.',
+        location: 'Tasmania',
+    },
+    {
+        image: '/assets/our-work-09.jpg',
+        title: 'Interstate Delivery — New South Wales',
+        description: 'Timber roof trusses and wall frames delivered to New South Wales, VicRoads permits and logistics managed by The Truss People.',
+        location: 'New South Wales',
+    },
+];
+
 // Testimonials
 export const TESTIMONIALS_SECTION = {
     label: 'What Builders Say',

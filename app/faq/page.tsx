@@ -27,6 +27,11 @@ const FAQ_ITEMS = [
             'We deliver across Greater Melbourne and regional Victoria from our Coolaroo facility. This includes Geelong, Ballarat, Bendigo, the Mornington Peninsula, and the Bellarine Peninsula. Delivery is handled by crane truck operators who have worked with us for over 10 years — not random third-party carriers. For oversize loads, we organise escort vehicles, VicRoads permits, and traffic management.',
     },
     {
+        title: 'Do you deliver interstate?',
+        content:
+            'Yes. While most of our work is across Greater Melbourne and regional Victoria, we\'ve delivered truss and frame packages interstate — including South Australia, Tasmania, and New South Wales. Our team handles oversize-load logistics end-to-end: VicRoads permits, escort vehicles, traffic management, and interstate transport coordination. If you\'re building outside Victoria, call us and we\'ll let you know what\'s feasible for your site and timeline.',
+    },
+    {
         title: 'Can you manufacture trusses for complex or non-standard roof designs?',
         content:
             'Yes. Our detailers handle standard gable, hip, Dutch gable, scissor, attic, and multi-level complex configurations. Every truss is engineered in-house to your specific plans using Multinail engineering software. If you\'re unsure whether your design is achievable, send us your plans and we\'ll assess it.',

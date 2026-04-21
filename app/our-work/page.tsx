@@ -9,7 +9,7 @@ import ScrollReveal from '@/components/animations/ScrollReveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Lightbox from '@/components/ui/Lightbox';
 import Button from '@/components/ui/Button';
-import { OUR_WORK_ITEMS } from '@/lib/constants';
+import { OUR_WORK_ITEMS, INTERSTATE_PROJECTS } from '@/lib/constants';
 import { fadeInUp } from '@/lib/utils';
 
 export default function OurWorkPage() {
@@ -83,6 +83,58 @@ export default function OurWorkPage() {
                                         </div>
                                     )}
                                     {/* Hover Overlay */}
+                                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-charcoal/80 via-transparent to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                        <h3 className="translate-y-4 font-heading text-xl font-semibold text-white transition-transform duration-300 group-hover:translate-y-0">
+                                            {item.title}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </ScrollReveal>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Beyond Victoria */}
+            <section className="bg-warm-white py-16 md:py-24">
+                <div className="mx-auto max-w-[1400px] px-6">
+                    <ScrollReveal>
+                        <SectionHeader
+                            label="Interstate Delivery"
+                            title="Beyond Victoria"
+                            description="Our delivery reach goes further than Melbourne and regional Victoria. We've delivered truss and frame packages interstate — including South Australia, Tasmania, and New South Wales — handling oversize-load logistics, VicRoads permits, escort vehicles, and interstate transport coordination end-to-end."
+                        />
+                    </ScrollReveal>
+                    <div className="mt-12 grid gap-6 md:grid-cols-3">
+                        {INTERSTATE_PROJECTS.map((item, i) => (
+                            <ScrollReveal key={i}>
+                                <div
+                                    className="group relative cursor-pointer overflow-hidden rounded-xl"
+                                    onClick={() =>
+                                        setLightbox({
+                                            isOpen: true,
+                                            src: item.image,
+                                            alt: item.title,
+                                        })
+                                    }
+                                >
+                                    <div className="relative aspect-[4/3]">
+                                        <Image
+                                            src={item.image}
+                                            alt={item.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                            sizes="(max-width: 768px) 100vw, 33vw"
+                                        />
+                                    </div>
+                                    {item.location && (
+                                        <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-charcoal/75 px-3 py-1 backdrop-blur-sm">
+                                            <svg className="h-3 w-3 text-terracotta" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                                            </svg>
+                                            <span className="text-xs font-medium text-white">{item.location}</span>
+                                        </div>
+                                    )}
                                     <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-charcoal/80 via-transparent to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                         <h3 className="translate-y-4 font-heading text-xl font-semibold text-white transition-transform duration-300 group-hover:translate-y-0">
                                             {item.title}
