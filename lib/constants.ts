@@ -828,10 +828,10 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     {
         title: 'Company',
         links: [
-            { label: 'About Us', href: '#about' },
+            { label: 'About Us', href: '/#about' },
             { label: 'Our Work', href: '/our-work' },
             { label: 'FAQ', href: '/faq' },
-            { label: 'Testimonials', href: '#testimonials' },
+            { label: 'Testimonials', href: '/#testimonials' },
             { label: 'Get a Quote', href: '/quote' },
         ],
     },

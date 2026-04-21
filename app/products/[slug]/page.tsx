@@ -21,11 +21,9 @@ export function generateStaticParams() {
   return Object.keys(PRODUCT_PAGES).map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Metadata {
-  // Need to handle this synchronously for static generation
-  // Next.js 16 passes params as a Promise in some contexts
-  const resolvedParams = params as unknown as { slug: string };
-  const product = PRODUCT_PAGES[resolvedParams.slug];
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const product = PRODUCT_PAGES[slug];
   if (!product) return { title: 'Product Not Found' };
   return {
     title: product.metaTitle,
