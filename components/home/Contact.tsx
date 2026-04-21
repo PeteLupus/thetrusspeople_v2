@@ -90,7 +90,14 @@ export default function Contact({ section, contactInfo }: ContactProps) {
                 </div>
                 <div>
                   <p className="font-heading text-sm font-semibold text-charcoal">Visit Our Factory</p>
-                  <p className="text-sm text-text-light">{address}</p>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=37-39+Glenelg+Street+Coolaroo+VIC+3048"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-timber hover:underline"
+                  >
+                    {address}
+                  </a>
                 </div>
               </div>
 
@@ -114,17 +121,22 @@ export default function Contact({ section, contactInfo }: ContactProps) {
                 </div>
               </div>
 
-              <div className="overflow-hidden rounded-xl border border-border">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=37-39+Glenelg+Street+Coolaroo+VIC+3048"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block overflow-hidden rounded-xl border border-border"
+                aria-label="Open in Google Maps"
+              >
                 <iframe
-                  src="https://www.openstreetmap.org/export/embed.html?bbox=144.9212%2C-37.6733%2C144.9412%2C-37.6533&layer=mapnik&marker=-37.6633%2C144.9312"
+                  src="https://maps.google.com/maps?q=37-39+Glenelg+Street+Coolaroo+VIC+3048&output=embed"
                   width="100%"
                   height="220"
-                  style={{ border: 0 }}
-                  allowFullScreen={false}
+                  style={{ border: 0, pointerEvents: 'none' }}
                   loading="lazy"
                   title="The Truss People factory location — 37-39 Glenelg Street, Coolaroo VIC 3048"
                 />
-              </div>
+              </a>
             </div>
           </ScrollReveal>
 
