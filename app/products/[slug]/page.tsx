@@ -140,7 +140,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 About This Product
               </span>
               <h2 className="mb-8 font-heading text-3xl font-bold text-charcoal md:text-4xl">
-                {product.title} Built to Last
+                {product.contentTitle ?? `${product.title} Built to Last`}
               </h2>
               <div className="space-y-4">
                 {product.content.map((paragraph, i) => (
@@ -183,7 +183,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               How It Works
             </span>
             <h2 className="font-heading text-3xl font-bold text-charcoal md:text-4xl">
-              From Plans to Delivery
+              {product.processTitle ?? 'From Plans to Delivery'}
             </h2>
           </div>
           <div className="grid gap-8 md:grid-cols-4">

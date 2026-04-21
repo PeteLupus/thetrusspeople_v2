@@ -18,12 +18,15 @@
 - [x] SEO basics (sitemap.ts, robots.ts, meta tags, JSON-LD LocalBusiness schema)
 - [x] Mobile responsive
 - [x] Victoria AI Agent — after-hours receptionist (Vapi + n8n, v4 production)
+- [x] Wow factor upgrades — 3D card tilt, word-by-word title reveal, ServiceAreas pill stagger (all with prefers-reduced-motion support)
+- [x] FAQ page (`/faq`) — SEO content page, linked in sitemap
+- [x] SEO upgrade — JSON-LD schema, keywords, OG image, alt text pass
 
 ## WHAT'S NEXT
-- [ ] SEO push — FAQ page, content for organic traffic
+- [ ] Connect domain `thetrusspeople.com.au` to Vercel project
 - [ ] Google Analytics — `NEXT_PUBLIC_GA_ID` env var (component already wired in)
-- [ ] Google Search Console — submit sitemap
-- [ ] Monthly project showcase content (photos → OUR_WORK_ITEMS in constants.ts)
+- [ ] Google Search Console — submit sitemap (`/sitemap.xml`)
+- [ ] Monthly project showcase content (photos → OUR_WORK_ITEMS in constants.ts) — need real job suburb/builder/type from Victor & Tony for 19 photos
 - [ ] Victoria agent — live integration testing
 
 ## SUB-PROJECTS

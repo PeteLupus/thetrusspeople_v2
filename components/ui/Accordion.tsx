@@ -8,19 +8,30 @@ import { cn } from '@/lib/utils';
 
 interface AccordionProps {
     items: AccordionItemType[];
+    defaultOpenAll?: boolean;
 }
 
-export default function Accordion({ items }: AccordionProps) {
-    const [activeIndex, setActiveIndex] = useState<number>(0);
+export default function Accordion({ items, defaultOpenAll }: AccordionProps) {
+    const [activeIndices, setActiveIndices] = useState<Set<number>>(
+        () => defaultOpenAll ? new Set(items.map((_, i) => i)) : new Set([0])
+    );
 
     const toggle = (index: number) => {
-        setActiveIndex(activeIndex === index ? -1 : index);
+        setActiveIndices(prev => {
+            const next = new Set(prev);
+            if (next.has(index)) {
+                next.delete(index);
+            } else {
+                next.add(index);
+            }
+            return next;
+        });
     };
 
     return (
         <div className="space-y-3">
             {items.map((item, i) => {
-                const isActive = activeIndex === i;
+                const isActive = activeIndices.has(i);
                 return (
                     <div
                         key={i}

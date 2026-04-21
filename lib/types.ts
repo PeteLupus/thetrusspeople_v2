@@ -78,8 +78,10 @@ export interface ProductPageData {
   metaDescription: string;
   benefits: ProductBenefit[];
   content: string[];
+  contentTitle?: string;
   features: string[];
   process: { step: string; description: string }[];
+  processTitle?: string;
 }
 
 // ─── Quote Form ────────────────────────────────────────────────────────────────

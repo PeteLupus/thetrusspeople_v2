@@ -9,22 +9,6 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import { PRODUCTS_SECTION, PRODUCTS } from '@/lib/constants';
 import type { Product } from '@/lib/types';
 
-const SHORT_DESCRIPTIONS: Record<string, string> = {
-  'Timber Roof Trusses':
-    'Custom-engineered roof trusses for residential and light commercial builds. AS certified, 100% Australian timber.',
-  'Wall Frames':
-    'Precision timber wall frames, pre-cut and site-ready. Custom-designed to your plans and delivered on schedule.',
-  'Floor Joists':
-    'Multistrut, Span Joists, Steelwood and I-joist systems. Complete floor framing solutions — load-optimized and site-ready.',
-  'Steelwood':
-    'Timber and galvanised steel trusses spanning up to 10m floors. Reduces concrete slab costs by up to 50%.',
-  'Site Measuring':
-    'Professional on-site measuring to ensure your framing is manufactured to exact specifications.',
-  'Franna Crane Rental':
-    'Franna crane hire with experienced operators to safely lift and position your trusses on site.',
-  'Delivery':
-    'Direct-to-site delivery across Melbourne and regional Victoria with our own fleet. On time, every time.',
-};
 
 interface ProductsSectionData {
   label?: string;
@@ -101,7 +85,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               {product.title}
             </h3>
             <p className="mb-5 text-sm leading-relaxed text-text-light">
-              {SHORT_DESCRIPTIONS[product.title] ?? product.description}
+              {product.shortDescription}
             </p>
 
             <div className="mt-auto flex items-center gap-3">

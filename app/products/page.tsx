@@ -7,7 +7,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Products & Services | The Truss People',
   description:
-    'Timber roof trusses, wall frames, floor joists, Multistruts and Steelwood systems — all 100% Australian-made at our Coolaroo facility, engineered to AS standards.',
+    'Timber roof trusses, wall frames, floor joists, Multistruts and Steelwood systems — all 100% Australian-made at our Coolaroo facility, engineered to AS1684 and relevant building codes.',
 };
 
 const SLUG_MAP: Record<string, string> = {

@@ -28,9 +28,9 @@ export default function Footer() {
                             />
                         </Link>
                         <p className="text-sm leading-relaxed text-gray-400">
-                            Family-owned timber roof truss and wall frame manufacturer in
-                            Coolaroo, Melbourne. Precision-engineered, 100% Australian-made
-                            products since 2006.
+                            Family-owned timber framing manufacturer in Coolaroo, Melbourne.
+                            Roof trusses, wall frames, floor joists and Steelwood —
+                            precision-engineered and 100% Australian-made since 2006.
                         </p>
 
                         {/* Social Links */}

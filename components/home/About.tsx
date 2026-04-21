@@ -57,7 +57,7 @@ export default function About({ data, accordionItems }: AboutProps) {
 
           <ScrollReveal delay={0.2}>
             <p className="mb-8 text-base leading-relaxed text-text-light">{about.description}</p>
-            <Accordion items={items} />
+            <Accordion items={items} defaultOpenAll />
           </ScrollReveal>
         </div>
       </div>

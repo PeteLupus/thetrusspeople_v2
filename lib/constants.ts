@@ -77,7 +77,7 @@ export const ACCORDION_ITEMS: AccordionItem[] = [
     {
         title: 'Engineered Right',
         content:
-            'Every roof truss and wall frame is detailed to your plans and engineered to AS standards. We partner with Multinail — an Australian engineering company — for our nail plates, software and connector systems. No shortcuts, no compromises.',
+            'Every roof truss and wall frame is detailed to your plans and engineered to AS1684 and relevant building codes. We partner with Multinail — an Australian engineering company — for our nail plates, software and connector systems. No shortcuts, no compromises.',
     },
     {
         title: 'Honest Lead Times',
@@ -92,7 +92,7 @@ export const ACCORDION_ITEMS: AccordionItem[] = [
     {
         title: 'Personal Service',
         content:
-            'When you call, you speak directly with our detailers, engineers, production leads, or business owners — not an automated system. We\'re a family business with long-term employees who know the building industry inside out.',
+            'When you call, you speak directly with our detailers, engineers, production leads or business owners — not an automated system. We\'re a family business with long-term employees who know the building industry inside out.',
     },
     {
         title: 'Practical Design',
@@ -106,7 +106,7 @@ export const PRODUCTS_SECTION = {
     label: 'Products & Services',
     title: 'Timber Framing, Delivery & Site Services',
     description:
-        'Every product is manufactured from 100% Australian timber at our Coolaroo facility, engineered to AS standards using Multinail technology.',
+        'Every product is manufactured from 100% Australian timber at our Coolaroo facility, engineered to AS1684 and relevant building codes using Multinail technology.',
 };
 
 export const PRODUCTS: Product[] = [
@@ -130,7 +130,7 @@ export const PRODUCTS: Product[] = [
             'Precision-manufactured timber wall frames designed and engineered to your specifications. Pre-cut and site-ready to keep your build on schedule.',
         features: [
             'Custom-designed to your plans',
-            'Australian standards compliant',
+            'AS1684 and relevant building codes',
             'Practical, installation-friendly design',
         ],
         icon: 'frame',
@@ -194,10 +194,10 @@ export const PRODUCTS: Product[] = [
         title: 'Delivery',
         shortDescription: 'Direct-to-site delivery across Melbourne and regional Victoria with experienced crane truck operators. On time, every time.',
         description:
-            'The Truss People coordinates direct-to-site delivery from our Coolaroo manufacturing facility. When your trusses, wall frames, or floor systems are ready, we load them onto our trucks and deliver directly to your building site across Melbourne and regional Victoria by one of our experienced and competent crane truck operators.\n\nWe don\'t outsource delivery to third-party transport companies. Our drivers know how to handle timber framing products — they understand the weight, the dimensions, and the care required to get your order to site without damage. That means fewer delays, fewer disputes, and fewer headaches for you.\n\nThe Truss People and our drivers have experience and understand the requirements for oversize dimensioned loads — we take the headache away from the client and organise everything from escort vehicles, VicRoads permits, and traffic management to get your product to site.',
+            'The Truss People coordinates direct-to-site delivery from our Coolaroo manufacturing facility. When your trusses, wall frames, or floor systems are ready, they\'re handled by experienced crane truck operators who have worked with us for over 10 years — they know the product, the dimensions, and the care required.\n\nWe don\'t use random third-party couriers. The same operators handle our timber framing deliveries every week, so your order gets to site without damage. That means fewer delays, fewer disputes, and fewer headaches for you.\n\nWe have experience with oversize dimensioned loads and organise everything — escort vehicles, VicRoads permits, and traffic management — to get your product to site.',
         features: [
-            'Own delivery fleet from Coolaroo',
-            'Experienced crane truck operators',
+            'Long-term crane truck operators — not random couriers',
+            '10+ years handling timber framing',
             'Oversize load permits & VicRoads compliance',
             'Melbourne & regional Victoria coverage',
         ],
@@ -264,7 +264,7 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
         tagline: 'Precision-manufactured timber wall frames designed to your specifications, pre-cut and site-ready to keep your build on schedule.',
         heroImage: '/assets/product-wall-frames.jpg',
         metaTitle: 'Timber Wall Frames Melbourne | The Truss People',
-        metaDescription: 'Precision-manufactured timber wall frames custom-designed to your plans. Australian standards compliant, practical installation-friendly design. Free quotes.',
+        metaDescription: 'Precision-manufactured timber wall frames custom-designed to your plans. AS1684 certified, practical installation-friendly design. Free quotes.',
         benefits: [
             {
                 icon: 'ruler',
@@ -273,8 +273,8 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
             },
             {
                 icon: 'shield',
-                title: 'Australian Standards',
-                description: 'All wall frames are engineered and manufactured to comply with AS structural standards for residential and light commercial construction.',
+                title: 'AS1684 Certified',
+                description: 'All wall frames are engineered and manufactured to comply with AS1684 and relevant building codes for residential and light commercial construction.',
             },
             {
                 icon: 'zap',
@@ -294,7 +294,7 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
         ],
         features: [
             'Custom-designed to your plans',
-            'Australian standards compliant',
+            'AS1684 and relevant building codes',
             'Practical, installation-friendly design',
             'Pre-cut and clearly labelled',
             'Seamless integration with our roof trusses',
@@ -317,36 +317,36 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
         benefits: [
             {
                 icon: 'shield',
-                title: 'Load-Optimized Engineering',
-                description: 'Every floor joist and Multistrut system is engineered to handle the specific load requirements of your project, ensuring structural integrity and performance.',
+                title: 'Load-Optimised Engineering',
+                description: 'Every floor system is engineered to handle the specific load requirements of your project — ensuring structural integrity and reliable performance.',
             },
             {
                 icon: 'timber',
-                title: 'Spanjoist & Multistrut Options',
-                description: 'We offer multiple floor framing systems to match your project — including Spanjoists for standard spans and Multistruts for long-span applications requiring superior strength.',
+                title: 'Four System Options',
+                description: 'Multistrut for standard spans, Spanjoist (Longreach) for long spans, Steelwood for commercial-grade high loads, and I-joists. We\'ll help you pick the right one.',
             },
             {
                 icon: 'zap',
                 title: 'Superior Span Capabilities',
-                description: 'Multistruts can span greater distances than traditional timber joists, reducing the need for intermediate supports and giving builders more flexibility in open-plan layouts.',
+                description: 'Spanjoist and Steelwood systems span greater distances than traditional timber joists — reducing intermediate supports and giving builders more flexibility in open-plan layouts.',
             },
             {
                 icon: 'users',
                 title: 'Expert Guidance',
-                description: 'Our team helps you select the right floor joist or Multistrut system for your project and ensures it integrates with your overall framing package.',
+                description: 'Our team helps you select the right floor system for your project and ensures it integrates seamlessly with your overall framing package.',
             },
         ],
         content: [
-            'The Truss People supplies engineered floor joist and Multistrut systems for residential builds across Melbourne and regional Victoria. Our floor framing solutions provide reliable, consistent performance for homes that demand structural integrity.',
-            'We offer Spanjoist systems for standard residential spans, and Multistruts for applications requiring longer spans and higher load capacity. Multistruts are lightweight, dimensionally stable, and can span greater distances than traditional solid timber — reducing the need for load-bearing walls and intermediate supports.',
-            'Floor joists and Multistruts are available as part of a complete framing package alongside our timber roof trusses and wall frames, or as a standalone supply. Our team will help you determine the right system for your span requirements and load specifications.',
+            'The Truss People supplies engineered floor system solutions for residential and light commercial builds across Melbourne and regional Victoria. We offer four systems so you can match the framing to the job — not the other way around.',
+            'Multistrut handles standard residential spans. Spanjoist (Longreach) is built for long spans where you want fewer intermediate supports. Steelwood is our commercial-grade option for high loads and demanding applications. I-joists round out the range for applications where they\'re the best fit.',
+            'Floor systems are available as part of a complete framing package alongside our timber roof trusses and wall frames, or as a standalone supply. Engineered to AS1684 and relevant building codes.',
         ],
         features: [
-            'Spanjoist & Multistrut options',
-            'Superior span capabilities',
-            'Load-optimized engineering',
-            'Lightweight & dimensionally stable',
-            'Available as part of full framing packages',
+            'Multistrut — standard spans',
+            'Spanjoist (Longreach) — long spans',
+            'Steelwood — commercial grade, greater loads',
+            'I-joists available',
+            'Engineered to AS1684 and relevant building codes',
             'Residential & light commercial applications',
         ],
         process: [
@@ -396,6 +396,7 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
             'Roof spans up to 20 metres',
             'Multinail engineered technology',
             'Reduces concrete slab costs up to 50%',
+            'Engineered to AS1684 and relevant building codes',
             'Integrates with full framing packages',
         ],
         process: [
@@ -434,6 +435,8 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
                 description: 'Our team has decades of combined experience reading builds and anticipating framing requirements. We measure what matters.',
             },
         ],
+        contentTitle: 'Site Measuring Done Right',
+        processTitle: 'How Site Measuring Works',
         content: [
             'The Truss People offers professional site measuring services for builders across Melbourne and regional Victoria. Before we manufacture your trusses, wall frames, or floor joists, our team can visit the site to verify dimensions and ensure everything is built to the exact specifications of your project.',
             'Site measuring is especially valuable for renovation work, additions, and projects where the as-built conditions may differ from the original plans. Our experienced measurers check roof lines, wall heights, floor levels, and structural openings — catching discrepancies before they become expensive manufacturing errors.',
@@ -483,6 +486,8 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
                 description: 'Our crane operators have extensive experience lifting and positioning timber roof trusses and wall frames on residential and light commercial builds.',
             },
         ],
+        contentTitle: 'Franna Crane Hire Done Right',
+        processTitle: 'How Crane Hire Works',
         content: [
             'The Truss People offers Franna crane hire for builders across Melbourne and regional Victoria. When your trusses and frames are ready for installation, our crane service ensures they are lifted and positioned safely and efficiently on site.',
             'A Franna crane is ideal for residential truss installation — compact enough to access tight building sites while powerful enough to lift heavy truss packages onto the roof structure. Our operators specialise in timber truss handling, so your frames are placed accurately and without damage.',
@@ -513,8 +518,8 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
         benefits: [
             {
                 icon: 'truck',
-                title: 'Our Own Fleet',
-                description: 'We deliver with our own trucks and drivers — no third-party couriers. Your trusses and frames are handled by people who know the product.',
+                title: 'Experienced Operators',
+                description: 'Your trusses and frames are handled by crane truck operators who\'ve worked with us for over 10 years — they know the product, the dimensions, and the care required.',
             },
             {
                 icon: 'clock',
@@ -524,7 +529,7 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
             {
                 icon: 'shield',
                 title: 'Safe Handling',
-                description: 'Our drivers are experienced in loading, transporting, and unloading timber framing packages. Product arrives to site in perfect condition.',
+                description: 'Our crane truck operators are experienced in loading, transporting, and unloading timber framing packages. Product arrives to site in perfect condition.',
             },
             {
                 icon: 'users',
@@ -532,17 +537,19 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
                 description: 'Delivery is scheduled around your framers and crane hire so everything arrives together — no wasted days waiting for materials.',
             },
         ],
+        contentTitle: 'Delivery Done Right',
+        processTitle: 'How Delivery Works',
         content: [
-            'The Truss People operates our own delivery fleet from our Coolaroo manufacturing facility. When your trusses, wall frames, or floor systems are ready, we load them onto our trucks and deliver directly to your building site across Melbourne and regional Victoria.',
-            'We don\'t outsource delivery to third-party transport companies. Our drivers know how to handle timber framing products — they understand the weight, the dimensions, and the care required to get your order to site without damage. That means fewer delays, fewer disputes, and fewer headaches for you.',
-            'Delivery is coordinated with your build schedule. If you\'ve booked crane hire through us, we time the delivery so your trusses arrive and go up on the same day. For builders running tight timelines on multi-unit or volume projects, this coordination is the difference between a smooth build week and a costly delay.',
+            'The Truss People coordinates direct-to-site delivery from our Coolaroo manufacturing facility to your building site across Melbourne and regional Victoria. When your trusses, wall frames, or floor systems are ready, they\'re handled by experienced crane truck operators who have worked with us for over 10 years.',
+            'We don\'t use random third-party couriers. The same operators handle our timber framing deliveries every week — they know how to load, transport, and unload truss and frame packages without damage. They understand the weight, the dimensions, and the care required. That means fewer delays, fewer disputes, and fewer headaches for you.',
+            'The Truss People and our crane truck operators have experience and understand the requirements for oversize dimensioned loads — we take the headache away from the client and organise everything from escort vehicles, VicRoads permits, and traffic management to get your product to site.',
         ],
         features: [
-            'Own fleet — no third-party transport',
+            'Long-term crane truck operators — not random couriers',
             'Melbourne & regional Victoria coverage',
             'Full framing package loads',
             'Coordinated with crane hire',
-            'Experienced drivers & loaders',
+            '10+ years handling timber framing',
             'On-time delivery commitment',
         ],
         process: [

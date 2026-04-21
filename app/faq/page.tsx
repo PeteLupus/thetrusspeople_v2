@@ -24,7 +24,7 @@ const FAQ_ITEMS = [
     {
         title: 'What areas do you deliver to?',
         content:
-            'We deliver across Greater Melbourne and regional Victoria from our Coolaroo facility. This includes Geelong, Ballarat, Bendigo, the Mornington Peninsula, and the Bellarine Peninsula. We operate our own delivery fleet — we don\'t outsource to third-party carriers. For oversize loads, we organise escort vehicles, VicRoads permits, and traffic management.',
+            'We deliver across Greater Melbourne and regional Victoria from our Coolaroo facility. This includes Geelong, Ballarat, Bendigo, the Mornington Peninsula, and the Bellarine Peninsula. Delivery is handled by crane truck operators who have worked with us for over 10 years — not random third-party carriers. For oversize loads, we organise escort vehicles, VicRoads permits, and traffic management.',
     },
     {
         title: 'Can you manufacture trusses for complex or non-standard roof designs?',

@@ -92,7 +92,7 @@ export default function RootLayout({
               "@type": ["LocalBusiness", "GeneralContractor"],
               name: "The Truss People",
               description:
-                "Family-owned timber roof truss, wall frame and floor joist manufacturer in Melbourne, Victoria. 100% Australian-made products engineered to AS standards.",
+                "Family-owned timber roof truss, wall frame and floor joist manufacturer in Melbourne, Victoria. 100% Australian-made products engineered to AS1684 and relevant building codes.",
               url: BASE_URL,
               telephone: "+61393096889",
               email: "info@thetrusspeople.com.au",
