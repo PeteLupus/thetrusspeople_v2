@@ -90,6 +90,10 @@ If blog/FAQ section needs new page design → brief Gemini with:
              seo-ops CLI registered: clients/trusspeople.json. Sitemap submit deferred to flip day (canonical domain not live yet).
              DNS at webstophosting.com.au (operator has cPanel access). Flip day: 1x A record edit only (www is CNAME → apex).
              MX (Outlook 365), SPF, TXT (MS verify) must be preserved on flip.
+2026-04-22 — OPERATION RIDGELINE: pre-launch readiness audit complete.
+             Fixed: map embed in Contact section, OG image (proper 1200×630 crop), .env.example created,
+             .gitignore patched to track .env.example. Pushed to main. Vercel deploy triggered.
+             Blocked items: GA4 ID (need from client), blog scaffolding (Sanity deferred).
 ```
 
 ---

@@ -23,7 +23,7 @@ export default function Navigation() {
     // Close mobile menu on resize
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth >= 768) setIsOpen(false);
+            if (window.innerWidth >= 1024) setIsOpen(false);
         };
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
@@ -80,7 +80,7 @@ export default function Navigation() {
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden items-center gap-8 md:flex">
+                    <div className="hidden items-center gap-8 lg:flex">
                         {NAV_LINKS.map((link) =>
                             link.href.startsWith('#') ? (
                                 <a
@@ -104,7 +104,7 @@ export default function Navigation() {
                     </div>
 
                     {/* Desktop CTA */}
-                    <div className="hidden items-center gap-4 md:flex">
+                    <div className="hidden items-center gap-4 lg:flex">
                         <a
                             href={PHONE_HREF}
                             className="flex items-center gap-2 text-sm font-medium text-text-primary transition-colors hover:text-timber"
@@ -122,7 +122,7 @@ export default function Navigation() {
 
                     {/* Mobile hamburger */}
                     <button
-                        className="relative z-[60] flex h-10 w-10 items-center justify-center md:hidden"
+                        className="relative z-[60] flex h-10 w-10 items-center justify-center lg:hidden"
                         onClick={() => setIsOpen(!isOpen)}
                         aria-label={isOpen ? 'Close menu' : 'Open menu'}
                         aria-expanded={isOpen}
@@ -135,7 +135,7 @@ export default function Navigation() {
             {/* Mobile Menu Overlay — outside <header> so backdrop-filter doesn't trap it */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 z-40 bg-black/50 md:hidden"
+                    className="fixed inset-0 z-40 bg-black/50 lg:hidden"
                     onClick={() => setIsOpen(false)}
                 />
             )}
@@ -143,7 +143,7 @@ export default function Navigation() {
             {/* Mobile Menu Panel — outside <header> so backdrop-filter doesn't trap it */}
             <div
                 className={cn(
-                    'fixed inset-y-0 right-0 z-50 w-[75%] max-w-[320px] bg-white shadow-xl transition-transform duration-300 md:hidden',
+                    'fixed inset-y-0 right-0 z-50 w-[75%] max-w-[320px] bg-white shadow-xl transition-transform duration-300 lg:hidden',
                     isOpen ? 'translate-x-0' : 'translate-x-full'
                 )}
             >

@@ -121,14 +121,13 @@ export default function Footer() {
                         </ul>
                         <div className="mt-3 overflow-hidden rounded-lg border border-white/10">
                             <iframe
-                                src="https://www.google.com/maps?q=37-39+Glenelg+Street,+Coolaroo+VIC+3048&output=embed"
+                                src="https://www.openstreetmap.org/export/embed.html?bbox=144.9212%2C-37.6733%2C144.9412%2C-37.6533&layer=mapnik&marker=-37.6633%2C144.9312"
                                 width="100%"
                                 height="130"
                                 style={{ border: 0 }}
                                 allowFullScreen={false}
                                 loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                title="The Truss People location"
+                                title="The Truss People factory location — 37-39 Glenelg Street, Coolaroo VIC 3048"
                             />
                         </div>
                     </div>

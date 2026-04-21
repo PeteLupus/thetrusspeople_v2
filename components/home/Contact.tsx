@@ -17,6 +17,7 @@ const schema = z.object({
   company: z.string().optional(),
   projectType: z.string().min(1, 'Please select a project type'),
   message: z.string().min(10, 'Message must be at least 10 characters'),
+  website: z.string().optional(), // honeypot — must be empty on submit
 });
 
 type FormData = z.infer<typeof schema>;
@@ -115,13 +116,12 @@ export default function Contact({ section, contactInfo }: ContactProps) {
 
               <div className="overflow-hidden rounded-xl border border-border">
                 <iframe
-                  src="https://www.google.com/maps?q=37-39+Glenelg+Street,+Coolaroo+VIC+3048&output=embed"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=144.9212%2C-37.6733%2C144.9412%2C-37.6533&layer=mapnik&marker=-37.6633%2C144.9312"
                   width="100%"
                   height="220"
                   style={{ border: 0 }}
                   allowFullScreen={false}
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
                   title="The Truss People factory location — 37-39 Glenelg Street, Coolaroo VIC 3048"
                 />
               </div>
@@ -131,6 +131,15 @@ export default function Contact({ section, contactInfo }: ContactProps) {
           {/* Form */}
           <ScrollReveal delay={0.2}>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              {/* Honeypot — hidden from humans, traps bots */}
+              <input
+                {...register('website')}
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+              />
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <input
