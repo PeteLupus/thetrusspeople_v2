@@ -69,7 +69,7 @@ export default function ProductsPage() {
                     </div>
                   )}
                   <div className="p-8">
-                    <p className="mb-6 leading-relaxed text-text-light">{product.description}</p>
+                    <p className="mb-6 leading-relaxed text-text-light">{product.shortDescription}</p>
                     <ul className="mb-6 space-y-2">
                       {product.features.map((feat, j) => (
                         <li key={j} className="flex items-start gap-3 text-sm text-text-light">

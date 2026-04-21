@@ -20,6 +20,7 @@ export interface AccordionItem {
 export interface Product {
   _id?: string;
   title: string;
+  shortDescription: string;
   description: string;
   features: string[];
   icon: 'truss' | 'frame' | 'floor' | 'steelwood' | 'measure' | 'crane' | 'delivery';

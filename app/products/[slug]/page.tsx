@@ -234,7 +234,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 )}
                 <div className="p-6">
                   <h3 className="mb-2 font-heading text-lg font-bold text-charcoal">{rp.title}</h3>
-                  <p className="mb-4 text-sm text-text-light line-clamp-2">{rp.description}</p>
+                  <p className="mb-4 text-sm text-text-light line-clamp-2">{rp.shortDescription}</p>
                   <span className="inline-flex items-center gap-2 text-sm font-semibold text-terracotta transition-all group-hover:gap-3">
                     Learn More <ArrowRight className="h-4 w-4" />
                   </span>

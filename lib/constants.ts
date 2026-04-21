@@ -112,6 +112,7 @@ export const PRODUCTS_SECTION = {
 export const PRODUCTS: Product[] = [
     {
         title: 'Timber Roof Trusses',
+        shortDescription: 'Custom-engineered roof trusses for residential and light commercial builds. AS1684 certified, 100% Australian timber.',
         description:
             'Custom-engineered timber roof trusses detailed to your plans. From standard gable to complex hip designs, every truss is built for residential and light commercial projects across Melbourne and Victoria.',
         features: [
@@ -124,6 +125,7 @@ export const PRODUCTS: Product[] = [
     },
     {
         title: 'Wall Frames',
+        shortDescription: 'Precision timber wall frames, pre-cut and site-ready. Custom-designed to your plans and delivered on schedule.',
         description:
             'Precision-manufactured timber wall frames designed and engineered to your specifications. Pre-cut and site-ready to keep your build on schedule.',
         features: [
@@ -136,6 +138,7 @@ export const PRODUCTS: Product[] = [
     },
     {
         title: 'Floor Joists',
+        shortDescription: 'Multistrut, Spanjoist, Steelwood and I-joist systems. Complete floor framing solutions — load-optimised and site-ready.',
         description:
             'Complete floor system solutions for residential and light commercial builds. Multistrut for standard spans, Span Joists (Longreach) for long spans, Steelwood for commercial-grade high loads, and I-joists. All engineered to your plans and manufactured at our Coolaroo facility.',
         features: [
@@ -149,6 +152,7 @@ export const PRODUCTS: Product[] = [
     },
     {
         title: 'Steelwood',
+        shortDescription: 'Timber and galvanised steel trusses spanning up to 10m floors and 20m roofs. Reduces concrete slab costs by up to 50%.',
         description:
             'The Truss People supplies Multinail Steelwood structural trusses for residential and light commercial applications across Melbourne and regional Victoria. Steelwood trusses combine solid timber top and bottom chords with galvanised steel diagonal web members — engineered for builds that demand long spans, high load capacity, and reliable performance. Steelwood uses vertical timber compression members and diagonal galvanised steel tension webs, which from an engineering perspective is superior to V-webbed joist systems and can carry higher loads. Floor spans reach up to 10 metres and roof spans up to 20 metres with most sheet roofing materials. Manufactured off-site and delivered when required, Steelwood is simple and efficient to install. It integrates seamlessly with our timber roof trusses, wall frames, and floor joist systems as part of a complete framing solution — and in many cases can reduce traditional concrete slab construction costs by up to 50%.',
         features: [
@@ -162,6 +166,7 @@ export const PRODUCTS: Product[] = [
     },
     {
         title: 'Site Measuring',
+        shortDescription: 'Professional on-site measuring to ensure your framing is manufactured to exact specifications.',
         description:
             'Professional on-site measuring service to ensure your trusses, frames, and floor systems are engineered to exact specifications before manufacturing begins.',
         features: [
@@ -174,6 +179,7 @@ export const PRODUCTS: Product[] = [
     },
     {
         title: 'Franna Crane Rental',
+        shortDescription: 'Franna crane hire with experienced operators to safely lift and position your trusses on site.',
         description:
             'Franna crane hire for truss and frame installation. Our experienced operators safely lift and position your trusses on site, keeping your build on schedule.',
         features: [
@@ -186,8 +192,9 @@ export const PRODUCTS: Product[] = [
     },
     {
         title: 'Delivery',
+        shortDescription: 'Direct-to-site delivery across Melbourne and regional Victoria with experienced crane truck operators. On time, every time.',
         description:
-            'The Truss People operates our own delivery fleet from our Coolaroo manufacturing facility. When your trusses, wall frames, or floor systems are ready, we load them onto our trucks and deliver directly to your building site across Melbourne and regional Victoria by one of our experienced and competent crane truck operators.\n\nWe don\'t outsource delivery to third-party transport companies. Our drivers know how to handle timber framing products — they understand the weight, the dimensions, and the care required to get your order to site without damage. That means fewer delays, fewer disputes, and fewer headaches for you.\n\nThe Truss People and our drivers have experience and understand the requirements for oversize dimensioned loads — we take the headache away from the client and organise everything from escort vehicles, VicRoads permits, and traffic management to get your product to site.',
+            'The Truss People coordinates direct-to-site delivery from our Coolaroo manufacturing facility. When your trusses, wall frames, or floor systems are ready, we load them onto our trucks and deliver directly to your building site across Melbourne and regional Victoria by one of our experienced and competent crane truck operators.\n\nWe don\'t outsource delivery to third-party transport companies. Our drivers know how to handle timber framing products — they understand the weight, the dimensions, and the care required to get your order to site without damage. That means fewer delays, fewer disputes, and fewer headaches for you.\n\nThe Truss People and our drivers have experience and understand the requirements for oversize dimensioned loads — we take the headache away from the client and organise everything from escort vehicles, VicRoads permits, and traffic management to get your product to site.',
         features: [
             'Own delivery fleet from Coolaroo',
             'Experienced crane truck operators',
