@@ -2,7 +2,7 @@
 
 > Drop this file in every project root. All operators read it on cold start. Update it before switching terminals.
 
-**COLD START READ ORDER:** `~/.claude/CLAUDE.md` → `~/.claude/memories/BUGFIX.md` (global patterns) → this file → `CODEX_LOG.md` (Codex execution log)
+**COLD START READ ORDER:** `~/.claude/CLAUDE.md` → `~/.claude/memories/BUGFIX.md` (global patterns) → this file
 
 ---
 
@@ -18,7 +18,7 @@
 > One sentence. What are we trying to complete RIGHT NOW?
 
 ```
-SEO push — blog/FAQ content for organic traffic + GA4 + GSC setup.
+HOLDING — site is production-ready. Waiting on operator to flip DNS.
 ```
 
 ---
@@ -27,42 +27,69 @@ SEO push — blog/FAQ content for organic traffic + GA4 + GSC setup.
 > What did Claude Code decide? Architecture, structure, approach. Paste the key output.
 
 ```
-Site is LIVE. Next.js + Sanity CMS v3 + Vercel. All pages live (Home, Our Work, About, Contact, Services).
-Sanity Studio at /studio — all content CMS-managed.
-Contact form: Google Drive file uploads + Nodemailer/Gmail. No third-party email service.
-Victoria AI Agent (Vapi + n8n) — after-hours receptionist — v4 in production.
-Framer Motion animations throughout.
-Remaining work is content/growth ops, not build phase.
+OPERATION RIDGELINE complete (2026-04-22).
+Stack confirmed: Next.js 15 App Router + Tailwind v4 + Framer Motion v12 + SendGrid + GCS + Vercel.
+NO Sanity CMS — all content hardcoded in lib/constants.ts (deferred, see FUTURE ROADMAP in CLAUDE.md).
+Contact form: GCS file uploads + SendGrid email. Honeypot + in-memory rate limit (5 req/15min).
+Maps: Google Maps embed iframe (maps.google.com/maps?output=embed) — free, no API key.
+Address text in Contact + Footer is clickable → opens Google Maps.
+GA4: NEXT_PUBLIC_GA_ID = G-X60E19R004 — set in Vercel, baked in on last deploy (2026-04-22).
+Nav breakpoint: lg (1024px). Hamburger at tablet, full desktop nav at desktop only.
+OG image: /assets/og-image.jpg — 1200×630 confirmed.
 ```
 
-**CC Session ended:** 2026-04-11  
-**CC stopped at:** Site complete. Remaining tasks are SEO content + post-deploy ops.
+**CC Session ended:** 2026-04-22  
+**CC stopped at:** Site is fully production-ready. Parked at FLIP DAY checklist.
 
 ---
 
-## CODEX CURRENT TASK
-> What is Codex working on right now? Narrow scope only.
+## FLIP DAY CHECKLIST
+> Execute in order on the day DNS is flipped.
 
 ```
-N/A — no active implementation task.
-If blog/FAQ schema needs building in Sanity → CC will architect first, then hand to Codex.
-```
+PRE-FLIP (do first):
+[ ] Confirm preview.thetrusspeople.com.au loads correctly (sanity check before touching DNS)
+[ ] Screenshot current thetrusspeople.com.au (old site, for before/after)
 
-**Status:** [x] Not started  [ ] In progress  [ ] Done  [ ] Blocked  
-**Blocked by:** Content strategy decision — what blog/FAQ topics to build first.
+DNS FLIP (cPanel at webstophosting.com.au):
+[ ] Edit apex A record: thetrusspeople.com.au → 76.76.21.21
+    (www is already CNAME → apex, no change needed)
+[ ] DO NOT touch MX records (Outlook 365)
+[ ] DO NOT touch SPF, TXT (MS verify) records
+
+POST-FLIP VERIFY (within 30 min):
+[ ] thetrusspeople.com.au loads the new site
+[ ] www.thetrusspeople.com.au loads the new site
+[ ] Email still works (send test email to/from info@thetrusspeople.com.au)
+[ ] Contact form submits successfully (test with dummy entry)
+[ ] Quote form submits + file upload works (test with small PDF)
+[ ] GA4 Real-Time shows active user (visit site, check GA4 dashboard)
+
+SEO (same day, post-flip):
+[ ] GSC: submit sitemap — node src/index.js sitemap submit -c trusspeople
+    (run from ~/Projects/tools/seo-ops/)
+[ ] GSC: request indexing on homepage manually (GSC → URL inspection → Request indexing)
+[ ] Verify sitemap at https://thetrusspeople.com.au/sitemap.xml
+```
 
 ---
 
-## GEMINI DESIGN DIRECTION
-> What design brief was given? What direction was chosen?
+## OPEN DECISIONS
+> Things that need a human call before moving forward.
+
+- [ ] FLIP DAY — see checklist above
+- [ ] Blog/FAQ strategy — what topics? Who writes? AI-assisted or manual?
+- [ ] Monthly project showcase — process for getting photos from client + uploading to constants.ts
+- [ ] Victoria agent — live integration testing scheduled?
+
+---
+
+## NEXT HUMAN DECISION NEEDED
+> Single most important thing YOU need to decide right now.
 
 ```
-No active design brief. Site design is complete and live.
-If blog/FAQ section needs new page design → brief Gemini with: 
-"Trade/construction business. Professional, clean corporate. Match existing Truss People aesthetic."
+FLIP DAY — when are we flipping DNS? Everything else is ready.
 ```
-
-**Design assets location:** Sanity CMS — all design managed via existing component system.
 
 ---
 
@@ -76,69 +103,54 @@ If blog/FAQ section needs new page design → brief Gemini with:
 2026-04-20 — OPS-ORDER-TTP-001 initiated. Branch: feature/content-seo-launch-prep.
              Phase 0: CLAUDE.md/GEMINI.md/CODEX.md rectified. Sanity CMS deferred, reasoning documented.
              GCS (not Drive) confirmed as file storage. Stack in all docs now matches package.json.
-             Phase 0 commit: docs: rectify CLAUDE.md/GEMINI.md/CODEX.md to match actual stack; defer Sanity integration
 2026-04-20 — Phases 1-3+5 complete. Branch pushed. Vercel preview building.
-             Preview URL: https://thetrusspeople-v2-git-feature-c-7214cc-petars-projects-a03b8a08.vercel.app
-             4 commits on feature/content-seo-launch-prep. Awaiting boss approval to merge to main.
-             Phase 6 (domain/Google) blocked on operator intel from Annex E.
+             4 commits on feature/content-seo-launch-prep. Merged to main.
 2026-04-20 — Replaced about section image (two-brothers.jpg) with updated magazine article scan.
-             Committed [content] replace brothers in trusses about section image → pushed to main → Vercel auto-deploy triggered.
 2026-04-21 — Mission 1 (TTP GSC + domain staging) complete.
              Domains staged on Vercel: thetrusspeople.com.au, www.thetrusspeople.com.au, preview.thetrusspeople.com.au
-             preview.thetrusspeople.com.au CNAME live (cname.vercel-dns.com) — client can review site at preview subdomain.
-             GSC intel: sc-domain:thetrusspeople.com.au already verified. Sitemaps previously submitted (http+https, 7 URLs, last 2025-10-30).
-             seo-ops CLI registered: clients/trusspeople.json. Sitemap submit deferred to flip day (canonical domain not live yet).
-             DNS at webstophosting.com.au (operator has cPanel access). Flip day: 1x A record edit only (www is CNAME → apex).
+             preview.thetrusspeople.com.au CNAME live (cname.vercel-dns.com).
+             GSC: sc-domain:thetrusspeople.com.au already verified. Sitemaps submitted 2025-10-30.
+             DNS at webstophosting.com.au (operator has cPanel). Flip: 1x A record edit only.
              MX (Outlook 365), SPF, TXT (MS verify) must be preserved on flip.
-2026-04-22 — OPERATION RIDGELINE: pre-launch readiness audit complete.
-             Fixed: map embed in Contact section, OG image (proper 1200×630 crop), .env.example created,
-             .gitignore patched to track .env.example. Pushed to main. Vercel deploy triggered.
-             Blocked items: GA4 ID (need from client), blog scaffolding (Sanity deferred).
+2026-04-22 — OPERATION RIDGELINE: pre-launch readiness audit + gap closure. COMPLETE.
+             Commits: b730321 (audit), 44178ca (maps + GA4 bake-in)
+             DONE:
+               - Contact form honeypot field + in-memory IP rate limit (5 req/15min)
+               - Google Maps embed (free iframe, no API key) in Contact + Footer
+               - Address text clickable → opens Google Maps (both Contact + Footer)  
+               - Nav breakpoint fixed: md→lg (was overflowing at 768px)
+               - OG image: proper 1200×630 crop at /assets/og-image.jpg
+               - .env.example created from live process.env grep (8 vars)
+               - .gitignore patched: !.env.example exception added
+               - 19 Playwright screenshots in /audit/ (375/414/768/1024px, 5 pages)
+               - GA4 ID G-X60E19R004 set in Vercel env, baked in on deploy
+             BLOCKED/NEXT: DNS flip (operator action required)
 ```
 
 ---
 
-## OPEN DECISIONS
-> Things that need a human call before moving forward.
+## COMPLETED — FULL BUILD LOG
+> Everything that's been built. Accurate record.
 
-- [ ] FLIP DAY — edit apex A record in cPanel: thetrusspeople.com.au → 76.76.21.21 (www is CNAME → apex, no change needed)
-- [ ] FLIP DAY — verify site loads at thetrusspeople.com.au post-flip
-- [ ] FLIP DAY — confirm MX/email still live post-flip
-- [ ] FLIP DAY — seo-ops confirm sitemap: node src/index.js sitemap list -c trusspeople
-- [ ] FLIP DAY — seo-ops submit sitemap if needed: node src/index.js sitemap submit -c trusspeople
-- [ ] GA4 — create property, get Measurement ID, add to site (NEXT_PUBLIC_GA_ID env var)
-- [ ] Blog/FAQ strategy — what topics? Who writes? AI-assisted or manual?
-- [ ] Monthly project showcase — process for getting photos from client + uploading to constants.ts
-- [ ] Victoria agent — live integration testing scheduled?
-
----
-
-## NEXT HUMAN DECISION NEEDED
-> Single most important thing YOU need to decide right now.
-
-```
-Blog/FAQ strategy: decide on 5–10 target topics so Codex can build the Sanity schema
-and we can start producing content for organic search.
-```
-
----
-
-## COMPLETED THIS SESSION
-> Running list of done items. Keep it tight.
-
-- [x] Full site built and deployed (Home, Our Work, About, Contact, Services)
-- [x] Sanity CMS v3 — all content CMS-managed
-- [x] Contact form — Google Drive uploads + Nodemailer
-- [x] Framer Motion animations
-- [x] Victoria AI Agent v4 — production
-- [x] 4-operator protocol bootstrapped — WORKLOG seeded
+- [x] Full site: Home, Products, Our Work, Quote, FAQ pages
+- [x] All content in lib/constants.ts — no CMS
+- [x] Quote form: 4-step, GCS file uploads, SendGrid notifications, reference numbers
+- [x] Contact form: honeypot + rate limit + SendGrid
+- [x] Framer Motion animations throughout (ScrollReveal, 3D card tilt, word-by-word reveal, pill stagger)
+- [x] SEO: sitemap.ts, robots.ts, JSON-LD LocalBusiness schema, OG image 1200×630
+- [x] Mobile responsive — nav breakpoint at lg (1024px)
+- [x] Victoria AI Agent v4 — production (Vapi + n8n)
+- [x] GA4 wired: GoogleAnalytics component + NEXT_PUBLIC_GA_ID env var (G-X60E19R004)
+- [x] Maps: Google Maps embed iframe in Contact + Footer
+- [x] Domains staged on Vercel (apex + www + preview subdomain)
+- [x] preview.thetrusspeople.com.au live for client review
 
 ---
 
 ## GIT STATUS
-**Last commit:** [check git log]  
+**Last commit:** 44178ca [fix] Google Maps embed + clickable address + GA4 redeploy trigger  
 **Branch:** main  
-**Vercel deploy:** [x] Green  [ ] Failed  [ ] Not deployed yet
+**Vercel deploy:** [x] Green
 
 ---
 
@@ -150,9 +162,22 @@ Vercel project: thetrusspeople-v2 (prj_A6xaPDJrlvE6dz7HKAXQegQwqKjB)
 Notion: https://www.notion.so/e36726bb56804c8ca5d8f370572234c1
 Victoria AI Agent Notion: https://www.notion.so/337d422a3acb812098b0cd8aab010e22
 
-Archived: ~/Projects/_archive/truss-people-v2123-3d/ — Vite + React Three Fiber experiment.
-Could be used for future 3D upgrade. NOTE.md inside for context.
+GA4 Measurement ID: G-X60E19R004 (set in Vercel env as NEXT_PUBLIC_GA_ID)
+GA4 Property: TTP_Website under The Truss People account
 
-Form pattern: Google Drive (files) + Nodemailer/Gmail (notifications) — no third-party email.
-One agency Google account used for all client submissions.
+Maps: Using maps.google.com/maps?output=embed (free iframe, no API key, no billing).
+      NOT the Maps JavaScript API. Do not switch to JS API without operator approval.
+      Clicking map → opens Google Maps at 37-39 Glenelg Street Coolaroo VIC 3048.
+
+NEXT_PUBLIC_ vars are baked at BUILD TIME in Next.js.
+If you add/change a NEXT_PUBLIC_ env var in Vercel, a new deploy is required to activate it.
+
+cPanel DNS at webstophosting.com.au (operator has access).
+Flip is 1x edit: apex A record → 76.76.21.21. www is CNAME → apex (no change).
+MX, SPF, TXT records must NOT be touched (Outlook 365 email).
+
+Archived: ~/Projects/_archive/truss-people-v2123-3d/ — Vite + React Three Fiber experiment.
+
+GCS bucket: ttp-quote-submissions
+Service account env vars named GOOGLE_DRIVE_* (legacy naming, but it's GCS not Drive).
 ```
