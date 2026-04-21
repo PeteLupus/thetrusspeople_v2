@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import { FACEBOOK_URL, INSTAGRAM_URL } from "@/lib/constants";
 
 const barlowCondensed = Barlow_Condensed({
   variable: "--font-barlow-condensed",
@@ -170,6 +171,11 @@ export default function RootLayout({
                 },
               ],
               priceRange: "$$",
+              sameAs: [FACEBOOK_URL, INSTAGRAM_URL],
+              logo: {
+                "@type": "ImageObject",
+                url: `${BASE_URL}/assets/logo.png`,
+              },
             }),
           }}
         />
