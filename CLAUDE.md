@@ -3,8 +3,8 @@
 ## MISSION
 - **Client:** The Truss People (Victor & Tony Manoski)
 - **Project:** Professional website — Melbourne roof truss & wall frame manufacturer
-- **Status:** Live on Vercel
-- **Phase:** Maintenance + Growth
+- **Status:** DNS flip pending — launching tomorrow night
+- **Phase:** Pre-Launch
 - **Notion:** https://www.notion.so/e36726bb56804c8ca5d8f370572234c1
 - **Vercel Project:** thetrusspeople-nextjs
 - **Local Path:** ~/Projects/clients/truss-people/v2/
@@ -21,13 +21,15 @@
 - [x] Wow factor upgrades — 3D card tilt, word-by-word title reveal, ServiceAreas pill stagger (all with prefers-reduced-motion support)
 - [x] FAQ page (`/faq`) — SEO content page, linked in sitemap
 - [x] SEO upgrade — JSON-LD schema, keywords, OG image, alt text pass
+- [x] Content fix — "Engineered Right" accordion: added floor joist; 20+ years experience copy updated
 
 ## WHAT'S NEXT
-- [ ] Connect domain `thetrusspeople.com.au` to Vercel project
-- [ ] Google Analytics — `NEXT_PUBLIC_GA_ID` env var (component already wired in)
-- [ ] Google Search Console — submit sitemap (`/sitemap.xml`)
-- [ ] Monthly project showcase content (photos → OUR_WORK_ITEMS in constants.ts) — need real job suburb/builder/type from Victor & Tony for 19 photos
-- [ ] Victoria agent — live integration testing
+- [ ] **TOMORROW NIGHT — DNS flip:** Point `thetrusspeople.com.au` to Vercel in cPanel
+- [ ] **TOMORROW NIGHT — Test quote form end-to-end:** confirm email lands + file appears in GCS bucket `ttp-quote-submissions`
+- [ ] Google Analytics — add `NEXT_PUBLIC_GA_ID` env var in Vercel → redeploy (NEXT_PUBLIC_ vars bake at build time)
+- [ ] Google Search Console — submit sitemap (`/sitemap.xml`) after domain is live
+- [ ] Monthly project showcase content — need real job suburb/builder/type from Victor & Tony for 19 gallery photos
+- [ ] Victoria agent — live integration testing on real calls
 
 ## SUB-PROJECTS
 - **Victoria AI Agent** — Notion: https://www.notion.so/337d422a3acb812098b0cd8aab010e22
