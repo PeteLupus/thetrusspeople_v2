@@ -46,6 +46,7 @@ export default function UploadStep({
     }))
   );
   const [isDragging, setIsDragging] = useState(false);
+  const [rejectedFiles, setRejectedFiles] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const folderIdRef = useRef<string | null>(folderId);
 
@@ -126,11 +127,21 @@ export default function UploadStep({
       const currentCount = files.length;
 
       const toAdd: UploadFile[] = [];
-      for (const file of fileArray) {
-        if (currentCount + toAdd.length >= QUOTE_MAX_FILES) break;
+      const rejected: string[] = [];
 
-        if (!isFileAccepted(file)) continue;
-        if (file.size > QUOTE_MAX_FILE_SIZE) continue;
+      for (const file of fileArray) {
+        if (currentCount + toAdd.length >= QUOTE_MAX_FILES) {
+          rejected.push(`${file.name}: maximum ${QUOTE_MAX_FILES} files reached`);
+          continue;
+        }
+        if (!isFileAccepted(file)) {
+          rejected.push(`${file.name}: unsupported file type`);
+          continue;
+        }
+        if (file.size > QUOTE_MAX_FILE_SIZE) {
+          rejected.push(`${file.name}: exceeds 100 MB limit`);
+          continue;
+        }
 
         const uploadFileObj: UploadFile = {
           localId: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
@@ -144,7 +155,9 @@ export default function UploadStep({
         toAdd.push(uploadFileObj);
       }
 
-      if (toAdd.length === 0) return;
+      setRejectedFiles(rejected);
+
+      if (toAdd.length === 0 && rejected.length === 0) return;
 
       setFiles((prev) => [...prev, ...toAdd]);
 
@@ -245,6 +258,25 @@ export default function UploadStep({
           className="hidden"
         />
       </div>
+
+      {/* Rejected file errors */}
+      <AnimatePresence>
+        {rejectedFiles.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="rounded-lg border border-red-200 bg-red-50 p-3 space-y-1"
+          >
+            {rejectedFiles.map((msg, i) => (
+              <p key={i} className="flex items-center gap-2 text-xs text-red-600">
+                <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                {msg}
+              </p>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* File List */}
       <AnimatePresence>

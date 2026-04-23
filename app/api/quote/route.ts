@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createTextFile } from '@/lib/cloud-storage';
 import { buildQuoteEmailHtml, buildQuoteSummaryText } from '@/lib/quote-email';
+import { getResend } from '@/lib/mailer';
 
 function generateReferenceNumber(): string {
   const date = new Date().toISOString().split('T')[0].replace(/-/g, '');
@@ -56,31 +57,26 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Send email notification via SendGrid
-    const apiKey = process.env.SENDGRID_API_KEY;
+    const apiKey = process.env.RESEND_API_KEY;
     const contactEmails = process.env.CONTACT_EMAIL;
-    const fromEmail = process.env.SENDGRID_FROM_EMAIL || contactEmails?.split(',')[0]?.trim() || 'info@thetrusspeople.com.au';
 
-    if (!apiKey || apiKey === 'your_sendgrid_api_key_here') {
+    if (!apiKey) {
       // Dev mode — log and return success
       console.log('📧 Quote Submission (dev mode):', emailData);
       return NextResponse.json({ success: true, referenceNumber });
     }
 
-    const sgMail = (await import('@sendgrid/mail')).default;
-    sgMail.setApiKey(apiKey);
-
     const projectTypeDisplay =
       projectType === 'Other' ? projectTypeOther || 'Other' : projectType;
 
-    // Support comma-separated CONTACT_EMAIL for multiple recipients
     const recipients = contactEmails
       ? contactEmails.split(',').map((e) => e.trim()).filter(Boolean)
       : ['info@thetrusspeople.com.au'];
 
-    await sgMail.send({
+    const resend = getResend();
+    await resend.emails.send({
+      from: 'The Truss People <notifications@thetrusspeople.com.au>',
       to: recipients,
-      from: fromEmail,
       replyTo: email,
       subject: `Quote Request: ${firstName} ${lastName} — ${projectTypeDisplay} [${referenceNumber}]`,
       html: buildQuoteEmailHtml(emailData),

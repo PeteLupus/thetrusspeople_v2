@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getResend } from '@/lib/mailer';
 
 // In-memory rate limit: 5 requests per 15 minutes per IP
 const rateLimitMap = new Map<string, number[]>();
@@ -43,26 +44,22 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Check if SendGrid is configured
-        const apiKey = process.env.SENDGRID_API_KEY;
+        const apiKey = process.env.RESEND_API_KEY;
         const contactEmails = process.env.CONTACT_EMAIL;
-        const fromEmail = process.env.SENDGRID_FROM_EMAIL || contactEmails?.split(',')[0]?.trim() || 'info@thetrusspeople.com.au';
 
-        if (!apiKey || apiKey === 'your_sendgrid_api_key_here') {
+        if (!apiKey) {
             console.log('📧 Contact Form Submission (dev):', { name, email, phone, businessName, suburb, projectType, message });
             return NextResponse.json({ success: true, message: 'Form received (dev mode - email not sent)' });
         }
-
-        const sgMail = (await import('@sendgrid/mail')).default;
-        sgMail.setApiKey(apiKey);
 
         const recipients = contactEmails
             ? contactEmails.split(',').map((e) => e.trim()).filter(Boolean)
             : ['info@thetrusspeople.com.au'];
 
-        await sgMail.send({
+        const resend = getResend();
+        await resend.emails.send({
+            from: 'The Truss People <notifications@thetrusspeople.com.au>',
             to: recipients,
-            from: fromEmail,
             replyTo: email,
             subject: `New Contact Request from ${name}${businessName ? ` (${businessName})` : ''}`,
             html: `
