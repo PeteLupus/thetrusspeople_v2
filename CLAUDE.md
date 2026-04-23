@@ -3,8 +3,8 @@
 ## MISSION
 - **Client:** The Truss People (Victor & Tony Manoski)
 - **Project:** Professional website — Melbourne roof truss & wall frame manufacturer
-- **Status:** DNS flip pending — launching tomorrow night
-- **Phase:** Pre-Launch
+- **Status:** LIVE — thetrusspeople.com.au on Vercel
+- **Phase:** Post-Launch
 - **Notion:** https://www.notion.so/e36726bb56804c8ca5d8f370572234c1
 - **Vercel Project:** thetrusspeople-nextjs
 - **Local Path:** ~/Projects/clients/truss-people/v2/
@@ -22,12 +22,17 @@
 - [x] FAQ page (`/faq`) — SEO content page, linked in sitemap
 - [x] SEO upgrade — JSON-LD schema, keywords, OG image, alt text pass
 - [x] Content fix — "Engineered Right" accordion: added floor joist; 20+ years experience copy updated
+- [x] SendGrid → Resend migration (contact + quote routes, lib/mailer.ts)
+- [x] DNS flip — A record + CNAME in cPanel → Vercel (76.76.21.21 / cname.vercel-dns.com, TTL 300)
+- [x] `vercel --prod` deployed — site live at thetrusspeople.com.au (HTTP/2 200 ✅)
 
 ## WHAT'S NEXT
-- [ ] **TOMORROW NIGHT — DNS flip:** Point `thetrusspeople.com.au` to Vercel in cPanel
-- [ ] **TOMORROW NIGHT — Test quote form end-to-end:** confirm email lands + file appears in GCS bucket `ttp-quote-submissions`
+- [ ] Test contact form on production domain → Victor confirms email at info@thetrusspeople.com.au
+- [ ] Test quote form on production domain (all 4 steps, attach file) → email + GCS bucket `ttp-quote-submissions`
+- [ ] Remove stale env vars from Vercel: `SENDGRID_API_KEY`, `SENDGRID_FROM_EMAIL`
 - [ ] Google Analytics — add `NEXT_PUBLIC_GA_ID` env var in Vercel → redeploy (NEXT_PUBLIC_ vars bake at build time)
-- [ ] Google Search Console — submit sitemap (`/sitemap.xml`) after domain is live
+- [ ] Google Search Console — verify domain (DNS TXT record in cPanel) → submit `/sitemap.xml`
+- [ ] Google Business Profile — Victor updates website URL to thetrusspeople.com.au (fixes old site in Google search)
 - [ ] Monthly project showcase content — need real job suburb/builder/type from Victor & Tony for 19 gallery photos
 - [ ] Victoria agent — live integration testing on real calls
 
