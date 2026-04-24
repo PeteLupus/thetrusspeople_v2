@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Send, Loader2 } from 'lucide-react';
+import { upload } from '@vercel/blob/client';
 import StepIndicator from './StepIndicator';
 import ContactStep from './steps/ContactStep';
 import ProjectStep from './steps/ProjectStep';
@@ -142,16 +143,22 @@ export default function QuoteForm() {
 
     try {
       const values = getValues();
-      const formData = new FormData();
-      formData.append('data', JSON.stringify(values));
-      for (const file of filesRef.current) {
-        formData.append('files', file);
-      }
+
+      // Upload files to Vercel Blob directly from browser (bypasses function payload limit)
+      const blobFiles = await Promise.all(
+        filesRef.current.map(async (file) => {
+          const blob = await upload(file.name, file, {
+            access: 'public',
+            handleUploadUrl: '/api/blob-upload',
+          });
+          return { name: file.name, size: file.size, url: blob.url };
+        })
+      );
 
       const res = await fetch('/api/quote', {
         method: 'POST',
-        body: formData,
-        // Do NOT set Content-Type — browser sets it with the multipart boundary
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...values, files: blobFiles }),
       });
 
       if (!res.ok) throw new Error('Submission failed');

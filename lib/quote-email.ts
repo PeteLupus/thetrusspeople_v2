@@ -20,7 +20,7 @@ interface QuoteEmailData {
   storeys: string;
   estimatedTimeline: string;
   additionalDetails?: string;
-  files?: { name: string; size: number }[];
+  files?: { name: string; size: number; url?: string }[];
 }
 
 export function buildQuoteEmailHtml(data: QuoteEmailData): string {
@@ -38,10 +38,14 @@ export function buildQuoteEmailHtml(data: QuoteEmailData): string {
     ? data.files
         .map(
           (f) =>
-            `<tr><td style="padding: 8px; border: 1px solid #ddd;">${f.name}</td><td style="padding: 8px; border: 1px solid #ddd;">${formatFileSize(f.size)}</td></tr>`
+            `<tr>
+              <td style="padding: 8px; border: 1px solid #ddd;">${f.name}</td>
+              <td style="padding: 8px; border: 1px solid #ddd;">${formatFileSize(f.size)}</td>
+              <td style="padding: 8px; border: 1px solid #ddd;">${f.url ? `<a href="${f.url}" style="color: #EE8925; text-decoration: none;">Download</a>` : '—'}</td>
+            </tr>`
         )
         .join('')
-    : '<tr><td style="padding: 8px; border: 1px solid #ddd;" colspan="2">No files uploaded — attached to this email if provided</td></tr>';
+    : '<tr><td style="padding: 8px; border: 1px solid #ddd;" colspan="3">No files uploaded</td></tr>';
 
   return `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto;">
@@ -70,9 +74,9 @@ export function buildQuoteEmailHtml(data: QuoteEmailData): string {
           ${data.additionalDetails ? `<tr><td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Additional Details</td><td style="padding: 8px; border: 1px solid #ddd;">${data.additionalDetails}</td></tr>` : ''}
         </table>
 
-        <h2 style="color: #222222; font-size: 16px; margin: 0 0 12px;">Attached Files</h2>
+        <h2 style="color: #222222; font-size: 16px; margin: 0 0 12px;">Uploaded Files</h2>
         <table style="border-collapse: collapse; width: 100%; margin-bottom: 16px;">
-          <tr style="background: #F8F9FA;"><th style="padding: 8px; border: 1px solid #ddd; text-align: left;">File</th><th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Size</th></tr>
+          <tr style="background: #F8F9FA;"><th style="padding: 8px; border: 1px solid #ddd; text-align: left;">File</th><th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Size</th><th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Link</th></tr>
           ${fileRows}
         </table>
       </div>
