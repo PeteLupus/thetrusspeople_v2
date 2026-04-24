@@ -101,26 +101,6 @@ export interface QuoteFormData {
   storeys: string;
   estimatedTimeline: string;
   additionalDetails?: string;
-  files?: CompletedFile[];
-}
-
-export interface UploadFile {
-  localId: string;
-  file: File;
-  name: string;
-  size: number;
-  type: string;
-  progress: number;
-  status: 'pending' | 'uploading' | 'complete' | 'error';
-  objectName?: string;
-  error?: string;
-}
-
-export interface CompletedFile {
-  id: string;
-  name: string;
-  size: number;
-  type: string;
 }
 
 export interface SelectOption {

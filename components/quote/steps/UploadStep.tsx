@@ -1,17 +1,14 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import { Upload, FileText, X, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Upload, FileText, X, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import type { UploadFile, CompletedFile } from '@/lib/types';
 import { QUOTE_ACCEPTED_TYPES, QUOTE_MAX_FILE_SIZE, QUOTE_MAX_FILES } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 interface UploadStepProps {
-  folderId: string | null;
-  onFolderNeeded: () => Promise<string>;
-  onFilesChange: (files: CompletedFile[]) => void;
-  initialFiles: CompletedFile[];
+  onFilesChange: (files: File[]) => void;
+  initialFiles: File[];
 }
 
 function formatFileSize(bytes: number): string {
@@ -27,110 +24,20 @@ function isFileAccepted(file: File): boolean {
   return acceptedExtensions.includes(ext);
 }
 
-export default function UploadStep({
-  folderId,
-  onFolderNeeded,
-  onFilesChange,
-  initialFiles,
-}: UploadStepProps) {
-  const [files, setFiles] = useState<UploadFile[]>(() =>
-    initialFiles.map((f) => ({
-      localId: f.id,
-      file: null as unknown as File,
-      name: f.name,
-      size: f.size,
-      type: f.type,
-      progress: 100,
-      status: 'complete' as const,
-      objectName: f.id,
-    }))
-  );
+export default function UploadStep({ onFilesChange, initialFiles }: UploadStepProps) {
+  const [files, setFiles] = useState<File[]>(initialFiles);
   const [isDragging, setIsDragging] = useState(false);
   const [rejectedFiles, setRejectedFiles] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const folderIdRef = useRef<string | null>(folderId);
-
-  const uploadFile = useCallback(async (uploadFile: UploadFile) => {
-    try {
-      // Ensure we have a folder
-      if (!folderIdRef.current) {
-        folderIdRef.current = await onFolderNeeded();
-      }
-
-      // Update status to uploading
-      setFiles((prev) =>
-        prev.map((f) =>
-          f.localId === uploadFile.localId ? { ...f, status: 'uploading' as const, progress: 5 } : f
-        )
-      );
-
-      // Upload file directly via XHR for progress tracking
-      const mimeType = uploadFile.type || 'application/octet-stream';
-      const uploadUrl = `/api/quote/upload?folderPath=${encodeURIComponent(folderIdRef.current)}&fileName=${encodeURIComponent(uploadFile.name)}&mimeType=${encodeURIComponent(mimeType)}`;
-
-      const result = await new Promise<{ fileName: string; objectName: string }>((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', uploadUrl);
-        xhr.setRequestHeader('Content-Type', mimeType);
-
-        xhr.upload.onprogress = (e) => {
-          if (e.lengthComputable) {
-            const progress = Math.round((e.loaded / e.total) * 100);
-            setFiles((prev) =>
-              prev.map((f) =>
-                f.localId === uploadFile.localId ? { ...f, progress } : f
-              )
-            );
-          }
-        };
-
-        xhr.onload = () => {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            resolve(JSON.parse(xhr.responseText));
-          } else {
-            reject(new Error(`Upload failed: ${xhr.statusText}`));
-          }
-        };
-
-        xhr.onerror = () => reject(new Error('Network error during upload'));
-        xhr.send(uploadFile.file);
-      });
-
-      // Mark as complete
-      setFiles((prev) => {
-        const updated = prev.map((f) =>
-          f.localId === uploadFile.localId
-            ? { ...f, status: 'complete' as const, progress: 100, objectName: result.objectName }
-            : f
-        );
-        // Notify parent of completed files
-        const completed: CompletedFile[] = updated
-          .filter((f) => f.status === 'complete' && f.objectName)
-          .map((f) => ({ id: f.objectName!, name: f.name, size: f.size, type: f.type }));
-        onFilesChange(completed);
-        return updated;
-      });
-    } catch (error) {
-      setFiles((prev) =>
-        prev.map((f) =>
-          f.localId === uploadFile.localId
-            ? { ...f, status: 'error' as const, error: (error as Error).message }
-            : f
-        )
-      );
-    }
-  }, [onFolderNeeded, onFilesChange]);
 
   const addFiles = useCallback(
     (newFiles: FileList | File[]) => {
       const fileArray = Array.from(newFiles);
-      const currentCount = files.length;
-
-      const toAdd: UploadFile[] = [];
+      const toAdd: File[] = [];
       const rejected: string[] = [];
 
       for (const file of fileArray) {
-        if (currentCount + toAdd.length >= QUOTE_MAX_FILES) {
+        if (files.length + toAdd.length >= QUOTE_MAX_FILES) {
           rejected.push(`${file.name}: maximum ${QUOTE_MAX_FILES} files reached`);
           continue;
         }
@@ -139,44 +46,33 @@ export default function UploadStep({
           continue;
         }
         if (file.size > QUOTE_MAX_FILE_SIZE) {
-          rejected.push(`${file.name}: exceeds 100 MB limit`);
+          rejected.push(`${file.name}: exceeds ${formatFileSize(QUOTE_MAX_FILE_SIZE)} limit`);
           continue;
         }
-
-        const uploadFileObj: UploadFile = {
-          localId: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-          file,
-          name: file.name,
-          size: file.size,
-          type: file.type,
-          progress: 0,
-          status: 'pending',
-        };
-        toAdd.push(uploadFileObj);
+        if (files.some((f) => f.name === file.name && f.size === file.size)) {
+          rejected.push(`${file.name}: already added`);
+          continue;
+        }
+        toAdd.push(file);
       }
 
       setRejectedFiles(rejected);
+      if (toAdd.length === 0) return;
 
-      if (toAdd.length === 0 && rejected.length === 0) return;
-
-      setFiles((prev) => [...prev, ...toAdd]);
-
-      // Start uploading each file
-      for (const f of toAdd) {
-        uploadFile(f);
-      }
+      setFiles((prev) => {
+        const updated = [...prev, ...toAdd];
+        onFilesChange(updated);
+        return updated;
+      });
     },
-    [files.length, uploadFile]
+    [files, onFilesChange]
   );
 
   const removeFile = useCallback(
-    (localId: string) => {
+    (index: number) => {
       setFiles((prev) => {
-        const updated = prev.filter((f) => f.localId !== localId);
-        const completed: CompletedFile[] = updated
-          .filter((f) => f.status === 'complete' && f.objectName)
-          .map((f) => ({ id: f.objectName!, name: f.name, size: f.size, type: f.type }));
-        onFilesChange(completed);
+        const updated = prev.filter((_, i) => i !== index);
+        onFilesChange(updated);
         return updated;
       });
     },
@@ -286,9 +182,9 @@ export default function UploadStep({
             animate={{ opacity: 1, height: 'auto' }}
             className="space-y-3"
           >
-            {files.map((file) => (
+            {files.map((file, index) => (
               <motion.div
-                key={file.localId}
+                key={`${file.name}-${file.size}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, x: -20, height: 0 }}
@@ -300,50 +196,20 @@ export default function UploadStep({
 
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-2">
-                    <p className="truncate text-sm font-medium text-charcoal">
-                      {file.name}
-                    </p>
+                    <p className="truncate text-sm font-medium text-charcoal">{file.name}</p>
                     <span className="flex-shrink-0 text-xs text-text-light">
                       {formatFileSize(file.size)}
                     </span>
                   </div>
-
-                  {/* Progress Bar */}
-                  {(file.status === 'uploading' || file.status === 'pending') && (
-                    <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-border">
-                      <motion.div
-                        className="h-full rounded-full bg-timber"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${file.progress}%` }}
-                        transition={{ duration: 0.3, ease: 'easeOut' }}
-                      />
-                    </div>
-                  )}
-
-                  {file.status === 'error' && (
-                    <p className="mt-1 text-xs text-red-500">{file.error || 'Upload failed'}</p>
-                  )}
                 </div>
 
-                {/* Status Icon */}
-                <div className="flex-shrink-0">
-                  {file.status === 'uploading' && (
-                    <Loader2 className="h-5 w-5 animate-spin text-timber" />
-                  )}
-                  {file.status === 'complete' && (
-                    <CheckCircle className="h-5 w-5 text-success" />
-                  )}
-                  {file.status === 'error' && (
-                    <AlertCircle className="h-5 w-5 text-error" />
-                  )}
-                </div>
+                <CheckCircle className="h-5 w-5 flex-shrink-0 text-success" />
 
-                {/* Remove Button */}
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    removeFile(file.localId);
+                    removeFile(index);
                   }}
                   className="flex-shrink-0 rounded-md p-1 text-text-light transition-colors hover:bg-red-50 hover:text-red-500"
                 >
@@ -358,7 +224,7 @@ export default function UploadStep({
       {files.length === 0 && (
         <div className="rounded-lg bg-warm-white p-4 text-center">
           <p className="text-sm text-text-light">
-            No files uploaded yet. You can skip this step and email your plans later.
+            No files added yet. You can skip this step and email your plans later.
           </p>
         </div>
       )}

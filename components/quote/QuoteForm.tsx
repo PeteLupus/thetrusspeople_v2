@@ -12,7 +12,7 @@ import ProjectStep from './steps/ProjectStep';
 import UploadStep from './steps/UploadStep';
 import ReviewStep from './steps/ReviewStep';
 import SuccessState from './SuccessState';
-import type { QuoteFormData, CompletedFile } from '@/lib/types';
+import type { QuoteFormData } from '@/lib/types';
 import { QUOTE_STEP_LABELS } from '@/lib/constants';
 
 // ─── Validation Schema ─────────────────────────────────────────────────────────
@@ -32,16 +32,6 @@ const quoteSchema = z.object({
   storeys: z.string().min(1, 'Please select number of storeys'),
   estimatedTimeline: z.string().min(1, 'Please select a timeline'),
   additionalDetails: z.string().optional(),
-  files: z
-    .array(
-      z.object({
-        id: z.string(),
-        name: z.string(),
-        size: z.number(),
-        type: z.string(),
-      })
-    )
-    .optional(),
 }).refine(
   (data) => data.projectType !== 'Other' || (data.projectTypeOther && data.projectTypeOther.length > 0),
   { message: 'Please specify the project type', path: ['projectTypeOther'] }
@@ -82,9 +72,8 @@ export default function QuoteForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [referenceNumber, setReferenceNumber] = useState('');
-  const [folderId, setFolderId] = useState<string | null>(null);
-  const [folderUrl, setFolderUrl] = useState<string | null>(null);
-  const completedFilesRef = useRef<CompletedFile[]>([]);
+  const filesRef = useRef<File[]>([]);
+  const [filesSnapshot, setFilesSnapshot] = useState<File[]>([]);
 
   const form = useForm<QuoteFormData>({
     resolver: zodResolver(quoteSchema),
@@ -104,11 +93,10 @@ export default function QuoteForm() {
       storeys: '',
       estimatedTimeline: '',
       additionalDetails: '',
-      files: [],
     },
   });
 
-  const { register, trigger, getValues, setValue, watch, formState: { errors } } = form;
+  const { register, trigger, getValues, watch, formState: { errors } } = form;
 
   const totalSteps = 4;
 
@@ -120,7 +108,6 @@ export default function QuoteForm() {
   }, [currentStep]);
 
   const goNext = useCallback(async () => {
-    // Validate current step's fields
     const fieldsToValidate = stepFields[currentStep - 1];
     if (fieldsToValidate.length > 0) {
       const isValid = await trigger(fieldsToValidate);
@@ -140,38 +127,12 @@ export default function QuoteForm() {
     }
   }, [currentStep]);
 
-  // ─── Folder Creation (lazy) ─────────────────────────────────────────────────
-
-  const ensureFolder = useCallback(async (): Promise<string> => {
-    if (folderId) return folderId;
-
-    const values = getValues();
-    const name = `${values.firstName} ${values.lastName}`.trim() || 'Unknown';
-    const projectType = values.projectType || 'General';
-
-    const res = await fetch('/api/quote/folder', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, projectType }),
-    });
-
-    if (!res.ok) throw new Error('Failed to create folder');
-
-    const data = await res.json();
-    setFolderId(data.folderId);
-    setFolderUrl(data.folderUrl);
-    return data.folderId;
-  }, [folderId, getValues]);
-
   // ─── File Management ────────────────────────────────────────────────────────
 
-  const handleFilesChange = useCallback(
-    (files: CompletedFile[]) => {
-      completedFilesRef.current = files;
-      setValue('files', files);
-    },
-    [setValue]
-  );
+  const handleFilesChange = useCallback((files: File[]) => {
+    filesRef.current = files;
+    setFilesSnapshot(files);
+  }, []);
 
   // ─── Submission ─────────────────────────────────────────────────────────────
 
@@ -181,16 +142,16 @@ export default function QuoteForm() {
 
     try {
       const values = getValues();
+      const formData = new FormData();
+      formData.append('data', JSON.stringify(values));
+      for (const file of filesRef.current) {
+        formData.append('files', file);
+      }
 
       const res = await fetch('/api/quote', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...values,
-          files: completedFilesRef.current,
-          folderId: folderId || undefined,
-          folderUrl: folderUrl || undefined,
-        }),
+        body: formData,
+        // Do NOT set Content-Type — browser sets it with the multipart boundary
       });
 
       if (!res.ok) throw new Error('Submission failed');
@@ -203,7 +164,7 @@ export default function QuoteForm() {
     } finally {
       setIsSubmitting(false);
     }
-  }, [getValues, folderId, folderUrl]);
+  }, [getValues]);
 
   // ─── Reset ──────────────────────────────────────────────────────────────────
 
@@ -214,9 +175,8 @@ export default function QuoteForm() {
     setIsSubmitting(false);
     setSubmitStatus('idle');
     setReferenceNumber('');
-    setFolderId(null);
-    setFolderUrl(null);
-    completedFilesRef.current = [];
+    filesRef.current = [];
+    setFilesSnapshot([]);
   }, [form]);
 
   // ─── Render ─────────────────────────────────────────────────────────────────
@@ -261,15 +221,14 @@ export default function QuoteForm() {
             )}
             {currentStep === 3 && (
               <UploadStep
-                folderId={folderId}
-                onFolderNeeded={ensureFolder}
                 onFilesChange={handleFilesChange}
-                initialFiles={completedFilesRef.current}
+                initialFiles={filesSnapshot}
               />
             )}
             {currentStep === 4 && (
               <ReviewStep
                 formData={getValues()}
+                files={filesSnapshot}
                 onEditStep={goToStep}
               />
             )}

@@ -926,5 +926,5 @@ export const QUOTE_STOREYS: { value: string; label: string }[] = [
 ];
 
 export const QUOTE_ACCEPTED_TYPES = '.pdf,.dwg,.dxf,.jpg,.jpeg,.png,.zip,.rar';
-export const QUOTE_MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+export const QUOTE_MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB
 export const QUOTE_MAX_FILES = 10;

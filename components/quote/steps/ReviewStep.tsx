@@ -5,6 +5,7 @@ import type { QuoteFormData } from '@/lib/types';
 
 interface ReviewStepProps {
   formData: QuoteFormData;
+  files: File[];
   onEditStep: (step: number) => void;
 }
 
@@ -60,7 +61,7 @@ function ReviewRow({ label, value }: { label: string; value?: string }) {
   );
 }
 
-export default function ReviewStep({ formData, onEditStep }: ReviewStepProps) {
+export default function ReviewStep({ formData, files, onEditStep }: ReviewStepProps) {
   const contactMethod =
     formData.preferredContact === 'either'
       ? 'Either'
@@ -113,11 +114,11 @@ export default function ReviewStep({ formData, onEditStep }: ReviewStepProps) {
       </ReviewCard>
 
       <ReviewCard title="Uploaded Files" icon={FileText} step={3} onEdit={onEditStep}>
-        {formData.files && formData.files.length > 0 ? (
+        {files.length > 0 ? (
           <div className="space-y-2">
-            {formData.files.map((file) => (
+            {files.map((file) => (
               <div
-                key={file.id}
+                key={`${file.name}-${file.size}`}
                 className="flex items-center justify-between rounded-lg bg-warm-white px-3 py-2"
               >
                 <div className="flex items-center gap-2">
@@ -129,7 +130,7 @@ export default function ReviewStep({ formData, onEditStep }: ReviewStepProps) {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-text-light">No files uploaded. You can email plans later.</p>
+          <p className="text-sm text-text-light">No files added. You can email plans later.</p>
         )}
       </ReviewCard>
     </div>
