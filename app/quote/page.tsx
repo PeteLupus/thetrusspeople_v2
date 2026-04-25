@@ -5,7 +5,7 @@ import { QUOTE_PAGE } from '@/lib/constants';
 export const metadata: Metadata = {
   title: 'Request a Quote',
   description:
-    'Get a free quote for timber roof trusses, wall frames, and floor systems. Upload your plans and hear back within 24 hours.',
+    'Get a free quote for timber roof trusses, wall frames, and floor systems. Upload your plans and our team will review everything and get back to you.',
 };
 
 export default function QuotePage() {

@@ -152,13 +152,11 @@ export const PRODUCTS: Product[] = [
     },
     {
         title: 'Steelwood',
-        shortDescription: 'Timber and galvanised steel trusses spanning up to 10m floors and 20m roofs. Reduces concrete slab costs by up to 50%.',
+        shortDescription: 'Timber and galvanised steel structural trusses for floor and roofing applications. Reduces concrete slab costs by up to 50%.',
         description:
-            'The Truss People supplies Multinail Steelwood structural trusses for residential and light commercial applications across Melbourne and regional Victoria. Steelwood trusses combine solid timber top and bottom chords with galvanised steel diagonal web members — engineered for builds that demand long spans, high load capacity, and reliable performance. Steelwood uses vertical timber compression members and diagonal galvanised steel tension webs, which from an engineering perspective is superior to V-webbed joist systems and can carry higher loads. Floor spans reach up to 10 metres and roof spans up to 20 metres with most sheet roofing materials. Manufactured off-site and delivered when required, Steelwood is simple and efficient to install. It integrates seamlessly with our timber roof trusses, wall frames, and floor joist systems as part of a complete framing solution — and in many cases can reduce traditional concrete slab construction costs by up to 50%.',
+            'The Truss People supplies Multinail Steelwood structural trusses for residential and light commercial applications across Melbourne and regional Victoria. Steelwood trusses combine solid timber top and bottom chords with galvanised steel diagonal web members — engineered for builds that demand high load capacity and reliable performance. Steelwood uses vertical timber compression members and diagonal galvanised steel tension webs, which from an engineering perspective is superior to V-webbed joist systems and can carry higher loads. Manufactured off-site and delivered when required, Steelwood is simple and efficient to install. It integrates seamlessly with our timber roof trusses, wall frames, and floor joist systems as part of a complete framing solution — and in many cases can reduce traditional concrete slab construction costs by up to 50%.',
         features: [
             'Timber & galvanised steel construction',
-            'Floor spans up to 10 metres',
-            'Roof spans up to 20 metres',
             'Reduces concrete slab costs by up to 50%',
         ],
         icon: 'steelwood',
@@ -362,12 +360,12 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
         tagline: 'Multinail Steelwood structural trusses — solid timber and galvanised steel engineered for demanding floor and roofing applications.',
         heroImage: '/assets/product-ijoists.jpg',
         metaTitle: 'Steelwood Joists Melbourne | The Truss People',
-        metaDescription: 'Multinail Steelwood structural trusses for floor and roofing applications. Timber and galvanised steel, spans up to 10m floors / 20m roofs. Free quotes Melbourne.',
+        metaDescription: 'Multinail Steelwood structural trusses for floor and roofing applications. Timber and galvanised steel, engineered for high load capacity. Free quotes Melbourne.',
         benefits: [
             {
                 icon: 'zap',
-                title: 'Exceptional Span Capabilities',
-                description: 'Steelwood trusses achieve floor spans up to 10 metres and roof spans up to 20 metres — reducing the need for intermediate supports.',
+                title: 'High Load Capacity',
+                description: 'Steelwood trusses are engineered for demanding floor and roofing applications — reducing the need for intermediate supports.',
             },
             {
                 icon: 'shield',
@@ -387,13 +385,11 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
         ],
         content: [
             'The Truss People supplies Multinail Steelwood structural trusses for residential and light commercial applications across Melbourne and regional Victoria. Steelwood trusses combine solid timber top and bottom chords with galvanised steel diagonal web members — engineered for builds that demand long spans, high load capacity, and reliable performance.',
-            'Steelwood uses vertical timber compression members and diagonal galvanised steel tension webs, which from an engineering perspective is superior to V-webbed joist systems and can carry higher loads. Floor spans reach up to 10 metres and roof spans up to 20 metres with most sheet roofing materials.',
+            'Steelwood uses vertical timber compression members and diagonal galvanised steel tension webs, which from an engineering perspective is superior to V-webbed joist systems and can carry higher loads with most sheet roofing materials.',
             'Manufactured off-site and delivered when required, Steelwood is simple and efficient to install. It integrates seamlessly with our timber roof trusses, wall frames, and floor joist systems as part of a complete framing solution — and in many cases can reduce traditional concrete slab construction costs by up to 50%.',
         ],
         features: [
             'Solid timber & galvanised steel construction',
-            'Floor spans up to 10 metres',
-            'Roof spans up to 20 metres',
             'Multinail engineered technology',
             'Reduces concrete slab costs up to 50%',
             'Engineered to AS1684 and relevant building codes',
@@ -886,7 +882,7 @@ export const QUOTE_PAGE = {
     label: 'Request a Quote',
     title: 'Get a Free Quote for Your Project',
     description:
-        'Upload your plans and project details. Our team will review everything and get back to you with a comprehensive quote within 24 hours.',
+        'Upload your plans and project details. Our team will review everything and get back to you with a comprehensive quote.',
 };
 
 export const QUOTE_STEP_LABELS = ['Your Details', 'Project Info', 'Upload Plans', 'Review'];
