@@ -24,7 +24,7 @@ export default function Footer() {
                                 alt="The Truss People"
                                 width={160}
                                 height={58}
-                                className="mb-4 h-[50px] w-auto brightness-0 invert"
+                                className="mb-4 h-[50px] w-auto"
                             />
                         </Link>
                         <p className="text-sm leading-relaxed text-gray-400">
