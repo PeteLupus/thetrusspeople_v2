@@ -35,6 +35,7 @@ export interface StatItem {
 
 export interface GalleryItem {
   image: string;
+  imageHover?: string;
   title: string;
   description: string;
   large?: boolean;

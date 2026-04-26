@@ -123,9 +123,18 @@ export default function OurWorkPage() {
                                             src={item.image}
                                             alt={item.title}
                                             fill
-                                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                            className={`object-cover transition-transform duration-500 group-hover:scale-110 ${item.imageHover ? 'transition-opacity group-hover:opacity-0' : ''}`}
                                             sizes="(max-width: 768px) 100vw, 33vw"
                                         />
+                                        {item.imageHover && (
+                                            <Image
+                                                src={item.imageHover}
+                                                alt={item.title}
+                                                fill
+                                                className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                                                sizes="(max-width: 768px) 100vw, 33vw"
+                                            />
+                                        )}
                                     </div>
                                     {item.location && (
                                         <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-charcoal/75 px-3 py-1 backdrop-blur-sm">

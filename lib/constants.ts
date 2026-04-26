@@ -715,7 +715,8 @@ export const OUR_WORK_ITEMS: GalleryItem[] = [
 // TODO: Replace placeholder images with actual interstate delivery photos once received from team
 export const INTERSTATE_PROJECTS: GalleryItem[] = [
     {
-        image: '/assets/our-work-09.jpg',
+        image: '/assets/interstate-sa-01.jpg',
+        imageHover: '/assets/interstate-sa-02.jpg',
         title: 'Interstate Delivery — South Australia',
         description: 'Truss and frame package delivered to South Australia, coordinated end-to-end including oversize load logistics.',
         location: 'South Australia',
