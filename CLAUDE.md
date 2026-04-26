@@ -25,6 +25,8 @@
 - [x] SendGrid → Resend migration (contact + quote routes, lib/mailer.ts)
 - [x] DNS flip — A record + CNAME in cPanel → Vercel (76.76.21.21 / cname.vercel-dns.com, TTL 300)
 - [x] `vercel --prod` deployed — site live at thetrusspeople.com.au (HTTP/2 200 ✅)
+- [x] South Australia interstate tile — real photos wired in with hover swap (`interstate-sa-01/02.jpg`); `GalleryItem.imageHover?` field added
+- [x] Footer logo — dropped `brightness-0 invert`, now matches header full-colour mark
 
 ## WHAT'S NEXT
 - [ ] Test contact form on production domain → Victor confirms email at info@thetrusspeople.com.au
@@ -34,6 +36,7 @@
 - [ ] Google Search Console — verify domain (DNS TXT record in cPanel) → submit `/sitemap.xml`
 - [ ] Google Business Profile — Victor updates website URL to thetrusspeople.com.au (fixes old site in Google search)
 - [ ] Monthly project showcase content — need real job suburb/builder/type from Victor & Tony for 19 gallery photos
+- [ ] Interstate tiles — Tasmania + NSW still placeholders; need real photos from Victor & Tony
 - [ ] Victoria agent — live integration testing on real calls
 
 ## SUB-PROJECTS
