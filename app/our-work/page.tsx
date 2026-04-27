@@ -48,7 +48,7 @@ export default function OurWorkPage() {
                                 className={item.large ? 'md:col-span-2' : ''}
                             >
                                 <div
-                                    className="group relative cursor-pointer overflow-hidden rounded-xl"
+                                    className="group relative isolate cursor-pointer overflow-hidden rounded-xl"
                                     onClick={() =>
                                         setLightbox({
                                             isOpen: true,
@@ -58,7 +58,7 @@ export default function OurWorkPage() {
                                     }
                                 >
                                     <div
-                                        className={`relative ${item.large ? 'aspect-[21/9]' : 'aspect-[4/3]'
+                                        className={`relative overflow-hidden rounded-xl ${item.large ? 'aspect-[21/9]' : 'aspect-[4/3]'
                                             }`}
                                     >
                                         <Image
@@ -109,7 +109,7 @@ export default function OurWorkPage() {
                         {INTERSTATE_PROJECTS.map((item, i) => (
                             <ScrollReveal key={i}>
                                 <div
-                                    className="group relative cursor-pointer overflow-hidden rounded-xl"
+                                    className="group relative isolate cursor-pointer overflow-hidden rounded-xl"
                                     onClick={() =>
                                         setLightbox({
                                             isOpen: true,
@@ -118,7 +118,7 @@ export default function OurWorkPage() {
                                         })
                                     }
                                 >
-                                    <div className="relative aspect-[4/3]">
+                                    <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
                                         <Image
                                             src={item.image}
                                             alt={item.title}
