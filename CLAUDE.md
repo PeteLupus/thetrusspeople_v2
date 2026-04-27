@@ -27,6 +27,8 @@
 - [x] `vercel --prod` deployed — site live at thetrusspeople.com.au (HTTP/2 200 ✅)
 - [x] South Australia interstate tile — real photos wired in with hover swap (`interstate-sa-01/02.jpg`); `GalleryItem.imageHover?` field added
 - [x] Footer logo — dropped `brightness-0 invert`, now matches header full-colour mark
+- [x] Our Work gallery — swapped `our-work-06.jpg` to new rooftop truss photo (cropped 4:3, sky-biased-down)
+- [x] Gallery rounded-corner bug fix — Safari/Chrome `overflow-hidden + rounded-xl` didn't clip absolutely-positioned `<Image fill>` until hover transform kicked in. Fix: `rounded-xl overflow-hidden` on inner aspect container + `isolate` on outer wrapper. Both main + interstate tiles.
 
 ## WHAT'S NEXT
 - [ ] Test contact form on production domain → Victor confirms email at info@thetrusspeople.com.au
