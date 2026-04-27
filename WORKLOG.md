@@ -112,6 +112,15 @@ FLIP DAY — when are we flipping DNS? Everything else is ready.
              GSC: sc-domain:thetrusspeople.com.au already verified. Sitemaps submitted 2025-10-30.
              DNS at webstophosting.com.au (operator has cPanel). Flip: 1x A record edit only.
              MX (Outlook 365), SPF, TXT (MS verify) must be preserved on flip.
+2026-04-27 — Gallery photo + corner-rounding fix.
+             Commits: 9f730ee (swap our-work-06 to new rooftop truss photo),
+                      1caf708 (tighten crop — reduce sky so rounded corners read on white bg),
+                      2095f40 (fix Safari/Chrome bug: rounded corners only showed on hover).
+             Root cause of rounding bug: parent had `overflow-hidden rounded-xl` but
+             absolutely-positioned <Image fill> children weren't clipped until a transform
+             kicked in (hover scale-110). Fix: added `rounded-xl overflow-hidden` to the
+             inner aspect container + `isolate` on the parent. Applied to both main gallery
+             and interstate tiles in app/our-work/page.tsx.
 2026-04-22 — OPERATION RIDGELINE: pre-launch readiness audit + gap closure. COMPLETE.
              Commits: b730321 (audit), 44178ca (maps + GA4 bake-in)
              DONE:
@@ -148,7 +157,7 @@ FLIP DAY — when are we flipping DNS? Everything else is ready.
 ---
 
 ## GIT STATUS
-**Last commit:** 44178ca [fix] Google Maps embed + clickable address + GA4 redeploy trigger  
+**Last commit:** 2095f40 [fix] gallery tiles — clip rounded corners on inner image container  
 **Branch:** main  
 **Vercel deploy:** [x] Green
 
