@@ -29,13 +29,14 @@
 - [x] Footer logo — dropped `brightness-0 invert`, now matches header full-colour mark
 - [x] Our Work gallery — swapped `our-work-06.jpg` to new rooftop truss photo (cropped 4:3, sky-biased-down)
 - [x] Gallery rounded-corner bug fix — Safari/Chrome `overflow-hidden + rounded-xl` didn't clip absolutely-positioned `<Image fill>` until hover transform kicked in. Fix: `rounded-xl overflow-hidden` on inner aspect container + `isolate` on outer wrapper. Both main + interstate tiles.
+- [x] Google Analytics — `GoogleAnalytics.tsx` now reads `NEXT_PUBLIC_GA4_ID` (matches Vercel env var name). GA4 `G-X60E19R004` firing on production.
+- [x] Google Search Console — domain already verified as `sc-domain:thetrusspeople.com.au`. Sitemap `https://thetrusspeople.com.au/sitemap.xml` submitted, 12 pages discovered.
 
 ## WHAT'S NEXT
 - [ ] Test contact form on production domain → Victor confirms email at info@thetrusspeople.com.au
 - [ ] Test quote form on production domain (all 4 steps, attach file) → email + GCS bucket `ttp-quote-submissions`
 - [ ] Remove stale env vars from Vercel: `SENDGRID_API_KEY`, `SENDGRID_FROM_EMAIL`
-- [ ] Google Analytics — add `NEXT_PUBLIC_GA_ID` env var in Vercel → redeploy (NEXT_PUBLIC_ vars bake at build time)
-- [ ] Google Search Console — verify domain (DNS TXT record in cPanel) → submit `/sitemap.xml`
+- [ ] Remove old `http://` sitemap entry from GSC (3-dot menu → Remove)
 - [ ] Google Business Profile — Victor updates website URL to thetrusspeople.com.au (fixes old site in Google search)
 - [ ] Monthly project showcase content — need real job suburb/builder/type from Victor & Tony for 19 gallery photos
 - [ ] Interstate tiles — Tasmania + NSW still placeholders; need real photos from Victor & Tony
