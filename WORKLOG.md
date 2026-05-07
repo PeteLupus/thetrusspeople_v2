@@ -10,7 +10,7 @@
 **Name:** The Truss People V2  
 **Path:** ~/Projects/clients/truss-people/v2/  
 **Client:** The Truss People (Victor & Tony Manoski)  
-**Phase:** [ ] Planning  [ ] Building  [ ] Testing  [x] Delivering  
+**Phase:** [ ] Planning  [x] Building (content)  [ ] Testing  [ ] Delivering  
 
 ---
 
@@ -18,7 +18,12 @@
 > One sentence. What are we trying to complete RIGHT NOW?
 
 ```
-HOLDING — site is production-ready. Waiting on operator to flip DNS.
+M02 BREAKOUT — DNS migration to Cloudflare + registrar transfer to VentraIP.
+Plan approved 2026-05-07, operator executing on own schedule. Pre-flight
+complete: auth code visible in WEBSTOP, domain unlocked, registrant
+victor@thetrusspeople.com.au, DKIM/Intune values captured from WEBSTOP zone.
+Brief: missions/002-breakout.md. Plan: ~/.claude/plans/can-we-go-back-humble-emerson.md
+Parallel: content post 003 (drone reel) still queued.
 ```
 
 ---
@@ -88,7 +93,15 @@ SEO (same day, post-flip):
 > Single most important thing YOU need to decide right now.
 
 ```
-FLIP DAY — when are we flipping DNS? Everything else is ready.
+NEXT SESSION (2026-05-06) — drop drone flyover clip(s) from GDrive
+into content/posts/003-precision-at-scale/_source/, then say "go".
+CC will ffprobe → cut to 9:16 1080×1920 15–20s → write POST.md +
+preview.html. Voice locked to post 002's "precision at scale" angle.
+
+ALSO PENDING — PII handling decision. Public repo (PeteLupus/thetrusspeople_v2)
+has uncommitted local-only files with Leonard McQualter's mobile/email/address
+in WORKLOG.md (modified) + missions/001-outage.md (untracked). Options:
+gitignore + revert, scrub PII, or flip repo private. Defer call to operator.
 ```
 
 ---
@@ -121,6 +134,31 @@ FLIP DAY — when are we flipping DNS? Everything else is ready.
              kicked in (hover scale-110). Fix: added `rounded-xl overflow-hidden` to the
              inner aspect container + `isolate` on the parent. Applied to both main gallery
              and interstate tiles in app/our-work/page.tsx.
+2026-04-30 — OUTAGE: site dark globally. CORRECTED ROOT CAUSE (intel from email
+             surfaced ~21:02 AEST): Leonard McQualter at WEBSTOP emailed Victor on
+             21 APR asking him to confirm the migration was complete so he could
+             terminate the package. Victor (or operator) replied "yeah we're good"
+             without checking that the domain's NS at the registrar were still
+             pointed at WebStop. Leonard then terminated the package, taking the
+             DNS zone with it. NOT a non-payment suspension — courtesy termination
+             on confirmed request. Leonard is professional and reachable.
+             Operator contact captured: Leonard McQualter,
+               leonard.mcqualter@webstop.com.au
+               mobile 0417 386 551 / landline 03 4053 4608
+               WEBSTOP AUSTRALIA P/L, 30 Church St Camperdown VIC 3260
+             Recovery plan: missions/001-outage.md
+             Tomorrow AM: call Leonard's mobile from 8:30 AEST. Mea culpa script:
+             "my bad, forgot to transfer the DNS, can you reactivate cPanel for
+             another month, I'll pay now, then I'll fix the records to point at
+             Vercel and migrate properly over the next few days." Once cPanel
+             is back, Zone Editor: A @ 76.76.21.21, CNAME www→cname.vercel-dns.com,
+             preserve MX/SPF/MS-verify/DKIM (Outlook 365). Then plan clean
+             registrar migration without outage pressure.
+             Lessons (saved to BUGFIX.md): (1) never accept reseller-controlled
+             NS on client handover; move NS to operator-controlled DNS day one.
+             (2) "Courtesy termination" emails from old hosts are landmines —
+             never confirm migration complete without verifying NS at the
+             registrar level first.
 2026-04-22 — OPERATION RIDGELINE: pre-launch readiness audit + gap closure. COMPLETE.
              Commits: b730321 (audit), 44178ca (maps + GA4 bake-in)
              DONE:
@@ -134,6 +172,16 @@ FLIP DAY — when are we flipping DNS? Everything else is ready.
                - 19 Playwright screenshots in /audit/ (375/414/768/1024px, 5 pages)
                - GA4 ID G-X60E19R004 set in Vercel env, baked in on deploy
              BLOCKED/NEXT: DNS flip (operator action required)
+2026-05-04 — Email outage resolved (M365 DNS records corrected after old hosting
+             guy's NS change post-OWL fix). Site + email back. Memory updated:
+             project_outage_2026_05_04.md, feedback_dns_stop_signal.md.
+2026-05-05 — Content workstream opened. Plan file written for post 003 (drone
+             flyover reel, codename precision-at-scale). Decisions locked:
+             single 15–20s clip, 9:16 1080×1920, muted by default, fade in/out,
+             angle extends post 002. Folder content/posts/003-precision-at-scale/_source/
+             created and waiting for operator to drop GDrive clips.
+             Plan: ~/.claude/plans/no-we-have-the-cosmic-cocoa.md
+             Session ended without commits — PII review pending.
 ```
 
 ---

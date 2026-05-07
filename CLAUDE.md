@@ -33,6 +33,7 @@
 - [x] Google Search Console — domain already verified as `sc-domain:thetrusspeople.com.au`. Sitemap `https://thetrusspeople.com.au/sitemap.xml` submitted, 12 pages discovered.
 
 ## WHAT'S NEXT
+- [ ] **M02 BREAKOUT** — DNS migration to Cloudflare + registrar to VentraIP. Plan approved 2026-05-07. Operator executing self-paced. Brief: `missions/002-breakout.md`. Notion checklist: https://www.notion.so/M02-BREAKOUT-DNS-Registrar-Migration-Checklist-359d422a3acb8108a9f5df1f4b54b10b
 - [ ] Test contact form on production domain → Victor confirms email at info@thetrusspeople.com.au
 - [ ] Test quote form on production domain (all 4 steps, attach file) → email + GCS bucket `ttp-quote-submissions`
 - [ ] Remove stale env vars from Vercel: `SENDGRID_API_KEY`, `SENDGRID_FROM_EMAIL`
