@@ -31,9 +31,14 @@
 - [x] Gallery rounded-corner bug fix — Safari/Chrome `overflow-hidden + rounded-xl` didn't clip absolutely-positioned `<Image fill>` until hover transform kicked in. Fix: `rounded-xl overflow-hidden` on inner aspect container + `isolate` on outer wrapper. Both main + interstate tiles.
 - [x] Google Analytics — `GoogleAnalytics.tsx` now reads `NEXT_PUBLIC_GA4_ID` (matches Vercel env var name). GA4 `G-X60E19R004` firing on production.
 - [x] Google Search Console — domain already verified as `sc-domain:thetrusspeople.com.au`. Sitemap `https://thetrusspeople.com.au/sitemap.xml` submitted, 12 pages discovered.
+- [x] **M02 BREAKOUT — DNS cutover (2026-05-09 02:22):** WEBSTOP NS flipped from ns1/ns2.vercel-dns.com → hera/paul.ns.cloudflare.com. Cloudflare now authoritative. Site HTTP/2 200, M365 mail flow verified both ways. Debrief: `missions/002-breakout-debrief.md`.
 
 ## WHAT'S NEXT
-- [ ] **M02 BREAKOUT** — DNS migration to Cloudflare + registrar to VentraIP. Plan approved 2026-05-07. Operator executing self-paced. Brief: `missions/002-breakout.md`. Notion checklist: https://www.notion.so/M02-BREAKOUT-DNS-Registrar-Migration-Checklist-359d422a3acb8108a9f5df1f4b54b10b
+- [ ] **Fix M365 signature HTML** — table layout breaks in Gmail web (logo column pushes address row out of alignment, T:/E:/W: cells offset). Renders fine in OWA. Pre-existing template bug, not a cutover regression. Fix: rebuild as single-column or set explicit `<td>` widths.
+- [ ] **mail-tester score** — send petar@... → fresh test@mail-tester.com, expect 8+/10 with SPF + DMARC pass (DKIM will show missing until M365 hardening mission).
+- [ ] **Invite OWL to TTP Cloudflare** — Members → DNS role only.
+- [ ] **+3–7d: registrar transfer to VentraIP** — domain stays on CF NS through transfer. Auth code in WEBSTOP. Approval lands at victor@. Adds 1yr to expiry.
+- [ ] **M365 hardening (separate mission)** — pull MS=, Intune CNAMEs, DKIM selectors, DMARC values from M365 Admin → Domains wizard, add to Cloudflare zone.
 - [ ] Test contact form on production domain → Victor confirms email at info@thetrusspeople.com.au
 - [ ] Test quote form on production domain (all 4 steps, attach file) → email + GCS bucket `ttp-quote-submissions`
 - [ ] Remove stale env vars from Vercel: `SENDGRID_API_KEY`, `SENDGRID_FROM_EMAIL`
