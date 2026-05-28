@@ -53,6 +53,20 @@
 
 ---
 
+## POST CONTENT — Slot Binding Rule (mandatory)
+
+Every TTP carousel post (IG / FB / LinkedIn) lives in `content/posts/NNN-slug/POST.md` and MUST follow the slot-binding model defined in `content/POST_TEMPLATE.md`.
+
+**Hard rule:** The Slot Binding Table is the only place numbered caption points are written. Every platform caption (IG / FB / LinkedIn) sources its numbered points verbatim from column 4 of that table, top-to-bottom. Never write numbered caption points and photo order in separate sections — that's the failure mode that caused Vic's "1, 2, 3, 4 don't match the photos" feedback on the live post (2026-05-28).
+
+**Image tags** in column 3 reference the content-engine vision taxonomy at `~/Projects/products/content-engine/` (operator-override merged). Look up via the `/library` dashboard. TTP repo reads taxonomy, does not write it.
+
+**At publish time** (Meta Business Suite, manual): upload carousel images in Slot Binding Table row order. Do not reshuffle in the Meta UI after the table is locked.
+
+Reference post: `content/posts/002-aussie-precision/POST.md` (retrofitted 2026-05-28).
+
+---
+
 # Jarvis Operating Manual
 
 This file is read automatically by Claude Code on every session.
