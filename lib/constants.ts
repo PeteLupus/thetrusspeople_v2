@@ -17,7 +17,7 @@ export const NAV_LINKS: NavLink[] = [
     { label: 'About', href: '#about' },
     { label: 'Products', href: '/products' },
     { label: 'Our Work', href: '/our-work' },
-    { label: 'Testimonials', href: '#testimonials' },
+    { label: 'Blog', href: '/blog' },
     { label: 'Contact', href: '#contact' },
 ];
 
@@ -864,6 +864,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
         links: [
             { label: 'About Us', href: '/#about' },
             { label: 'Our Work', href: '/our-work' },
+            { label: 'Blog', href: '/blog' },
             { label: 'FAQ', href: '/faq' },
             { label: 'Testimonials', href: '/#testimonials' },
             { label: 'Get a Quote', href: '/quote' },
