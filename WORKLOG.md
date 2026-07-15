@@ -201,13 +201,14 @@ gitignore + revert, scrub PII, or flip repo private. Defer call to operator.
 - [x] Maps: Google Maps embed iframe in Contact + Footer
 - [x] Domains staged on Vercel (apex + www + preview subdomain)
 - [x] preview.thetrusspeople.com.au live for client review
+- [x] **Perf hotfix (2026-07-15, commit 09dcf28, live on prod):** hero LCP fix. Root cause — hero heading/paragraph (the PSI-named LCP element) was gated by Framer Motion `initial="hidden"` (opacity:0 baked into SSR HTML), invisible until hydration → mobile LCP 6.3s. Fix: CSS-keyframe entrance (`hero-reveal` in globals.css), self-starts at first paint, reduced-motion safe. Mobile PSI LCP 6.3s→5.0s, score 69→71. Pattern logged to BUGFIX.md for future builds. Round 2 (defer offscreen hero slides + trim eager Framer Motion JS, ~251 KiB images + 300ms render-block) **parked** — diminishing returns for a low-traffic site with no CrUX field data; revisit if paid traffic points here.
 
 ---
 
 ## GIT STATUS
-**Last commit:** 2095f40 [fix] gallery tiles — clip rounded corners on inner image container  
+**Last commit:** 09dcf28 [fix] hero — CSS-driven entrance so LCP text paints at first paint  
 **Branch:** main  
-**Vercel deploy:** [x] Green
+**Vercel deploy:** [x] Green (prod, 2026-07-15)
 
 ---
 
