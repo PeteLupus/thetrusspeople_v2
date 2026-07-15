@@ -72,6 +72,28 @@ h6 {
   animation: marquee 18s linear infinite;
 }
 
+/* Hero entrance — CSS-driven so the LCP heading paints at first paint,
+   not after JS hydration. Self-starts on render; no Framer Motion dependency. */
+@keyframes heroSlideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hero-reveal {
+  animation: heroSlideInLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.hero-reveal--1 { animation-delay: 0.05s; }
+.hero-reveal--2 { animation-delay: 0.15s; }
+.hero-reveal--3 { animation-delay: 0.25s; }
+.hero-reveal--4 { animation-delay: 0.35s; }
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
 
@@ -82,6 +104,11 @@ h6 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Hero text must appear instantly (no delayed backwards-fill flash) */
+  .hero-reveal {
+    animation: none !important;
   }
 }
 

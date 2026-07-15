@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Button from '@/components/ui/Button';
 import { HERO, TRUST_ITEMS } from '@/lib/constants';
-import { slideInLeft, slideInRight, fadeInUp } from '@/lib/utils';
+import { slideInRight, fadeInUp } from '@/lib/utils';
 import { Shield, Check } from 'lucide-react';
 import type { TrustItem } from '@/lib/types';
 
@@ -96,18 +96,14 @@ export default function Hero({ data, trustItems }: HeroProps) {
       {/* Content */}
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-[1400px] items-center px-6 py-16">
         <div className="grid w-full gap-8 lg:grid-cols-[1fr_320px] lg:gap-12 xl:grid-cols-[1fr_360px]">
-          {/* Text */}
-          <motion.div
-            variants={slideInLeft}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col justify-center"
-          >
-            <span className="mb-4 inline-block w-fit rounded-full bg-terracotta/20 px-4 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
+          {/* Text — CSS entrance (not Framer Motion) so the LCP heading paints
+              at first paint instead of waiting on JS hydration. */}
+          <div className="flex flex-col justify-center">
+            <span className="hero-reveal mb-4 inline-block w-fit rounded-full bg-terracotta/20 px-4 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
               {hero.label}
             </span>
             <h1
-              className="mb-6 font-display text-4xl font-bold uppercase leading-none tracking-tight text-white md:text-6xl"
+              className="hero-reveal hero-reveal--1 mb-6 font-display text-4xl font-bold uppercase leading-none tracking-tight text-white md:text-6xl"
               style={{ color: '#ffffff', textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
             >
               <span className="block">Melbourne&apos;s Trusted</span>
@@ -116,12 +112,12 @@ export default function Hero({ data, trustItems }: HeroProps) {
               <span className="block">Manufacturer</span>
             </h1>
             <p
-              className="mb-8 max-w-xl text-base leading-relaxed text-white md:text-lg"
+              className="hero-reveal hero-reveal--2 mb-8 max-w-xl text-base leading-relaxed text-white md:text-lg"
               style={{ color: '#ffffff', textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}
             >
               {hero.description}
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="hero-reveal hero-reveal--3 flex flex-wrap gap-4">
               <Button
                 variant="primary"
                 href="/quote"
@@ -135,7 +131,7 @@ export default function Hero({ data, trustItems }: HeroProps) {
                 {hero.ctaSecondary}
               </Button>
             </div>
-          </motion.div>
+          </div>
 
           {/* Trust Card — compact */}
           <motion.div
