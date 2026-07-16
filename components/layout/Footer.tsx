@@ -10,6 +10,7 @@ import {
     FACEBOOK_URL,
     INSTAGRAM_URL,
 } from '@/lib/constants';
+import TradeSortedMark from './TradeSortedMark';
 
 export default function Footer() {
     return (
@@ -146,11 +147,15 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-12 border-t border-white/10 pt-6">
-                    <p className="text-center text-xs text-gray-500">
+                <div className="mt-12 flex flex-col-reverse items-center gap-4 border-t border-white/10 pt-6 sm:flex-row sm:justify-between">
+                    <p className="text-center text-xs text-gray-500 sm:text-left">
                         © {new Date().getFullYear()} The Truss People. All rights reserved.
                         | Family-owned &amp; Australian-made since 2006.
                     </p>
+                    <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-gray-500">
+                        <span className="uppercase tracking-[0.14em]">Powered by</span>
+                        <TradeSortedMark size={15} tone="dark" />
+                    </span>
                 </div>
             </div>
         </footer>
