@@ -154,7 +154,15 @@ export default function Footer() {
                     </p>
                     <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-gray-500">
                         <span className="uppercase tracking-[0.14em]">Powered by</span>
-                        <TradeSortedMark size={15} tone="dark" />
+                        <a
+                            href="https://tradesorted.com.au"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="TradeSorted — visit website"
+                            className="transition-opacity duration-300 hover:opacity-80"
+                        >
+                            <TradeSortedMark size={15} tone="dark" />
+                        </a>
                     </span>
                 </div>
             </div>
