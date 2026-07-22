@@ -145,7 +145,7 @@ export default function FAQPage() {
                             <a href={PHONE_HREF} className="text-terracotta hover:underline">
                                 {PHONE}
                             </a>{' '}
-                            or send us your plans and we&rsquo;ll get back to you within 24 hours.
+                            or send us your plans and our team will get back to you.
                         </p>
                         <Button variant="primary" href="/quote">
                             Get a Free Quote

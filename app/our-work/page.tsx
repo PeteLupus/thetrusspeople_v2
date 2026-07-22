@@ -164,7 +164,7 @@ export default function OurWorkPage() {
                             Ready to Start Your Project?
                         </h2>
                         <p className="mx-auto mb-8 max-w-xl text-base text-gray-300">
-                            Send us your plans and get a comprehensive quote within 24 hours.
+                            Send us your plans for a comprehensive, no-obligation quote.
                         </p>
                         <Button variant="primary" href="/quote">
                             Get a Free Quote

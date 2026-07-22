@@ -251,7 +251,7 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
         ],
         process: [
             { step: 'Send Your Plans', description: 'Upload your architectural or engineering plans through our quote form or email them directly.' },
-            { step: 'Engineering & Quote', description: 'Our detailers review your plans, engineer the truss layout, and provide a detailed quote — typically within 24-48 hours.' },
+            { step: 'Engineering & Quote', description: 'Our detailers review your plans, engineer the truss layout, and provide a detailed quote.' },
             { step: 'Manufacturing', description: 'Once approved, your trusses are manufactured at our Coolaroo facility using Multinail technology and 100% Australian timber.' },
             { step: 'Delivery', description: 'We deliver directly to your site on the confirmed date, with experienced operators who know how to handle trusses safely.' },
         ],

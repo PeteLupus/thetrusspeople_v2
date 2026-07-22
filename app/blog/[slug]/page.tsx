@@ -141,7 +141,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="mx-auto max-w-[1400px] px-6 text-center">
           <h2 className="mb-4 font-heading text-3xl font-bold text-white md:text-4xl">Ready to price your job?</h2>
           <p className="mx-auto mb-8 max-w-xl text-base text-gray-300">
-            Send us your plans and get a comprehensive quote within 24 hours.
+            Send us your plans for a comprehensive, no-obligation quote.
           </p>
           <Link
             href="/quote"

@@ -14,7 +14,7 @@ interface SuccessStateProps {
 const steps = [
   'We review your plans and project details',
   'Our detailers prepare a detailed quote',
-  'We contact you with pricing within 24 hours',
+  'We contact you with your detailed pricing',
 ];
 
 export default function SuccessState({ firstName, referenceNumber, onReset }: SuccessStateProps) {
@@ -40,7 +40,7 @@ export default function SuccessState({ firstName, referenceNumber, onReset }: Su
 
       <p className="mb-2 text-base text-text-light">
         Thank you, {firstName}. We&apos;ve received your quote request and will
-        be in touch within 24 hours.
+        be in touch as soon as your quote is ready.
       </p>
 
       <p className="mb-8 text-sm text-text-light">
