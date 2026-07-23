@@ -688,7 +688,7 @@ export const OUR_WORK_ITEMS: GalleryItem[] = [
     {
         image: '/assets/our-work-16.jpg',
         title: 'Staged for Delivery',
-        description: 'Multiple framing packages bundled and staged in the yard, ready for dispatch.',
+        description: 'Multiple framing packages bundled and staged at our Coolaroo facility, ready for dispatch.',
         location: 'Coolaroo, VIC',
     },
     {
