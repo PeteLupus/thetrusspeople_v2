@@ -46,7 +46,12 @@
 - [ ] Google Business Profile — Victor updates website URL to thetrusspeople.com.au (fixes old site in Google search)
 - [ ] Monthly project showcase content — need real job suburb/builder/type from Victor & Tony for 19 gallery photos
 - [ ] Interstate tiles — Tasmania + NSW still placeholders; need real photos from Victor & Tony
-- [ ] Victoria agent — live integration testing on real calls
+- [ ] **Victoria agent: close the two unticked rows on TTP's own phone line.** Data accuracy, and
+      the `log_victoria_call` → n8n logging leg. Both sit at 0/4 on the post-test checklist and the
+      agent has never run on a real call. Needs no customer and nobody's permission.
+      **Why it is worth doing now:** it converts *"we built one"* into *"it has been running on real
+      calls"*, which is the single sentence that sells the top rung of the ladder. TTP is the firm's
+      testing ground by design, and this is the clearest example of it paying off.
 
 ## SUB-PROJECTS
 - **Victoria AI Agent** — Notion: https://www.notion.so/337d422a3acb812098b0cd8aab010e22

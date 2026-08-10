@@ -85,7 +85,8 @@ SEO (same day, post-flip):
 - [ ] FLIP DAY — see checklist above
 - [ ] Blog/FAQ strategy — what topics? Who writes? AI-assisted or manual?
 - [ ] Monthly project showcase — process for getting photos from client + uploading to constants.ts
-- [ ] Victoria agent — live integration testing scheduled?
+- [x] Victoria agent, live integration testing scheduled? **Not a decision. It needs nobody's
+      permission and no customer, so it moves to the task list below.**
 
 ---
 
