@@ -195,7 +195,7 @@ export const PRODUCTS: Product[] = [
             'The Truss People coordinates direct-to-site delivery from our Coolaroo manufacturing facility. When your trusses, wall frames, or floor systems are ready, they\'re handled by experienced crane truck operators who have worked with us for over 10 years — they know the product, the dimensions, and the care required.\n\nWe don\'t use random third-party couriers. The same operators handle our timber framing deliveries every week, so your order gets to site without damage. That means fewer delays, fewer disputes, and fewer headaches for you.\n\nWe have experience with oversize dimensioned loads and organise everything — escort vehicles, VicRoads permits, and traffic management — to get your product to site.',
         features: [
             'Long-term crane truck operators — not random couriers',
-            '20+ years of experience handling timber frames',
+            'More than 20 years of experience in the field',
             'Oversize load permits & VicRoads compliance',
             'Melbourne & regional Victoria coverage',
         ],
@@ -545,7 +545,7 @@ export const PRODUCT_PAGES: Record<string, ProductPageData> = {
             'Melbourne & regional Victoria coverage',
             'Full framing package loads',
             'Coordinated with crane hire',
-            '20+ years of experience handling timber frames',
+            'More than 20 years of experience in the field',
             'On-time delivery commitment',
         ],
         process: [
