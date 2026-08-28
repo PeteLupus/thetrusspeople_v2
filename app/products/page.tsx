@@ -5,7 +5,10 @@ import { PRODUCTS, PRODUCTS_SECTION } from '@/lib/constants';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Products & Services | The Truss People',
+  // Absolute for the same reason as the product pages: this string already carries the
+  // brand, and the root template would append it a second time.
+  title: { absolute: 'Products & Services | The Truss People' },
+  alternates: { canonical: '/products' },
   description:
     'Timber roof trusses, wall frames, floor joists, Multistruts and Steelwood systems — all 100% Australian-made at our Coolaroo facility, engineered to AS1684 and relevant building codes.',
 };

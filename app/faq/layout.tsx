@@ -3,7 +3,10 @@ import type { Metadata } from 'next';
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://thetrusspeople.com.au';
 
 export const metadata: Metadata = {
-    title: 'FAQ | The Truss People',
+    // Absolute: this string already ends in the brand and the root layout's
+    // template appended it again, so the live tab read 'FAQ | The Truss People |
+    // The Truss People'.
+    title: { absolute: 'FAQ | The Truss People' },
     description:
         'Frequently asked questions about timber roof trusses, wall frames, floor joists and delivery from The Truss People — Melbourne\'s trusted truss manufacturer since 2006.',
     alternates: {

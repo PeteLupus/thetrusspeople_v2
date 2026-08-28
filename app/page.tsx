@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Hero from '@/components/home/Hero';
 import About from '@/components/home/About';
 import Products from '@/components/home/Products';
@@ -13,6 +14,11 @@ import {
   TESTIMONIALS_SECTION, TESTIMONIALS,
   CONTACT_SECTION, PHONE, EMAIL, ADDRESS,
 } from '@/lib/constants';
+
+// The homepage keeps the canonical the root layout used to supply for everything.
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
 
 export default function Home() {
   return (

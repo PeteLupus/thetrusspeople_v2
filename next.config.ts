@@ -16,6 +16,17 @@ const nextConfig: NextConfig = {
   // new equivalents to recapture ranking equity. Source data: GSC, 2026-06 baseline.
   async redirects() {
     return [
+      // www.thetrusspeople.com.au answered 200 with the whole live site until
+      // 2026-08-28, so every page existed on two hostnames and GSC was reporting page
+      // rows under both. The apex is canonical; www redirects to it. Checked before
+      // adding: WORKLOG's 2026-04-21 "www is already CNAME to apex" describes the old
+      // cPanel DNS, not Vercel's behaviour after the May Cloudflare migration.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.thetrusspeople.com.au' }],
+        destination: 'https://thetrusspeople.com.au/:path*',
+        permanent: true,
+      },
       { source: '/timber-trusses-melbourne.html', destination: '/products/timber-roof-trusses', permanent: true },
       { source: '/roof-trusses-melbourne.html', destination: '/products/timber-roof-trusses', permanent: true },
       { source: '/prefab-trusses-melbourne.html', destination: '/products/timber-roof-trusses', permanent: true },

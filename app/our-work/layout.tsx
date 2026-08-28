@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Our Work — Timber Truss & Wall Frame Projects Melbourne',
+    alternates: { canonical: '/our-work' },
     description:
         'See our portfolio of timber roof truss and wall frame projects across Melbourne and Victoria. Custom residential homes, multi-unit developments, and commercial builds.',
     keywords:

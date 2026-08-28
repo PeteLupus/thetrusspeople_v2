@@ -26,8 +26,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const product = PRODUCT_PAGES[slug];
   if (!product) return { title: 'Product Not Found' };
   return {
-    title: product.metaTitle,
+    // `absolute` opts out of the root title template. product.metaTitle already ends
+    // in '| The Truss People', so the default path stamped the brand on twice and the
+    // SERP read 'Floor Joists & Multistruts Melbourne | The Truss People | The Truss People'.
+    title: { absolute: product.metaTitle },
     description: product.metaDescription,
+    alternates: { canonical: `/products/${slug}` },
   };
 }
 

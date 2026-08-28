@@ -33,9 +33,12 @@ export const metadata: Metadata = {
   keywords:
     "timber roof trusses Melbourne, wall frames Melbourne, floor joists Melbourne, floor joist manufacturer Victoria, Multistruts Melbourne, Steelwood joists Melbourne, roof truss manufacturer Victoria, prefabricated trusses Coolaroo, truss supplier Greater Melbourne, Australian made trusses, AS1684 compliant trusses, timber frames Victoria, roof truss delivery Melbourne, custom roof trusses, residential trusses Melbourne, commercial trusses Victoria, Geelong trusses, Ballarat trusses, Bendigo trusses, Mornington Peninsula trusses, Bellarine Peninsula trusses",
   robots: "index, follow",
-  alternates: {
-    canonical: BASE_URL,
-  },
+  // NO canonical on the root layout. Next.js merges root metadata into every child
+  // segment, so one declared here is inherited by every route that does not set its
+  // own. That shipped /products, /quote, /our-work and all seven product pages telling
+  // Google they were duplicates of the homepage, 2026-02-14 to 2026-08-28. Google
+  // overrode it on the two product pages it crawled and never crawled the other nine
+  // sitemap URLs at all. Each route sets its own now; the homepage's is in app/page.tsx.
   openGraph: {
     title: "Roof Trusses & Wall Frames Melbourne | The Truss People",
     description:
