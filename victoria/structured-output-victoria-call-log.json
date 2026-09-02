@@ -1,0 +1,116 @@
+{
+  "name": "Victoria_Call_Log",
+  "description": "data_collection_call",
+  "schema": {
+    "type": "object",
+    "required": [
+      "caller_name",
+      "phone_number",
+      "email",
+      "inquiry_type",
+      "call_summary",
+      "urgency",
+      "action_required",
+      "timestamp"
+    ],
+    "properties": {
+      "email": {
+        "description": "Caller's email address",
+        "type": "string",
+        "format": "email"
+      },
+      "suburb": {
+        "description": "Project location suburb",
+        "type": "string"
+      },
+      "urgency": {
+        "description": "Follow-up priority level",
+        "type": "string",
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ]
+      },
+      "postcode": {
+        "description": "Project location postcode if provided",
+        "type": "string"
+      },
+      "has_plans": {
+        "description": "Whether caller has plans/drawings ready",
+        "type": "boolean"
+      },
+      "timestamp": {
+        "description": "Call timestamp in ISO 8601 format",
+        "type": "string",
+        "format": "date-time"
+      },
+      "caller_name": {
+        "description": "Full name of the caller",
+        "type": "string"
+      },
+      "call_summary": {
+        "description": "Brief 1-2 sentence summary of the inquiry",
+        "type": "string",
+        "maxLength": 200
+      },
+      "full_address": {
+        "description": "Complete site address if provided, otherwise null",
+        "type": "string"
+      },
+      "inquiry_type": {
+        "description": "Type of service inquiry",
+        "type": "string",
+        "enum": [
+          "roof_trusses",
+          "wall_frames",
+          "floor_joists",
+          "quote",
+          "site_measurement",
+          "general_inquiry",
+          "urgent_issue"
+        ],
+        "maxLength": 199
+      },
+      "phone_number": {
+        "description": "Caller's contact phone number in format 04XX XXX XXX or 03 XXXX XXXX\n  ",
+        "type": "string",
+        "pattern": "^0[2-478]\\\\d{8}$",
+        "maxLength": 20
+      },
+      "project_type": {
+        "description": "Type of construction project",
+        "type": "string",
+        "enum": [
+          "new_build",
+          "renovation",
+          "extension",
+          "commercial",
+          "residential",
+          "unknown"
+        ]
+      },
+      "action_required": {
+        "description": "Whether team callback is required",
+        "type": "boolean"
+      },
+      "data_quality_score": {
+        "description": "Self-assessed accuracy of captured data (0-10)",
+        "type": "number",
+        "maximum": 10
+      },
+      "call_duration_seconds": {
+        "description": "Length of call in seconds",
+        "type": "number"
+      }
+    }
+  },
+  "assistantIds": [
+    "0d7391df-2a5b-42d9-86dc-d9bb6337e4bb",
+    "b4bae3f1-41a7-4ca2-8ab2-e9303e9443f3",
+    "f44bbcf8-0489-45a1-9123-11393fa35357",
+    "5b1197ca-1230-40fb-85b5-e06dd8e83d26"
+  ],
+  "createdAt": "2026-01-10T06:31:03.813Z",
+  "updatedAt": "2026-01-14T11:16:57.129Z"
+}
