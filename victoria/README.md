@@ -21,3 +21,19 @@ Archive of what exists in Vapi for The Truss People, pulled off the Vapi API on 
 | Prompt and knowledge base say "30+ years"; the live site says 20 years, Vic's wording, 27 Aug | `lib/constants.ts` |
 
 Recon and next steps: `~/Projects/products/tradesorted/missions/036-switchboard-recon.md`.
+
+## v5 draft, 2 Sep 2026, not deployed
+
+`v5-system-prompt.md` is v4 with four changes, every fact in it checked against `lib/constants.ts`:
+
+• "30+ years" is gone. The site says family-owned since 2006 and more than twenty years, Vic's wording.
+• The knowledge base tool instruction is replaced by a Company Facts section: address, phone, email,
+  products, materials, AS1684, delivery regions, all from the site. Facts that only the knowledge
+  base document claimed (hours 7 to 5, quotes in 1 to 2 days, measurements on Tuesdays and
+  Thursdays) are out until Vic confirms them.
+• "We usually book measurements on Tuesdays and Thursdays" became "the team will sort out a time",
+  in line with the no-time-promises rule from 23 Jul.
+• Floor systems added to the product list; the site sells them and v4 never mentioned them.
+
+Callback timing lines ("first thing tomorrow", "Monday morning") are kept. They are promises Vic's
+team has to keep, so they are his call before the line goes live.
