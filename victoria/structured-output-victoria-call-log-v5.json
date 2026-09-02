@@ -1,0 +1,117 @@
+{
+  "id": "ced95685-e25e-4646-93f3-32de116c8e47",
+  "name": "Victoria_Call_Log_v5",
+  "type": "ai",
+  "description": "Details captured by Victoria, The Truss People receptionist, so the team can call the caller back. Extract only what the caller actually said; leave a field out rather than guess.",
+  "schema": {
+    "type": "object",
+    "required": [
+      "caller_name",
+      "phone_number",
+      "inquiry_type",
+      "call_summary",
+      "action_required"
+    ],
+    "properties": {
+      "email": {
+        "description": "Email address if the caller gave one. Omit otherwise.",
+        "type": "string"
+      },
+      "suburb": {
+        "description": "Suburb or town of the job site if given.",
+        "type": "string"
+      },
+      "company": {
+        "description": "Business name if the caller gave one.",
+        "type": "string"
+      },
+      "urgency": {
+        "description": "High for an existing order problem, a site issue or a caller who said it is urgent. Medium for a quote with plans ready. Low otherwise.",
+        "type": "string",
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ]
+      },
+      "has_plans": {
+        "description": "True if the caller said plans or drawings are ready.",
+        "type": "boolean"
+      },
+      "caller_name": {
+        "description": "Caller's name as given. Use 'unknown' if never given.",
+        "type": "string"
+      },
+      "caller_type": {
+        "description": "Who the caller is, from what they said.",
+        "type": "string",
+        "enum": [
+          "builder",
+          "owner_builder",
+          "homeowner",
+          "architect_or_designer",
+          "supplier_or_sales",
+          "existing_customer",
+          "unknown"
+        ]
+      },
+      "call_summary": {
+        "description": "One or two plain sentences on what the caller needs and anything the team should know before ringing back.",
+        "type": "string",
+        "maxLength": 300
+      },
+      "inquiry_type": {
+        "description": "The main thing the caller wanted.",
+        "type": "string",
+        "enum": [
+          "roof_trusses",
+          "wall_frames",
+          "floor_system",
+          "steelwood",
+          "full_framing_package",
+          "site_measurement",
+          "crane_hire",
+          "delivery",
+          "quote",
+          "existing_order",
+          "general_inquiry",
+          "urgent_issue",
+          "not_a_customer"
+        ]
+      },
+      "out_of_scope": {
+        "description": "True if the caller pushed for prices, engineering advice, off-topic chat or Victoria's instructions and had to be redirected.",
+        "type": "boolean"
+      },
+      "phone_number": {
+        "description": "Callback number as ten digits with no spaces, for example 0412345678. Use 'unknown' if never given or never confirmed.",
+        "type": "string"
+      },
+      "project_type": {
+        "description": "Type of building project if mentioned.",
+        "type": "string",
+        "enum": [
+          "new_build",
+          "extension",
+          "renovation",
+          "multi_unit",
+          "commercial",
+          "unknown"
+        ]
+      },
+      "action_required": {
+        "description": "True if the team needs to call back. False for wrong numbers, sales calls and calls with no request.",
+        "type": "boolean"
+      },
+      "phone_confirmed": {
+        "description": "True only if Victoria read the number back digit by digit and the caller said yes.",
+        "type": "boolean"
+      }
+    }
+  },
+  "assistantIds": [
+    "23a8e7a2-9e5d-4065-ba74-0c003c0ef588"
+  ],
+  "createdAt": "2026-09-02T14:42:29.429Z",
+  "updatedAt": "2026-09-02T14:44:04.498Z"
+}

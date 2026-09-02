@@ -1,39 +1,51 @@
 # Victoria, the after-hours voice agent
 
-Archive of what exists in Vapi for The Truss People, pulled off the Vapi API on 2 Sep 2026 with
-`~/.claude/scripts/vapi.py`. Until this folder existed the build lived only in Vapi and in Notion.
+What exists in Vapi for The Truss People, kept here so the build is not only in Vapi and Notion.
+Reader and writer for the account: `~/.claude/scripts/vapi.py` (writes need `--confirm` and are
+logged). Every fact the agent can say is checked against `lib/constants.ts` and `app/faq/page.tsx`
+in this repo.
 
-• `v4-system-prompt.md` · the production prompt, 9,869 characters, last edited 18 Jan 2026
-• `knowledge-base-v4.txt` · text of the 1.7MB docx sitting in Vapi's file store, attached to nothing
-• `structured-output-victoria-call-log.json` · the 15-field capture schema, attached to every version
-• `assistant-v4-config.json` · the full assistant object as served, org id and the webhook path removed
+## Files
 
-## State on 2 Sep 2026
+• `v5-system-prompt.md` · the live prompt on Victoria TTP_v5, byte for byte. Edit here, then patch.
+• `structured-output-victoria-call-log-v5.json` · the capture schema attached to v5, as served
+• `chat-test.py` · the question battery. Runs through Vapi's Chat API when the account has a card
+• `prompt-test.py` · the same battery run straight against the model with the rendered prompt.
+  Built on 3 Sep because Vapi's Chat API answered 402, no card on file
+• `v5-test-log.md` · the final run of the battery against the live prompt, with a verdict per turn
+• `v4-system-prompt.md`, `knowledge-base-v4.txt`, `structured-output-victoria-call-log.json`,
+  `assistant-v4-config.json` · the January build, archived 2 Sep
+
+## State on 3 Sep 2026
 
 | Fact | Receipt |
 |---|---|
-| Five assistants: Victoria v1 to v4, plus Vapi's stock "Alex" template | `vapi.py assistants` |
-| One number, Twilio, +61 485 002 210, attached to **v3**. Operator says the Twilio side is not active | `vapi.py numbers`, operator 2 Sep |
+| Six assistants: Victoria v1 to v5, plus Vapi's stock "Alex" template | `vapi.py assistants` |
+| The Twilio number +61 485 002 210 points at **v5**. Operator says the Twilio side is not active | `vapi.py numbers`, operator 2 Sep |
+| v5 model is Claude Haiku 4.5 through Vapi's own integration, temperature 0.4, 250 token cap | `vapi.py assistant "Victoria TTP_v5"` |
+| v5 voice is the same ElevenLabs voice as v4 on the Flash v2.5 model; transcriber Deepgram Nova 3, Australian English, twelve trade key terms | same |
+| Recording on, call summary on, success checklist on, fixed opening line, end-call tool attached | same |
+| The v4 schema's phone pattern was stored double-escaped and could never match a number; v5 has its own schema with five required fields instead of eight | `GET /structured-output` |
+| Vapi's Chat API refuses this account: "Add a payment method to use chat" | HTTP 402, 3 Sep 00:45 |
 | Zero calls on record, any version | `vapi.py calls` |
-| v4 logging posts the end-of-call report to n8n on `n8n.srv1176496.hstgr.cloud`, which no longer resolves | `dig`, `host` |
-| v4 prompt orders an `n8n_victoria_tools` MCP tool that is not attached to v4 and points at the same dead host | `vapi.py assistant`, `GET /tool` |
-| Recording off, call summary off, success evaluation off | `assistant-v4-config.json` |
-| Prompt and knowledge base say "30+ years"; the live site says 20 years, Vic's wording, 27 Aug | `lib/constants.ts` |
+| v4's n8n webhook host does not resolve; v5 has no server URL and no tools beyond end call | `dig`, `vapi.py assistant` |
 
-Recon and next steps: `~/Projects/products/tradesorted/missions/036-switchboard-recon.md`.
+## How v5 was built
 
-## v5 draft, 2 Sep 2026, not deployed
+Read first: Vapi's prompting guide and the Vapi Skills plugin for Claude Code, then the site. The
+prompt follows the six sections Vapi asks for: identity, response guidelines, guardrails, context,
+workflow, examples. Facts the site does not state are out: opening hours, lead times, quote
+turnaround, the "30+ years" line. The callback wording is computed in Liquid from Melbourne time,
+so the model never does the day arithmetic itself.
 
-`v5-system-prompt.md` is v4 with four changes, every fact in it checked against `lib/constants.ts`:
+Testing: the battery in `chat-test.py` (sixteen factual questions, seven off-topic, seven
+adversarial, three call flows) was run on Claude Haiku 4.5 and Claude Sonnet 4.6 with the same
+prompt. Both passed every turn. Haiku answered faster and shorter, which is what a phone line
+needs, so it is the v5 model. The full record is `v5-test-log.md`.
 
-• "30+ years" is gone. The site says family-owned since 2006 and more than twenty years, Vic's wording.
-• The knowledge base tool instruction is replaced by a Company Facts section: address, phone, email,
-  products, materials, AS1684, delivery regions, all from the site. Facts that only the knowledge
-  base document claimed (hours 7 to 5, quotes in 1 to 2 days, measurements on Tuesdays and
-  Thursdays) are out until Vic confirms them.
-• "We usually book measurements on Tuesdays and Thursdays" became "the team will sort out a time",
-  in line with the no-time-promises rule from 23 Jul.
-• Floor systems added to the product list; the site sells them and v4 never mentioned them.
+## Still Vic's call before the line goes public
 
-Callback timing lines ("first thing tomorrow", "Monday morning") are kept. They are promises Vic's
-team has to keep, so they are his call before the line goes live.
+• The callback promise itself ("later today or tomorrow during business hours" and the Monday
+  variant). Victoria says nothing more specific than that, and nothing about lead times.
+• Whether the opening line should mention that calls are recorded.
+• Opening hours, if he wants her to state them. They are not on the website, so she does not.
