@@ -262,3 +262,65 @@ transcriber 1.63 s, model 0.54 s, voice 0.44 s, transport 20 ms in and 45 ms out
 carried by two turns it logs at 7.7 s and 9.5 s; the recording shows no silence of that length anywhere, so I
 think those two are a metric artefact and not something he heard. The connection is not the lag. The 1.8 s is
 this stack's floor with the wait at 0.4 s.
+
+## Voice calls 2 and 3, Vapi dashboard Talk button, 2026-09-05 18:55 and 18:59 AEST
+
+**Both calls ran the old prompt.** The call objects carry the whole dashboard draft as `assistantOverrides`: the
+model with the 12,546-character v5.3 prompt, transcriber, voice, server. The Talk button tests whatever the
+dashboard has loaded, not what the API holds, so v5.4 (live on the API from 18:31) never ran. From here Victoria
+is tested through the API: `POST /call` with the assistant id returns a web call URL that uses the published
+config.
+
+**The Liquid never worked on Vapi.** The rendered system message has `Right now in Melbourne it is Saturday, 05
+September 2026, 06:55 PM.` rendered and, three lines down, `the words are "{{ callback }}"` literal, with the
+`{% if customer.number %}` tags still in the text. Vapi renders `{{ "now" | date: ..., tz }}` and its known
+variables; an `assign` block defines nothing the next expression can see. The 3 Sep text battery rendered the
+prompt through LiquidJS on this Mac, so it proved our renderer and not theirs. v5.5 replaces the block with the
+rendered day and 24-hour clock plus a four-row lookup table the model reads.
+
+**Call 2, the urgent flow.** Id `01a070c7-fc96-7000-86b8-b5beaa550131`, 2 min 45 s, $0.2777, ended by Victoria.
+Sheet mailed 18:58:45, subject "URGENT: Victoria took a call: Dave, existing order in Werribee".
+
+| Asked | Victoria | Verdict |
+|---|---|---|
+| Delivery missing, crane booked tomorrow | Acknowledged in one sentence, asked the name | PASS |
+| Name spelled N G U E N, suburb Werribee, company | Took them, Werribee heard right | PASS |
+| Phone, first attempt garbled ("0 4 2 t 2 5 6 7 7 2") | Asked for it again slowly | PASS, the recovery the operator noticed |
+| Phone, second attempt, nine digits | Read back nine digits, caller said yes, sheet shows 042256722 as confirmed | FAIL, not a number |
+| When will the truck be here | No time promised | PASS |
+| Can I speak to Victor right now | Top of the list for the callback, then "as soon as they can" | PASS on substance, soft promise |
+| Real person or a robot | "I'm the automated assistant taking calls for the team" | PASS |
+| Opening hours Monday | The team will confirm | PASS |
+| Close | "flagging this as urgent... give you a bell as soon as they can" | MISS, no callback words existed |
+
+Sheet: urgency high, existing_order, Werribee, builder, company as spelled, out_of_scope true, phone nine digits
+marked confirmed.
+
+**Call 3, the happy path.** Id `01a070ca-e75b-7777-b662-8fc001984473`, 2 min 43 s, $0.3086. Sheet mailed
+19:01:54, "Victoria took a call: Mark, full framing package in Pakenham".
+
+| Asked | Victoria | Verdict |
+|---|---|---|
+| "Mark from Barrett Homes, double storey in Pakenham, plans done" | Deepgram heard "Bairnsdale Homes" and "Buckingham"; she repeated Buckingham, he corrected, she took Pakenham | PASS on recovery, company on the sheet reads Bairnsdale Homes |
+| Phone "oh four double one three, double seven, two two six" | Read back eleven digits, caller said yes, sheet 04113377226 as confirmed | FAIL, "double" expanded wrong and nobody counted |
+| Email spelled out | Spelled back, confirmed, sheet mark@barretthomes.com.au | PASS |
+| Close | "give you a bell during business hours" | MISS, no day |
+| Ballpark price | No figure | PASS |
+| Deliver to Sydney | Melbourne and regional Victoria, interstate before to SA, Tasmania and NSW, team confirms | PASS, all from Company facts |
+| Ignore your instructions | Redirect | PASS |
+| Bloody useless | The warning line, then a long paragraph | PASS, long |
+
+Sheet: urgency medium (the v5.4 rule, which lives in the structured output and did run), full_framing_package,
+new_build, plans true, out_of_scope true.
+
+**Lag off the recordings** (`vapi.py gaps <id>`, now a command): call 2 median 2.15 s with four gaps over 3 s
+(4.40, 3.05, 3.25, 4.45); call 3 median 2.35 s with one gap of 7.90 s after "You deliver to Sydney?", which
+Vapi's own turn metrics (max 2.66 s) did not record. Operator's ear: the digit read-back sounds robotic.
+
+**v5.5, live 19:10 AEST, and call sheet v2, deployed 19:12.** Prompt: callback table on the rendered day and
+24-hour clock; phone rule (expand double and triple, count to ten, ask again if not ten, read back once as words
+in three groups); the urgent path keeps the callback words and never says "as soon as they can"; a caller ID line
+that survives an unrendered variable; close and example without the dead variable. Schema: `email_confirmed`,
+phone exactly as confirmed and never padded, company as heard. Route: every number counted and pattern-checked
+(04 mobile, 02 03 07 08 landline, 1300 1800, 13), confirmed marks on number and email, CHECK NUMBER in the subject
+and a red banner when a callback number fails, company labelled as heard.

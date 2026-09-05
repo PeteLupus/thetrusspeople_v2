@@ -23,7 +23,9 @@ in this repo.
 | Six assistants: Victoria v1 to v5, plus Vapi's stock "Alex" template | `vapi.py assistants` |
 | The Twilio number +61 485 002 210 is a dead pointer. On 5 Sep Twilio's own API answered error 20003, "account with status 4 is not active", for the account SID Vapi holds, and the Twilio Admin console under the TTP work Gmail lists zero accounts, closed filter included. Vapi still calls the number "active" because it never asks Twilio. No phone call can reach Victoria until a new number exists | Twilio REST API + admin.twilio.com, 5 Sep |
 | v5 model is Claude Haiku 4.5 through Vapi's own integration, temperature 0.4, 250 token cap | `vapi.py assistant "Victoria TTP_v5"` |
-| v5 voice is the same ElevenLabs voice as v4 on the Flash v2.5 model; transcriber Deepgram Nova 3, Australian English, twelve trade key terms | same |
+| v5 voice is the same ElevenLabs voice as v4 on the Flash v2.5 model; transcriber Deepgram Nova 3, Australian English, 44 key terms (12 trade words, 32 towns) | same |
+| **The dashboard Talk button does not test the API config.** It sends the dashboard's draft as `assistantOverrides` (model, transcriber, voice, server, all of it), so calls 2 and 3 on 5 Sep ran v5.3 while v5.4 sat live on the API. Test through `POST /call`, which uses the published config | call objects `assistantOverrides.model.messages`, 5 Sep |
+| **Vapi renders `{{ "now" \| date: fmt, tz }}` and its known variables only.** A `{% assign %}` block defines nothing the next `{{ }}` can see, and `{% if customer.number %}` stays in the text on a web call. v5.5 carries the callback rule as a table on the rendered day and clock | rendered system message in three call objects, 5 Sep |
 | Recording on, call summary on, success checklist on, fixed opening line, end-call tool attached | same |
 | The v4 schema's phone pattern was stored double-escaped and could never match a number; v5 has its own schema with five required fields instead of eight | `GET /structured-output` |
 | Vapi's Chat API refuses this account: "Add a payment method to use chat" | HTTP 402, 3 Sep 00:45 |
