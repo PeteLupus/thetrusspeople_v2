@@ -385,3 +385,47 @@ back or NOT VALID with what to tell the caller. Eleven cases from tonight's call
 operator spoke. Tool `00319fe3-8829-49aa-adcc-579d0fb21aed`, attached through `model.toolIds`, end-call tool kept.
 **v5.7, live 20:08 AEST:** step 5 now says call the tool the moment a number is given, never count yourself, read
 back once with the tool's words, at most two retries, then take an email and move on.
+
+## Voice call 6, two dead attempts and then the call, 2026-09-05 21:25 and 21:36 AEST
+
+**Two dead attempts, 21:25 and 21:26.** Ids `01a07151-049a-7000-9846-5085663aaab6` and
+`01a07151-450f-7000-9848-708c5cc3c770`, both ended `call.in-progress.error-assistant-did-not-receive-customer-audio`
+15 s after creation, zero LLM and TTS cost, Victoria never spoke, and the test page sat on "Connecting". Same reason
+as the 19:31 call that worked on retry. Cause, read in the SDK source (`@vapi-ai/web@2.7.0`, `start()`): the call
+is created on Vapi's server first and the browser is asked for the microphone only when it joins the Daily room, so
+Vapi's wait for customer audio races Chrome's permission prompt. Fix on the test page (`~/.claude/scripts/webcall/`):
+it asks for the mic before `start()`, shows the permission state and the device, a level bar, a 20 s watchdog that
+hands the Call button back, and Vapi's own `endedReason` at call end. Both dead attempts still produced a call sheet
+("CHECK NUMBER: Victoria took a call: name not given, no details"): a line fault reads as a call. Noted, not fixed.
+
+**The call, 21:36.** Published config, v5.7. Id `01a0715b-263a-7778-9ac1-e3fdd8ead7ca`, 2 min 31 s, $0.2706.
+
+| Asked | Victoria | Verdict |
+|---|---|---|
+| Owner-builder, extension, Craigieburn, trusses and floor joists, plans next week | Captured, one question on the plans, never re-asked | PASS |
+| "O 3 9 7 4 double 2, 1 8", nine digits on purpose | Called check_phone_number with the words exactly, got "Unknown tool ." back, said "Sorry, I didn't quite catch that number" | FAIL, the tool result was garbage |
+| "0 3 9 7 4 2 2 0 1 8" | Same call, same garbage, same apology, "Let me check that" twice | FAIL |
+| The same ten digits again | Same garbage; "No worries, I'll note that down as 0 3 9 7 4 2 2 0 1 8", no yes asked | FAIL, noted an unconfirmed number |
+| Email | Spelled back, confirmed | PASS |
+| Name | Asked for it after the details, got Sarah | PASS |
+| Close | Shape held, "on Monday during business hours" on a Saturday, hand-back | PASS |
+| Hours | "9 to 4 Monday to Thursday, and 9 to 2 on Friday. Closed on the weekend." and then nothing | FAIL, no hand-back, the line sat open until the caller ended it |
+
+Sheet: phone 0397422018, phone_confirmed false, so the subject read "CHECK NUMBER: Victoria took a call: Sarah,
+roof trusses in Craigieburn", 8 s after the call. Honest, and the number happened to be right. Lag: median 1.92 s,
+max 2.25 s, none over 3 s.
+
+**The finding.** The tool call reached our route all three times: "Unknown tool ." is this route's own string with
+an empty name. The route was built to the docs example, a flat `{ id, name, arguments: {} }`. Vapi's OpenAPI spec
+and its own call record both carry OpenAI's shape, `{ id, type, function: { name, arguments: "<json string>" } }`,
+so `call.name` was undefined. The unit tests and the 20:10 production curl both used the shape I took from the
+docs, which is how a green gate proved nothing (memories `prove-the-gate-can-fail` and
+`our-implementation-is-not-the-platform`). Fixed 23:41 (`7ba2409`): both shapes read, the real one first, and the
+fallback text now tells the model to read the number back itself. Proven on production with the two numbers from
+this call: nine digits NOT VALID, ten digits VALID with "oh three, nine seven four two, two oh one eight"; wrong
+secret 401.
+
+**v5.8, live 23:41 AEST.** Hand-back in the same breath as every answer, the hours named explicitly; a failed or
+strange tool result means she reads the number back herself in groups and waits for a yes; a number counts as
+confirmed only after a yes. Assistant: idle nudge "Sorry, are you still there?" at 6 s of caller silence, at most
+twice, and the call ends at 20 s of silence (was 8 s and 30 s). Operator's ask: no open lines after an answer.
