@@ -1,5 +1,6 @@
 {
   "id": "ced95685-e25e-4646-93f3-32de116c8e47",
+  "orgId": "296c908f-0012-4d64-9e1a-61e78e390e22",
   "name": "Victoria_Call_Log_v5",
   "type": "ai",
   "description": "Details captured by Victoria, The Truss People receptionist, so the team can call the caller back. Extract only what the caller actually said; leave a field out rather than guess.",
@@ -26,7 +27,7 @@
         "type": "string"
       },
       "urgency": {
-        "description": "High for an existing order problem, a site issue or a caller who said it is urgent. Medium for a quote with plans ready. Low otherwise.",
+        "description": "High for an existing order problem, a site issue, a deadline the caller mentioned such as a crane booked or a slab going down, or a caller who said it is urgent. Medium when the caller wants a price or a quote and said plans are ready, or wants to place an order. Low otherwise.",
         "type": "string",
         "enum": [
           "high",
@@ -113,5 +114,5 @@
     "23a8e7a2-9e5d-4065-ba74-0c003c0ef588"
   ],
   "createdAt": "2026-09-02T14:42:29.429Z",
-  "updatedAt": "2026-09-02T14:44:04.498Z"
+  "updatedAt": "2026-09-05T08:31:59.290Z"
 }
