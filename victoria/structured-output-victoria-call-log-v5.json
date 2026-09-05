@@ -15,7 +15,7 @@
     ],
     "properties": {
       "email": {
-        "description": "Email address if the caller gave one. Omit otherwise.",
+        "description": "Email address exactly as spelled back, if the caller gave one. Omit otherwise.",
         "type": "string"
       },
       "suburb": {
@@ -23,7 +23,7 @@
         "type": "string"
       },
       "company": {
-        "description": "Business name if the caller gave one.",
+        "description": "Business name as heard. It is never read back, so it is unconfirmed.",
         "type": "string"
       },
       "urgency": {
@@ -85,7 +85,7 @@
         "type": "boolean"
       },
       "phone_number": {
-        "description": "Callback number as ten digits with no spaces, for example 0412345678. Use 'unknown' if never given or never confirmed.",
+        "description": "Callback number as digits with no spaces, exactly as read back and confirmed, even if it is not ten digits. Never pad or fix it. Use 'unknown' if never given or never confirmed.",
         "type": "string"
       },
       "project_type": {
@@ -104,6 +104,10 @@
         "description": "True if the team needs to call back. False for wrong numbers, sales calls and calls with no request.",
         "type": "boolean"
       },
+      "email_confirmed": {
+        "description": "True only if Victoria spelled the email address back and the caller said yes.",
+        "type": "boolean"
+      },
       "phone_confirmed": {
         "description": "True only if Victoria read the number back digit by digit and the caller said yes.",
         "type": "boolean"
@@ -114,5 +118,5 @@
     "23a8e7a2-9e5d-4065-ba74-0c003c0ef588"
   ],
   "createdAt": "2026-09-02T14:42:29.429Z",
-  "updatedAt": "2026-09-05T08:31:59.290Z"
+  "updatedAt": "2026-09-05T09:10:26.779Z"
 }
