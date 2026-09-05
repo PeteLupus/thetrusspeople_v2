@@ -21,7 +21,7 @@ in this repo.
 | Fact | Receipt |
 |---|---|
 | Six assistants: Victoria v1 to v5, plus Vapi's stock "Alex" template | `vapi.py assistants` |
-| The Twilio number +61 485 002 210 points at **v5**. Operator says the Twilio side is not active | `vapi.py numbers`, operator 2 Sep |
+| The Twilio number +61 485 002 210 is a dead pointer. On 5 Sep Twilio's own API answered error 20003, "account with status 4 is not active", for the account SID Vapi holds, and the Twilio Admin console under the TTP work Gmail lists zero accounts, closed filter included. Vapi still calls the number "active" because it never asks Twilio. No phone call can reach Victoria until a new number exists | Twilio REST API + admin.twilio.com, 5 Sep |
 | v5 model is Claude Haiku 4.5 through Vapi's own integration, temperature 0.4, 250 token cap | `vapi.py assistant "Victoria TTP_v5"` |
 | v5 voice is the same ElevenLabs voice as v4 on the Flash v2.5 model; transcriber Deepgram Nova 3, Australian English, twelve trade key terms | same |
 | Recording on, call summary on, success checklist on, fixed opening line, end-call tool attached | same |
