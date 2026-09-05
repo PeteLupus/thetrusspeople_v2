@@ -11,7 +11,11 @@
       "phone_number",
       "inquiry_type",
       "call_summary",
-      "action_required"
+      "action_required",
+      "phone_confirmed",
+      "email_confirmed",
+      "urgency",
+      "out_of_scope"
     ],
     "properties": {
       "email": {
@@ -105,11 +109,11 @@
         "type": "boolean"
       },
       "email_confirmed": {
-        "description": "True only if Victoria spelled the email address back and the caller said yes.",
+        "description": "True only if Victoria spelled the email address back and the caller said yes. False when no email was given or it was never spelled back.",
         "type": "boolean"
       },
       "phone_confirmed": {
-        "description": "True only if Victoria read the number back digit by digit and the caller said yes.",
+        "description": "True only if Victoria read the number back digit by digit and the caller said yes. False otherwise, including when no number was taken.",
         "type": "boolean"
       }
     }
@@ -118,5 +122,5 @@
     "23a8e7a2-9e5d-4065-ba74-0c003c0ef588"
   ],
   "createdAt": "2026-09-02T14:42:29.429Z",
-  "updatedAt": "2026-09-05T09:10:26.779Z"
+  "updatedAt": "2026-09-05T09:47:56.493Z"
 }

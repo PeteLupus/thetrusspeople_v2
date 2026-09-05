@@ -73,11 +73,13 @@ function phoneCheck(raw: string | undefined, confirmed: boolean | undefined, cal
     const digits = (raw as string).replace(/\D/g, '');
     const valid = AU_NUMBER.test(digits);
     const shown = valid ? prettyNumber(digits) : digits || (raw as string);
-    if (valid && confirmed) return { text: `${shown} ✔ ${digits.length} digits, read back and confirmed`, ok: true };
-    if (valid) return { text: `${shown} ✗ never read back to the caller, check before calling`, ok: false };
+    // confirmed: true = read back and the caller said yes; false = never read back; undefined = the sheet did not say.
+    const readBack = confirmed === true ? 'read back and confirmed' : confirmed === false ? 'never read back to the caller' : 'confirmation not recorded on the sheet, check the transcript';
+    if (valid && confirmed === true) return { text: `${shown} ✔ ${digits.length} digits, ${readBack}`, ok: true };
+    if (valid) return { text: `${shown} ✗ ${readBack}, check before calling`, ok: false };
     const why = `${digits.length} digits, not a valid Australian number`;
     return {
-        text: confirmed ? `${shown} ✗ ${why} even though the caller said yes, check before calling` : `${shown} ✗ ${why}, and never read back`,
+        text: confirmed === true ? `${shown} ✗ ${why} even though the caller said yes, check before calling` : `${shown} ✗ ${why}, and ${readBack}`,
         ok: false,
     };
 }
@@ -86,8 +88,9 @@ function emailCheck(email: string | undefined, confirmed: boolean | undefined): 
     if (!email) return { text: 'not given', ok: true };
     const shape = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!shape) return { text: `${email} ✗ does not look like an address`, ok: false };
-    if (confirmed) return { text: `${email} ✔ spelled back and confirmed`, ok: true };
-    return { text: `${email} ✗ never spelled back, check before emailing`, ok: false };
+    if (confirmed === true) return { text: `${email} ✔ spelled back and confirmed`, ok: true };
+    if (confirmed === false) return { text: `${email} ✗ never spelled back, check before emailing`, ok: false };
+    return { text: `${email} ✗ confirmation not recorded on the sheet, check the transcript`, ok: false };
 }
 
 function secretMatches(header: string | null, expected: string): boolean {
