@@ -22,7 +22,7 @@
     "optimizeStreamingLatency": 3
   },
   "createdAt": "2026-09-02T14:44:04.180Z",
-  "updatedAt": "2026-09-05T08:31:51.273Z",
+  "updatedAt": "2026-09-05T08:37:20.297Z",
   "model": {
     "model": "claude-haiku-4-5-20251001",
     "tools": [
@@ -106,6 +106,9 @@
     }
   },
   "silenceTimeoutSeconds": 30,
+  "serverMessages": [
+    "end-of-call-report"
+  ],
   "endCallPhrases": [
     "goodbye for now"
   ],
@@ -145,6 +148,10 @@
       "provider": "livekit"
     }
   },
-  "latestVersion": "v5",
-  "isServerUrlSecretSet": false
+  "server": {
+    "url": "https://thetrusspeople.com.au/api/victoria",
+    "timeoutSeconds": 20
+  },
+  "latestVersion": "v6",
+  "isServerUrlSecretSet": true
 }

@@ -28,7 +28,7 @@ in this repo.
 | The v4 schema's phone pattern was stored double-escaped and could never match a number; v5 has its own schema with five required fields instead of eight | `GET /structured-output` |
 | Vapi's Chat API refuses this account: "Add a payment method to use chat" | HTTP 402, 3 Sep 00:45 |
 | One real call on record: the operator's 2 min 46 s test through the dashboard Talk button, 5 Sep 18:11 AEST. Every guardrail held, the sheet captured what he said, median reply gap 1.8 s measured off the recording, three misses logged in `v5-test-log.md` | `vapi.py call 01a0709f`, stereo recording |
-| v4's n8n webhook host does not resolve; v5 has no server URL and no tools beyond end call | `dig`, `vapi.py assistant` |
+| v4's n8n webhook host does not resolve. v5 posts its end-of-call report to `thetrusspeople.com.au/api/victoria` (set 5 Sep 18:37 AEST, `serverMessages` = end-of-call-report only), which mails the call sheet through the site's Resend path to `VICTORIA_CALL_SHEET_TO`. The shared secret lives in the Vercel env and `~/Projects/_credentials/victoria-webhook.env`, never in this repo; Vapi's GET does not echo it. First sheet landed in the test inbox 2 s after the POST | `vapi.py assistant`, route probes 401/200/200, Gmail search 5 Sep |
 
 ## How v5 was built
 
