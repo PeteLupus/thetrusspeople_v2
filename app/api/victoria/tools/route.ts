@@ -7,7 +7,12 @@ import { timingSafeEqual } from 'node:crypto';
 // as confirmed), so the number the caller spoke is normalised, expanded and validated here, and the
 // model reads back exactly the words this returns. Auth: X-Vapi-Secret equals VICTORIA_WEBHOOK_SECRET.
 
-type ToolCall = { id: string; name?: string; arguments?: Record<string, unknown> | string };
+type ToolArgs = Record<string, unknown> | string;
+// Vapi's wire shape is OpenAI's: { id, type: "function", function: { name, arguments: "<json string>" } }.
+// The docs example shows a flat { id, name, arguments: {} }. Building to that example is why call six on
+// 5 Sep 2026 got "Unknown tool ." back three times: the request reached this route and the name read as
+// undefined. Both shapes are accepted; the real one is tried first.
+type ToolCall = { id: string; name?: string; arguments?: ToolArgs; function?: { name?: string; arguments?: ToolArgs } };
 
 const WORDS: Record<string, string> = {
     zero: '0', oh: '0', o: '0', nought: '0', one: '1', won: '1', two: '2', to: '2', too: '2', three: '3', tree: '3',
@@ -94,14 +99,16 @@ export async function POST(request: NextRequest) {
     if (message.type !== 'tool-calls') return NextResponse.json({ results: [] });
 
     const results = (message.toolCallList ?? []).map((call) => {
-        const args = typeof call.arguments === 'string' ? safeParse(call.arguments) : call.arguments ?? {};
+        const name = call.function?.name ?? call.name;
+        const rawArgs = call.function?.arguments ?? call.arguments;
+        const args = typeof rawArgs === 'string' ? safeParse(rawArgs) : rawArgs ?? {};
         let result: string;
-        if (call.name === 'check_phone_number') {
+        if (name === 'check_phone_number') {
             result = checkPhoneNumber(String(args.spoken ?? args.number ?? ''));
         } else {
-            result = `Unknown tool ${call.name ?? ''}.`;
+            result = `Unknown tool ${name ?? ''}. Read the number back yourself in groups of three or four digits and ask the caller if that is right.`;
         }
-        console.log('Victoria tool', call.name, JSON.stringify(args), '->', result.slice(0, 80));
+        console.log('Victoria tool', name ?? '(no name)', call.function ? 'nested' : 'flat', JSON.stringify(args), '->', result.slice(0, 80));
         return { toolCallId: call.id, result };
     });
     return NextResponse.json({ results });
