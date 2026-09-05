@@ -353,3 +353,35 @@ Friday, closed weekends; the site's JSON-LD was corrected to match the Google Bu
 on 21 Apr 2026, so the receipt is TTP's own listing). Every answer after the details ends with a hand-back
 question. The callback words are said once in the close and once more only if asked. A name inside the greeting
 is not the caller's name. Vic can veto the hours; it is on her list.
+
+## Voice call 5, owner-builder with a landline, 2026-09-05 19:56 AEST
+
+Published config, v5.6. Id `01a070ff-db0e-7000-975f-1aee4f559c67`, 5 min 01 s, $0.5180. The scenario handed to the
+operator carried a **nine-digit landline by my own error** ("oh three, nine seven four, double two, one eight" is
+0 3 9 7 4 2 2 1 8), so the digit rule was tested harder than planned.
+
+| Asked | Victoria | Verdict |
+|---|---|---|
+| Extension, owner-builder, Craigieburn, trusses and floor joists, plans next week | All captured, never re-asked, except one hedged "same as Craigieburn?" late in the call | PASS, minor |
+| Nine-digit landline, first go | "That's 9 digits though. Could you say the number again?" | PASS, the count was right |
+| "It's a landline, so it should be 9 digits" | "A landline in Victoria needs to be 10" | PASS, held the line |
+| Ten digits, "0 3 9 7 4 4 double 2 1 8" | "That's still 9 digits" | FAIL, miscounted ten as nine |
+| Caller gives up, gives the email instead | Took it, one correction, spelled back, confirmed: sarah.k@gmail.com | PASS |
+| Went back for the number, caller gives eleven digits | "That's 10 digits. Is that right?", then read it back a second time | FAIL, miscounted eleven as ten, and two read-backs |
+| Close | Callback words once, hand-back question | PASS |
+| Hours | "9 to 4 Monday to Thursday, and 9 to 2 on Friday" | PASS, v5.6 |
+| Australian timber, site measuring | From Company facts, hand-back after each | PASS |
+
+Sheet: owner_builder, extension, Craigieburn, has_plans false, urgency low, email confirmed, phone 04037742218
+(eleven digits) marked confirmed. **The sheet's own check caught it:** subject "CHECK NUMBER: Victoria took a call:
+Sarah, full framing package in Craigieburn", 11 s after the call. Lag: median 2.05 s, two gaps over 3 s (3.35, 3.15),
+both on the model working through digits.
+
+**The finding.** A language model cannot be trusted to count digits: ten read as nine, eleven read as ten, in the
+same call, with the rule in front of it. Counting leaves the model. `app/api/victoria/tools/route.ts` is a Vapi tool
+server with one function, `check_phone_number`: it turns the caller's words into digits (oh, double, triple, plus
+61), validates 04 / 02 03 07 08 / 1300 1800 / 13 patterns, and returns either VALID with the exact words to read
+back or NOT VALID with what to tell the caller. Eleven cases from tonight's calls pass, including every number the
+operator spoke. Tool `00319fe3-8829-49aa-adcc-579d0fb21aed`, attached through `model.toolIds`, end-call tool kept.
+**v5.7, live 20:08 AEST:** step 5 now says call the tool the moment a number is given, never count yourself, read
+back once with the tool's words, at most two retries, then take an email and move on.

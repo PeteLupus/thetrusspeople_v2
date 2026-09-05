@@ -1,0 +1,38 @@
+{
+  "id": "00319fe3-8829-49aa-adcc-579d0fb21aed",
+  "createdAt": "2026-09-05T10:08:32.046Z",
+  "updatedAt": "2026-09-05T10:08:32.046Z",
+  "type": "function",
+  "function": {
+    "name": "check_phone_number",
+    "description": "Checks and formats an Australian phone number the caller gave. Call it with the number exactly as the caller said it, digits or words, including double and triple, before reading any number back. Returns VALID with the exact words to read back, or NOT VALID with what to tell the caller.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "spoken": {
+          "description": "The number exactly as the caller said it, for example: oh four double one, three double seven, two two six",
+          "type": "string"
+        }
+      },
+      "required": [
+        "spoken"
+      ]
+    }
+  },
+  "messages": [
+    {
+      "type": "request-start",
+      "content": "Let me check that."
+    },
+    {
+      "type": "request-failed",
+      "content": "Sorry, I couldn't check that number. Could you say it again slowly?"
+    }
+  ],
+  "orgId": "296c908f-0012-4d64-9e1a-61e78e390e22",
+  "server": {
+    "url": "https://thetrusspeople.com.au/api/victoria/tools",
+    "timeoutSeconds": 10
+  },
+  "latestVersion": "v1"
+}
