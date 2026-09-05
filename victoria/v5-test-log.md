@@ -216,3 +216,49 @@ Turns: 18. Auto-flagged: 0. Human verdicts to follow.
 
 Human verdicts by CC, 3 Sep 2026, 01:20 AEST. Every fact stated was checked against the Company facts
 section of the prompt, which was itself checked against lib/constants.ts and app/faq/page.tsx.
+
+## Voice call 1, Vapi dashboard Talk button, 2026-09-05 18:11 AEST
+
+Caller: the operator, from a browser. Call id `01a0709f-3196-7000-9f5c-c6b42165165b`. 2 min 46 s, 13 exchanges,
+ended by Victoria's own end-call phrase after the close. Cost $0.2963 of Vapi credit: platform $0.1385, voice
+$0.0715, model $0.0530, transcription $0.0276. 50,762 prompt tokens, none cached. Read back with
+`vapi.py call <id> --json`; the stereo recording was pulled from the presigned URL for the gap measurement below.
+
+| Asked | Victoria | Verdict |
+|---|---|---|
+| Where are you located, do you deliver to Geelong | Address, Coolaroo, yes to Geelong and regional Victoria, asked about the project | PASS |
+| How much for trusses on a 4 bedroom house | No figure, quoted from the plan, asked if plans exist | PASS |
+| When will my trusses be ready if I order today | No date, the team gives it once they have seen the job | PASS |
+| What's the weather doing tomorrow | Redirected, then gave the website and email for the plans in the same turn | PASS, long turn |
+| Name, number, suburb, email | Name taken, number read back digit by digit and confirmed, suburb misheard as "Qilong", recovered by asking him to spell it, email read back and confirmed | PASS |
+| Close | Summarised name, job and suburb, then "the team will give you a bell about your project" | MISS, see below |
+
+**The sheet** (structured output `Victoria_Call_Log_v5`): caller_name Peter · phone_number as spoken, phone_confirmed
+true · suburb Geelong · inquiry_type roof_trusses · has_plans true · email as spoken · out_of_scope true (price and
+weather, correct per the field's own description) · action_required true · caller_type unknown and project_type
+unknown, both never stated · urgency low. Everything matches the transcript except urgency.
+
+**Three misses**
+
+• The close skipped the callback words. The Liquid rendered "on Monday during business hours" for a Saturday
+  evening in Melbourne; she said "give you a bell about your project" with no time. One call, one miss, but it
+  is the one line the prompt says to use exactly. Fix: make the close sentence carry `{{ callback }}` verbatim.
+• urgency came out low. The field says medium for a quote with plans ready, and he said yes to plans and asked
+  the price. Fix: tighten the description so has_plans true plus a price or quote request reads medium.
+• Deepgram heard Geelong as "Qilong". The recovery path worked as designed. The key-term list carries twelve
+  trade words and no towns. Fix: add the delivery towns. Deepgram's limit is 500 tokens across all key terms,
+  best practice 20 to 50 terms (developers.deepgram.com/docs/keyterm, fetched 5 Sep).
+
+**Open, only the operator can answer.** Deepgram's transcript of Victoria's own voice reads the website as
+"thetrustpeople dot com" and the email as "infothetrustpeople dot com dot au" with no "at". That transcript is a
+transcription of her audio, not the model's text (it wrote "promise 1" where the battery answer reads "promise
+one"), so it may be a mishearing of "truss". No whisper model is on this disk to re-decode it. Asked him.
+
+**Lag, measured off the recording, not the metrics.** Silence between the operator finishing and Victoria
+starting, 13 exchanges: median 1.80 s, longest 3.75 s (after Geelong was spelled letter by letter, the
+endpointing waited). Method: 44.1 kHz stereo WAV, assistant on the right channel, 50 ms RMS frames, speech
+above four times the noise floor, gaps under 350 ms merged. Vapi's own per-turn averages: endpointing 0.66 s,
+transcriber 1.63 s, model 0.54 s, voice 0.44 s, transport 20 ms in and 45 ms out. The transcriber average is
+carried by two turns it logs at 7.7 s and 9.5 s; the recording shows no silence of that length anywhere, so I
+think those two are a metric artefact and not something he heard. The connection is not the lag. The 1.8 s is
+this stack's floor with the wait at 0.4 s.

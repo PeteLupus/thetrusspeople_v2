@@ -27,7 +27,7 @@ in this repo.
 | Recording on, call summary on, success checklist on, fixed opening line, end-call tool attached | same |
 | The v4 schema's phone pattern was stored double-escaped and could never match a number; v5 has its own schema with five required fields instead of eight | `GET /structured-output` |
 | Vapi's Chat API refuses this account: "Add a payment method to use chat" | HTTP 402, 3 Sep 00:45 |
-| Zero calls on record, any version | `vapi.py calls` |
+| One real call on record: the operator's 2 min 46 s test through the dashboard Talk button, 5 Sep 18:11 AEST. Every guardrail held, the sheet captured what he said, median reply gap 1.8 s measured off the recording, three misses logged in `v5-test-log.md` | `vapi.py call 01a0709f`, stereo recording |
 | v4's n8n webhook host does not resolve; v5 has no server URL and no tools beyond end call | `dig`, `vapi.py assistant` |
 
 ## How v5 was built
