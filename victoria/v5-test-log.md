@@ -324,3 +324,32 @@ that survives an unrendered variable; close and example without the dead variabl
 phone exactly as confirmed and never padded, company as heard. Route: every number counted and pattern-checked
 (04 mobile, 02 03 07 08 landline, 1300 1800, 13), confirmed marks on number and email, CHECK NUMBER in the subject
 and a red banner when a callback number fails, company labelled as heard.
+
+## Voice call 4, the first one on the published config, 2026-09-05 19:41 AEST
+
+Through the local test line (`vapi.py webcall`, Vapi web SDK, public key). Id `01a070f1-df3e-7000-8180-d44c8f84a8bf`,
+2 min 31 s, $0.2622. The rendered system message is v5.5: "The day is Saturday and the 24-hour clock reads 19",
+no Liquid tags left, the caller ID line carries the literal `{{customer.number}}` as designed for a web call.
+
+| Asked | Victoria | Verdict |
+|---|---|---|
+| "Yeah, look, I've got a delivery..." | Deepgram wrote "Hi, Luke"; she called him Luke. He objected, she apologised and asked the name | MISS, fixed in v5.6 |
+| "Dave, N G U Y E N" | Sheet: caller_name Dave Nguyen | PASS |
+| "oh four, double one, three, double seven, two two six" | Read back 0 4 1 1 3 7 7 2 2 6, ten digits, caller said yes; sheet 0411377226 | PASS, the double rule works |
+| Close | "flagged this as urgent... give you a bell on Monday during business hours. Anything else I can help with?" | PASS, first close with the words |
+| When will the truck get here | Team will confirm | PASS, no hand-back question |
+| Speak to Victor now | Top of the list, callback words again | PASS |
+| What time do you open on Monday, twice | "The team will confirm", then "I don't have the opening hours to give you" | MISS by design, the caller found it evasive |
+| Silence after the hours answer, 16 s | "Sorry, are you still there?" landed on top of his "That's all" | Note |
+
+Sheet: urgency high, existing_order, Werribee, action_required true, but only seven fields came back and
+`phone_confirmed` was not among them, so the sheet email (09:44:16, 11 s after the call ended) read "URGENT: CHECK
+NUMBER" for a number that was read back and confirmed. Fixed the same hour: `phone_confirmed`, `email_confirmed`,
+`urgency` and `out_of_scope` are required fields now, and a missing flag reads "confirmation not recorded on the
+sheet" instead of "never read back". Lag: median 1.85 s, longest 2.45 s, none over three seconds.
+
+**v5.6, live 19:50 AEST.** Office hours added to Company facts (nine to four Monday to Thursday, nine to two
+Friday, closed weekends; the site's JSON-LD was corrected to match the Google Business Profile in commit `abb452e`
+on 21 Apr 2026, so the receipt is TTP's own listing). Every answer after the details ends with a hand-back
+question. The callback words are said once in the close and once more only if asked. A name inside the greeting
+is not the caller's name. Vic can veto the hours; it is on her list.
