@@ -93,3 +93,36 @@ export function checkPhoneNumber(spoken: string): PhoneCheck {
     }
     return { valid: false, digits, result: `NOT VALID: ${count} digits heard, ${digits}. An Australian number is ten digits. The caller has been told you have ${count} digits and asked to say it again slowly. Wait for it, then send it to this tool.`, say: `I've got ${count} digits there. Could you say the number again slowly for me?` };
 }
+
+export type PhoneVerdict = { text: string; ok: boolean; digits: string };
+
+// The call sheet's judgement of the number: what to print beside "Call back on" and whether the team can dial it
+// without checking. `confirmed` comes from the structured output: true = the caller said yes to a read-back or to
+// the number they called from; false = never; undefined = the sheet did not say. Every form the extractor might
+// write (+61411773226, 0411 773 226, "unknown") goes through toDigits first: call eight on 6 Sep 2026 copied the
+// caller ID as +61 and the sheet flagged a confirmed number as invalid.
+export function judgePhone(raw: string | undefined, confirmed: boolean | undefined, callerId: string): PhoneVerdict {
+    const caller = callerId ? toDigits(callerId) : '';
+    const callerValid = AU_NUMBER.test(caller);
+    const digits = raw ? toDigits(raw) : '';
+    const taken = digits !== '';
+    if (callerValid && confirmed === true && (!taken || digits === caller)) {
+        return { text: `${prettyNumber(caller)} ✔ the number they called from, confirmed as the best one`, ok: true, digits: caller };
+    }
+    if (!taken) {
+        return callerId
+            ? { text: `${callerValid ? prettyNumber(caller) : callerId} ✗ the number they called from, never confirmed as the best one`, ok: false, digits: caller }
+            : { text: 'no number taken', ok: false, digits: '' };
+    }
+    const valid = AU_NUMBER.test(digits);
+    const shown = valid ? prettyNumber(digits) : digits;
+    const readBack = confirmed === true ? 'read back and confirmed' : confirmed === false ? 'never read back to the caller' : 'confirmation not recorded on the sheet, check the transcript';
+    if (valid && confirmed === true) return { text: `${shown} ✔ ${digits.length} digits, ${readBack}`, ok: true, digits };
+    if (valid) return { text: `${shown} ✗ ${readBack}, check before calling`, ok: false, digits };
+    const why = `${digits.length} digits, not a valid Australian number`;
+    return {
+        text: confirmed === true ? `${shown} ✗ ${why} even though the caller said yes, check before calling` : `${shown} ✗ ${why}, and ${readBack}`,
+        ok: false,
+        digits,
+    };
+}

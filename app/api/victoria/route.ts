@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { timingSafeEqual } from 'node:crypto';
 import { getResend } from '@/lib/mailer';
-import { AU_NUMBER, prettyNumber, toDigits } from '@/lib/victoria/phone';
+import { judgePhone } from '@/lib/victoria/phone';
 
 // Victoria's call sheet. Vapi posts an end-of-call report here after every call the
 // Victoria assistant takes. This mails the sheet to VICTORIA_CALL_SHEET_TO through the
@@ -40,7 +40,7 @@ type VapiMessage = {
     transcript?: string;
     recordingUrl?: string;
     customer?: { number?: string };
-    call?: { id?: string; startedAt?: string; endedAt?: string; customer?: { number?: string } };
+    call?: { id?: string; startedAt?: string; endedAt?: string; customer?: { number?: string }; assistantOverrides?: { variableValues?: { customer?: { number?: string } } } };
     analysis?: { summary?: string };
     artifact?: {
         transcript?: string;
@@ -56,35 +56,6 @@ const words = (v?: string) => (given(v) ? (v as string).replace(/_/g, ' ') : 'no
 const yesNo = (v?: boolean) => (v === true ? 'yes' : v === false ? 'no' : 'not given');
 
 // Australian numbers as dialled locally: 04 mobiles, 02/03/07/08 landlines, 1300/1800, 13xxxx.
-
-function phoneCheck(raw: string | undefined, confirmed: boolean | undefined, callerId: string): { text: string; ok: boolean } {
-    // Caller ID arrives as +61411773226 on a phone call; a web call has none.
-    const caller = callerId ? toDigits(callerId) : '';
-    const callerValid = AU_NUMBER.test(caller);
-    const digits = given(raw) ? (raw as string).replace(/\D/g, '') : '';
-    const taken = digits !== '';
-    // The caller said yes to "is the number you're calling from the best one": the sheet carries no digits, or
-    // the caller ID itself in either form. The network supplied that number, so nothing was mis-heard.
-    if (callerValid && confirmed === true && (!taken || toDigits(digits) === caller)) {
-        return { text: `${prettyNumber(caller)} ✔ the number they called from, confirmed as the best one`, ok: true };
-    }
-    if (!taken) {
-        return callerId
-            ? { text: `${callerValid ? prettyNumber(caller) : callerId} ✗ the number they called from, never confirmed as the best one`, ok: false }
-            : { text: 'no number taken', ok: false };
-    }
-    const valid = AU_NUMBER.test(digits);
-    const shown = valid ? prettyNumber(digits) : digits || (raw as string);
-    // confirmed: true = read back and the caller said yes; false = never read back; undefined = the sheet did not say.
-    const readBack = confirmed === true ? 'read back and confirmed' : confirmed === false ? 'never read back to the caller' : 'confirmation not recorded on the sheet, check the transcript';
-    if (valid && confirmed === true) return { text: `${shown} ✔ ${digits.length} digits, ${readBack}`, ok: true };
-    if (valid) return { text: `${shown} ✗ ${readBack}, check before calling`, ok: false };
-    const why = `${digits.length} digits, not a valid Australian number`;
-    return {
-        text: confirmed === true ? `${shown} ✗ ${why} even though the caller said yes, check before calling` : `${shown} ✗ ${why}, and ${readBack}`,
-        ok: false,
-    };
-}
 
 function emailCheck(email: string | undefined, confirmed: boolean | undefined): { text: string; ok: boolean } {
     if (!email) return { text: 'not given', ok: true };
@@ -123,7 +94,7 @@ function length(m: VapiMessage): string {
 }
 
 export async function GET() {
-    return NextResponse.json({ ok: true, version: 2 });
+    return NextResponse.json({ ok: true, version: 3 });
 }
 
 export async function POST(request: NextRequest) {
@@ -158,12 +129,13 @@ export async function POST(request: NextRequest) {
     const summary = sheet.call_summary || message.analysis?.summary || message.summary || 'No summary was produced.';
     const transcript = message.artifact?.transcript || message.transcript || '';
     const recording = message.artifact?.recordingUrl || message.recordingUrl || '';
-    const callerId = message.customer?.number || message.call?.customer?.number || '';
+    // A phone call carries the caller in `customer`; the test line fakes one through variableValues (vapi.py webcall --from).
+    const callerId = message.customer?.number || message.call?.customer?.number || message.call?.assistantOverrides?.variableValues?.customer?.number || '';
     const name = given(sheet.caller_name) ? (sheet.caller_name as string) : 'name not given';
     const wants = given(sheet.inquiry_type) ? words(sheet.inquiry_type) : 'no details taken';
     const urgent = sheet.urgency === 'high';
     const when = melbourne(message.startedAt ?? message.call?.startedAt);
-    const phone = phoneCheck(sheet.phone_number, sheet.phone_confirmed, callerId);
+    const phone = judgePhone(sheet.phone_number, sheet.phone_confirmed, callerId);
     const email = emailCheck(sheet.email, sheet.email_confirmed);
     const needsCallback = sheet.action_required !== false;
     const numberProblem = needsCallback && !phone.ok;
