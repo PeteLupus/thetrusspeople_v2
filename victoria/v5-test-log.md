@@ -429,3 +429,47 @@ secret 401.
 strange tool result means she reads the number back herself in groups and waits for a yes; a number counts as
 confirmed only after a yes. Assistant: idle nudge "Sorry, are you still there?" at 6 s of caller silence, at most
 twice, and the call ends at 20 s of silence (was 8 s and 30 s). Operator's ask: no open lines after an answer.
+
+## Voice call 7, cut short, and the caller ID idea, 2026-09-06 13:44 to 13:56 AEST
+
+**The call.** Published config, v5.8. Id `01a074d1-a67f-7000-8aa8-3d2fd0fab301`, 1 min 21 s, ended by the operator
+mid-scenario. Builder, Werribee, double storey, plans ready, all captured in one turn.
+
+| Asked | Victoria | Verdict |
+|---|---|---|
+| "0 4 1 1 3, double 7, 2 2" (nine digits, on purpose) | Did not call the tool. "Sorry, I didn't quite catch that. Could you say it again slowly?" | FAIL, the rule says the tool decides, not her |
+| "0 4 1 1 double 7 3 2 2 6" | "Let me check that. 0 4 1 1 7 7 3 2 2 6." spoken BEFORE the tool answered, then the tool: VALID, "oh four one one, seven seven three, two two six", then she said only "That right?" | Tool PASS, first time live. Model FAIL twice: read digits herself, never used the tool's words |
+| Silence, about 7 s | "Sorry. Are you still there?" | PASS, the 6 s idle nudge works |
+| "Uh, thank you." then "That will be all." | Tried to re-ask the number, got cut off, closed cleanly | PASS |
+
+Sheet: 0411773226, phone_confirmed false, subject "CHECK NUMBER: Victoria took a call: name not given, roof
+trusses in Werribee", 8 s after the call. Correct: nobody said yes. The 13:50 render test (below) also produced a
+"name not given, no details" sheet; every dead web call still mails a sheet.
+
+**Fix, live 13:54.** The read-back leaves the model entirely. `lib/victoria/phone.ts` is now the one source of
+phone rules for the tool server and the call sheet, and the tool response carries a `message` of type
+`request-complete`, which Vapi speaks word for word and then does not ask the model to respond (schema
+`ToolMessageComplete`, Vapi OpenAPI). VALID: "I have oh four one one, seven seven three, two two six. Is that
+right?" Nine digits: "I've got nine digits there. Could you say the number again slowly for me?" Eight digits asks
+for the area code; nine starting with four asks for the whole number from oh four. Proven on production 13:55:48
+with the two numbers from this call, both `message` and `result` present. v5.9: send even a short or unfinished
+number to the tool, say nothing in that turn, wait for the yes. Twenty-two unit checks pass.
+
+**The operator's idea, 13:47: ask the caller if the number they are calling from is the best one, and only run
+the capture when they say no.** Right, and already written: line 39 of the prompt has carried "Caller ID:
+{{customer.number}} ... ask 'Is the number you're calling from the best one for the callback?'" since v5.5. It has
+never been heard because a web test call has no caller ID, so the variable stayed literal and she fell back to
+asking. Three things it needed, all done 13:54:
+
+• **Proof it renders.** One API web call (`01a074d6-5a71-7cc1-a54d-7a807ea46653`, public key, no audio, $0.0028)
+  with `assistantOverrides.variableValues.customer.number = +61411773226`: the rendered system message read
+  "Caller ID: +61411773226". `vapi.py webcall <name> --from +614...` now puts that on the test line, so the flow
+  is rehearsable before any real number exists. On a real inbound call Vapi fills `customer` itself.
+• **The sheet.** A caller-ID number the caller said yes to is confirmed: "0411 773 226 ✔ the number they called
+  from, confirmed as the best one". Unconfirmed caller ID prints ✗ and flags CHECK NUMBER as before. +61 is
+  formatted as an Australian number through the shared `toDigits`.
+• **The extractor.** `phone_number` and `phone_confirmed` descriptions on the structured output now cover the
+  caller-ID yes as well as the read-back yes (patched 13:54, read back).
+
+Prompt v5.9, line 39: a yes means confirmed, no read-back, no second number; a no means the tool. Withheld
+numbers render as no caller ID and fall through to capture.
