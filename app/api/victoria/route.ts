@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { timingSafeEqual } from 'node:crypto';
 import { getResend } from '@/lib/mailer';
+import { AU_NUMBER, prettyNumber, toDigits } from '@/lib/victoria/phone';
 
 // Victoria's call sheet. Vapi posts an end-of-call report here after every call the
 // Victoria assistant takes. This mails the sheet to VICTORIA_CALL_SHEET_TO through the
@@ -55,22 +56,23 @@ const words = (v?: string) => (given(v) ? (v as string).replace(/_/g, ' ') : 'no
 const yesNo = (v?: boolean) => (v === true ? 'yes' : v === false ? 'no' : 'not given');
 
 // Australian numbers as dialled locally: 04 mobiles, 02/03/07/08 landlines, 1300/1800, 13xxxx.
-const AU_NUMBER = /^(04\d{8}|0[2378]\d{8}|1[38]00\d{6}|13\d{4})$/;
-
-function prettyNumber(digits: string): string {
-    if (/^04\d{8}$/.test(digits)) return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7)}`;
-    if (/^0[2378]\d{8}$/.test(digits)) return `${digits.slice(0, 2)} ${digits.slice(2, 6)} ${digits.slice(6)}`;
-    if (/^1[38]00\d{6}$/.test(digits)) return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7)}`;
-    return digits;
-}
 
 function phoneCheck(raw: string | undefined, confirmed: boolean | undefined, callerId: string): { text: string; ok: boolean } {
-    if (!given(raw)) {
+    // Caller ID arrives as +61411773226 on a phone call; a web call has none.
+    const caller = callerId ? toDigits(callerId) : '';
+    const callerValid = AU_NUMBER.test(caller);
+    const digits = given(raw) ? (raw as string).replace(/\D/g, '') : '';
+    const taken = digits !== '';
+    // The caller said yes to "is the number you're calling from the best one": the sheet carries no digits, or
+    // the caller ID itself in either form. The network supplied that number, so nothing was mis-heard.
+    if (callerValid && confirmed === true && (!taken || toDigits(digits) === caller)) {
+        return { text: `${prettyNumber(caller)} ✔ the number they called from, confirmed as the best one`, ok: true };
+    }
+    if (!taken) {
         return callerId
-            ? { text: `${callerId} (caller ID only, never read back)`, ok: false }
+            ? { text: `${callerValid ? prettyNumber(caller) : callerId} ✗ the number they called from, never confirmed as the best one`, ok: false }
             : { text: 'no number taken', ok: false };
     }
-    const digits = (raw as string).replace(/\D/g, '');
     const valid = AU_NUMBER.test(digits);
     const shown = valid ? prettyNumber(digits) : digits || (raw as string);
     // confirmed: true = read back and the caller said yes; false = never read back; undefined = the sheet did not say.

@@ -89,7 +89,7 @@
         "type": "boolean"
       },
       "phone_number": {
-        "description": "Callback number as digits with no spaces, exactly as read back and confirmed, even if it is not ten digits. Never pad or fix it. Use 'unknown' if never given or never confirmed.",
+        "description": "Callback number as digits with no spaces. If the caller said yes that the number they are calling from is the best one, copy the Caller ID from the system context exactly (it may start with +61). Otherwise the number exactly as the tool read it back and the caller confirmed, even if it is not ten digits. Never pad or fix it. Use 'unknown' if never given or never confirmed.",
         "type": "string"
       },
       "project_type": {
@@ -113,7 +113,7 @@
         "type": "boolean"
       },
       "phone_confirmed": {
-        "description": "True only if Victoria read the number back digit by digit and the caller said yes. False otherwise, including when no number was taken.",
+        "description": "True if the caller said yes after the number was read back to them, or said yes that the number they are calling from is the best one. False otherwise, including when no number was taken or the caller never answered the read-back.",
         "type": "boolean"
       }
     }
@@ -122,5 +122,5 @@
     "23a8e7a2-9e5d-4065-ba74-0c003c0ef588"
   ],
   "createdAt": "2026-09-02T14:42:29.429Z",
-  "updatedAt": "2026-09-05T09:47:56.493Z"
+  "updatedAt": "2026-09-06T03:54:33.713Z"
 }
