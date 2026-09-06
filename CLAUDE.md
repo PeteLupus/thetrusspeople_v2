@@ -17,7 +17,7 @@
 - [x] Framer Motion animations throughout
 - [x] SEO basics (sitemap.ts, robots.ts, meta tags, JSON-LD LocalBusiness schema)
 - [x] Mobile responsive
-- [x] Victoria AI Agent — after-hours receptionist (Vapi + n8n, v4 production)
+- [x] Victoria AI Agent, after-hours receptionist. **v5 on Vapi** (Claude Haiku 4.5, Deepgram, ElevenLabs), the n8n leg is gone. Call sheets by email from `app/api/victoria/route.ts`, phone numbers checked by `app/api/victoria/tools/route.ts`. Eight web test calls 5 to 6 Sep 2026. Record: `victoria/README.md`, `victoria/v5-test-log.md`.
 - [x] Wow factor upgrades — 3D card tilt, word-by-word title reveal, ServiceAreas pill stagger (all with prefers-reduced-motion support)
 - [x] FAQ page (`/faq`) — SEO content page, linked in sitemap
 - [x] SEO upgrade — JSON-LD schema, keywords, OG image, alt text pass
@@ -46,12 +46,20 @@
 - [ ] Google Business Profile — Victor updates website URL to thetrusspeople.com.au (fixes old site in Google search)
 - [ ] Monthly project showcase content — need real job suburb/builder/type from Victor & Tony for 19 gallery photos
 - [ ] Interstate tiles — Tasmania + NSW still placeholders; need real photos from Victor & Tony
-- [ ] **Victoria agent: close the two unticked rows on TTP's own phone line.** Data accuracy, and
-      the `log_victoria_call` → n8n logging leg. Both sit at 0/4 on the post-test checklist and the
-      agent has never run on a real call. Needs no customer and nobody's permission.
-      **Why it is worth doing now:** it converts *"we built one"* into *"it has been running on real
-      calls"*, which is the single sentence that sells the top rung of the ladder. TTP is the firm's
-      testing ground by design, and this is the clearest example of it paying off.
+- [ ] **Victoria v5 before a public line.** Vic's decisions (callback wording, recording notice, hours veto,
+      after-hours urgent escalation), a phone number (the Twilio account is dead, so Crazytel or a fresh Twilio),
+      and the email check tool. Everything else is proven on the test line: `vapi.py webcall "Victoria TTP_v5"`.
+      Mission M036 SWITCHBOARD, debrief `~/Projects/products/tradesorted/missions/036-switchboard-victoria-v5-debrief.md`.
+
+## VICTORIA v5, the gotchas that bite
+Detail and receipts: `victoria/README.md` and `victoria/v5-test-log.md`.
+- The Vapi dashboard Talk button tests the dashboard DRAFT, not the published config. Test with `vapi.py webcall`.
+- Vapi renders `{{ "now" | date }}` and `{{customer.number}}` in the prompt and no Liquid logic at all.
+- Tool calls arrive as `toolCallList[].function.{name, arguments}` with arguments a JSON string. The docs example is wrong.
+- The model never handles digits: `check_phone_number` validates, and Vapi speaks its `request-complete` message word for word.
+- Every number on the sheet goes through `toDigits` first, because the extractor copies a caller ID as +61.
+- The web SDK creates the call before Chrome asks for the mic and Vapi hangs up 15 s later without audio. The test page asks for the mic first.
+- Nothing from a test goes to info@thetrusspeople.com.au: `VICTORIA_CALL_SHEET_TO` is the switch, petar@tradesorted.com.au until Vic says otherwise.
 
 ## SUB-PROJECTS
 - **Victoria AI Agent** — Notion: https://www.notion.so/337d422a3acb812098b0cd8aab010e22

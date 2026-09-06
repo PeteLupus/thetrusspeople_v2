@@ -473,3 +473,34 @@ asking. Three things it needed, all done 13:54:
 
 Prompt v5.9, line 39: a yes means confirmed, no read-back, no second number; a no means the tool. Withheld
 numbers render as no caller ID and fall through to capture.
+
+## Voice call 8, caller ID first, 2026-09-06 14:01 AEST
+
+Published config, v5.9, through `vapi.py webcall --from +61411773226`. Id `01a074e0-d849-7000-a4a0-c860144bc157`,
+2 min 33 s, $0.2725. The system message rendered "Caller ID: +61411773226".
+
+| Asked | Victoria | Verdict |
+|---|---|---|
+| Builder, Werribee, double storey, plans ready | Captured in one turn | PASS |
+| (the number) | "What's the best number for the team to call you on?" with a Caller ID showing; the caller waited, the 6 s nudge fired, then "the one I'm calling from" got "Is the number you're calling from the best one for the callback?" | FAIL then PASS: the rule sat in Context and in step 4 and she asked the generic question first |
+| "Yes" | Nobody spoke a digit, on to the email | PASS |
+| Email, "Dave at n g u y e n dot com dot a u" | Read back "dave at nguyen dot com dot a u"; caller: "No, it's Dave and Gwen Bills" (Deepgram's hearing of Nguyen Builds); she asked again; caller spelled "n g u y n e n builds"; she read it back letter by letter; yes | PASS on process: the sheet carries exactly what the caller spelled, typo and all. Names inside addresses are the weak point |
+| Hours | Stated, then "Anything else I can help with?" | PASS, v5.8 held |
+| Close | Shape held, callback words once | PASS |
+
+Sheet: phone_number "+61411773226", phone_confirmed true, email dave@nguynenbuilds.com.au confirmed. **Subject
+still read "CHECK NUMBER: Victoria took a call: Dave, roof trusses in Werribee".** Two reasons, both fixed 14:09
+(`4dd38ee`, sheet route v3 deployed 14:09:59): the sheet ran a bare digit strip and saw eleven digits in
++61411773226, and on a web call the caller ID sits in `assistantOverrides.variableValues`, not in `customer`, so
+the caller-ID branch never fired. `judgePhone` in `lib/victoria/phone.ts` now takes every form through `toDigits`
+first and the route reads the faked caller ID too; twelve verdicts unit-tested, a withheld number among them.
+**On a real phone call the extractor would have copied +61 the same way, so this was a production bug found on
+the test line.** v5.10: with a Caller ID showing, the only phone question is the caller-ID one, never "what's the
+best number".
+
+**Email, the open question.** Both parties got tangled once and recovered. What worked: she spelled the local part
+back letter by letter and waited for a yes, and the sheet carries exactly what was confirmed. What is missing is
+what the phone had before its tool: nothing checks the address. A `check_email` tool on the same pattern would
+normalise "at", "dot", "underscore", "dash" and the common domains, validate the shape, look the domain up, and
+speak the read-back itself, letter by letter before the at and as words after it. Not built tonight; learn-first
+before it is.
