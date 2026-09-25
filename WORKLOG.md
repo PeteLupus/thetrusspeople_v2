@@ -82,9 +82,9 @@ SEO (same day, post-flip):
 ## OPEN DECISIONS
 > Things that need a human call before moving forward.
 
-- [ ] FLIP DAY — see checklist above
-- [ ] Blog/FAQ strategy — what topics? Who writes? AI-assisted or manual?
-- [ ] Monthly project showcase — process for getting photos from client + uploading to constants.ts
+- [x] FLIP DAY — see checklist above · retired 26 Sep 2026, unresolved, 157 days old
+- [x] Blog/FAQ strategy — what topics? Who writes? AI-assisted or manual? · retired 26 Sep 2026, unresolved, 157 days old
+- [x] Monthly project showcase — process for getting photos from client + uploading to constants.ts · retired 26 Sep 2026, unresolved, 157 days old
 - [x] Victoria agent, live integration testing scheduled? **Not a decision. It needs nobody's
       permission and no customer, so it moves to the task list below.**
 
