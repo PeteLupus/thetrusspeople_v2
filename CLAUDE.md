@@ -43,7 +43,7 @@
 - [ ] Test quote form on production domain (all 4 steps, attach file) → email + GCS bucket `ttp-quote-submissions`
 - [ ] Remove stale env vars from Vercel: `SENDGRID_API_KEY`, `SENDGRID_FROM_EMAIL`
 - [ ] Remove old `http://` sitemap entry from GSC (3-dot menu → Remove)
-- [ ] Google Business Profile — Victor updates website URL to thetrusspeople.com.au (fixes old site in Google search)
+- [x] Google Business Profile, website URL: found already set to https://thetrusspeople.com.au/ on the owner view, 2026-10-08 (content-engine M067 LANDMARK audit)
 - [ ] Monthly project showcase content — need real job suburb/builder/type from Victor & Tony for 19 gallery photos
 - [ ] Interstate tiles — Tasmania + NSW still placeholders; need real photos from Victor & Tony
 - [ ] **Victoria v5 before a public line.** Vic's decisions (callback wording, recording notice, hours veto,
