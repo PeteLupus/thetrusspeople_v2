@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import Attribution from "@/components/analytics/Attribution";
 import { FACEBOOK_URL, INSTAGRAM_URL } from "@/lib/constants";
 
 const barlowCondensed = Barlow_Condensed({
@@ -82,6 +83,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${barlowCondensed.variable} ${dmSans.variable} antialiased`}>
         <GoogleAnalytics />
+        <Attribution />
         <Navigation />
         <main>{children}</main>
         <Footer />

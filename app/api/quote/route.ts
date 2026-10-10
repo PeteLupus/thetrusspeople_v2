@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildQuoteEmailHtml } from '@/lib/quote-email';
 import { getResend } from '@/lib/mailer';
+import { buildLeadPayload, recordLead } from '@/lib/leadLedger';
 
 function generateReferenceNumber(): string {
   const date = new Date().toISOString().split('T')[0].replace(/-/g, '');
@@ -62,6 +63,16 @@ export async function POST(request: NextRequest) {
       subject: `Quote Request: ${firstName} ${lastName} — ${projectTypeDisplay} [${referenceNumber}]`,
       html: buildQuoteEmailHtml(emailData),
     });
+
+    // Awaited: a serverless function can be frozen once the response is sent.
+    // recordLead is capped at three seconds and never throws.
+    await recordLead(buildLeadPayload({
+      type: 'quote',
+      firstName, lastName, email, phone, company, suburb,
+      projectType, projectTypeOther, additionalDetails,
+      reference: referenceNumber,
+      page: body.page, referrer: body.referrer, utm: body.utm,
+    }));
 
     return NextResponse.json({ success: true, referenceNumber });
   } catch (error) {

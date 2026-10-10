@@ -9,6 +9,7 @@ import ScrollReveal from '@/components/animations/ScrollReveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Button from '@/components/ui/Button';
 import { CONTACT_SECTION, PROJECT_TYPES, PHONE, EMAIL, ADDRESS } from '@/lib/constants';
+import { readAttribution } from '@/lib/attribution';
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -60,7 +61,7 @@ export default function Contact({ section, contactInfo }: ContactProps) {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, ...readAttribution() }),
       });
       if (res.ok) {
         setStatus('success');

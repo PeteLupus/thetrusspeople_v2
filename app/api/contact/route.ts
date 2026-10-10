@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getResend } from '@/lib/mailer';
+import { buildLeadPayload, recordLead } from '@/lib/leadLedger';
 
 // In-memory rate limit: 5 requests per 15 minutes per IP
 const rateLimitMap = new Map<string, number[]>();
@@ -34,7 +35,10 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: true });
         }
 
-        const { name, email, phone, businessName, suburb, projectType, message } = body;
+        const { name, email, phone, suburb, projectType, message } = body;
+        // The contact form posts the business as `company`; this route read `businessName`
+        // and silently dropped it from every email until 10 Oct 2026. Accept either.
+        const businessName = body.businessName ?? body.company;
 
         // Validate required fields
         if (!name || !email || !phone || !message) {
@@ -75,6 +79,15 @@ export async function POST(request: NextRequest) {
         </table>
       `,
         });
+
+        // Awaited: a serverless function can be frozen once the response is sent.
+        // recordLead is capped at three seconds and never throws.
+        await recordLead(buildLeadPayload({
+            type: 'contact',
+            name, email, phone, businessName, suburb, projectType, message,
+            reference: null,
+            page: body.page, referrer: body.referrer, utm: body.utm,
+        }));
 
         return NextResponse.json({ success: true });
     } catch (error) {

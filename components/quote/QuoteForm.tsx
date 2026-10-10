@@ -15,6 +15,7 @@ import ReviewStep from './steps/ReviewStep';
 import SuccessState from './SuccessState';
 import type { QuoteFormData } from '@/lib/types';
 import { QUOTE_STEP_LABELS } from '@/lib/constants';
+import { readAttribution } from '@/lib/attribution';
 
 // ─── Validation Schema ─────────────────────────────────────────────────────────
 
@@ -158,7 +159,7 @@ export default function QuoteForm() {
       const res = await fetch('/api/quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...values, files: blobFiles }),
+        body: JSON.stringify({ ...values, files: blobFiles, ...readAttribution() }),
       });
 
       if (!res.ok) throw new Error('Submission failed');
